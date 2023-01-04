@@ -9,9 +9,9 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())
 p.setGravity(0,0,-9.8)
 
 #create floor
-planeId = p.loadURDF("plane.urdf")
+#planeId = p.loadURDF("plane.urdf")
 
-p.loadSDF("boxes.sdf")
+p.loadSDF("world.sdf")
 
 for i in range(1000):
     p.stepSimulation()
