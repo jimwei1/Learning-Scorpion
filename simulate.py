@@ -1,9 +1,17 @@
 import pybullet as p
 import time
+import pybullet_data
 
 physicsClient = p.connect(p.GUI)
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-p.loadSDF("box.sdf")
+#gravity
+p.setGravity(0,0,-9.8)
+
+#create floor
+planeId = p.loadURDF("plane.urdf")
+
+p.loadSDF("boxes.sdf")
 
 for i in range(1000):
     p.stepSimulation()
