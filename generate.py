@@ -6,9 +6,10 @@ pyrosim.Start_SDF("boxes.sdf")
 x = 0
 y = 0
 z = 0.5
-pyrosim.Send_Cube(name="Box", pos=[x,y,z] , size=[1,1,1])
 
-pyrosim.Send_Cube(name="Box2", pos=[x +0.5 ,y,z+1] , size=[1,1,1])
+#pyrosim.Send_Cube(name="Box", pos=[x,y,z] , size=[1,1,1])
+
+#pyrosim.Send_Cube(name="Box2", pos=[x +0.5 ,y,z+1] , size=[1,1,1])
 
 for i in range(5):
     for o in range (5):
