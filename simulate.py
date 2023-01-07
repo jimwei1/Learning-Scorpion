@@ -23,19 +23,21 @@ pyrosim.Prepare_To_Simulate(robotID)
 
 #numpy vector to save sensor values, same iterations as for loop
 backLegSensorValues = numpy.zeros(100)
+frontLegSensorValues = numpy.zeros(100)
 
 
 for i in range(100):
     p.stepSimulation()
     backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
-    #print(backLegTouch)
+    frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
 
     time.sleep(1/600)
     #print(i)
 
-print("BACKLEG SENSOR VALUES")
-print(backLegSensorValues)
-numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/test.npy', backLegSensorValues)
+#print("BACKLEG SENSOR VALUES")
+#print(backLegSensorValues)
+numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/backLegSensorValues.npy', backLegSensorValues)
+numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/frontLegSensorValues.npy', frontLegSensorValues)
 
 
 p.disconnect()
