@@ -31,13 +31,11 @@ for i in range(100):
     backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
     frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
 
-    pyrosim.Set_Motor_For_Joint(bodyIndex = ..., jointName = "...", controlMode = ..., targetPosition = ..., maxForce = ...)
-
     time.sleep(1/600)
+    #print(i)
 
-
-
-    
+#print("BACKLEG SENSOR VALUES")
+#print(backLegSensorValues)
 numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/backLegSensorValues.npy', backLegSensorValues)
 numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/frontLegSensorValues.npy', frontLegSensorValues)
 
