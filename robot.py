@@ -13,9 +13,17 @@ class ROBOT: #class name
 
     def __init__(self): #constructor
 
-        self.sensors = {}
         self.motors = {}
 
         self.robotID = p.loadURDF("body.urdf")
 
         pyrosim.Prepare_To_Simulate(self.robotID)
+
+        self.Prepare_To_Sense()
+
+    def Prepare_To_Sense(self):
+            self.sensors = {}
+            for linkName in pyrosim.linkNamesToIndices:
+                #print(linkName)
+                self.sensors[linkName] = SENSOR(linkName)
+                
