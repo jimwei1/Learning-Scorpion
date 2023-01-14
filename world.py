@@ -10,8 +10,6 @@ class WORLD:
 
     def __init__(self): #constructor
 
-        planeId = p.loadURDF("plane.urdf")
-
+        self.planeId = p.loadURDF("plane.urdf")
         p.loadSDF("world.sdf")
 
-        robotID = p.loadURDF("body.urdf")
