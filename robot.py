@@ -27,3 +27,13 @@ class ROBOT: #class name
                 #print(linkName)
                 self.sensors[linkName] = SENSOR(linkName)
                 
+                self.values = numpy.zeros(c.timevalue)
+
+    def Sense(self):
+        pass
+        
+
+    def Get_Value(self):
+        self.values = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+
+                

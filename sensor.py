@@ -8,7 +8,8 @@ import constants as c
 
 class SENSOR:
 
-    def __init__(self): #constructor
+    def __init__(self, linkname): #constructor
 
         self.backLegSensorValues = numpy.zeros(c.timevalue)
         self.frontLegSensorValues = numpy.zeros(c.timevalue)
+        self.linkname = linkname
