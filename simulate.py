@@ -57,7 +57,7 @@ for i in range(c.timevalue):
 
 
     #print(targetAngles[i])
-    print(i)
+    #print(i)
     #numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/sinTargetAngles.npy', targetAngles)
 
     pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_BackLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles_Front[i]), maxForce = 50)
