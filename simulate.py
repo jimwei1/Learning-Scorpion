@@ -5,11 +5,6 @@ import pyrosim.pyrosim as pyrosim
 import numpy as numpy
 import random as random
 
-amplitude = numpy.pi / 8
-frequency = 1
-phaseOffset = 0
-
-
 physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
@@ -27,7 +22,16 @@ robotID = p.loadURDF("body.urdf")
 #Simulation setup
 pyrosim.Prepare_To_Simulate(robotID)
 
+#Values
 timevalue = 10000
+
+amplitude_Front = numpy.pi / 4
+frequency_Front = 1
+phaseOffset_Front = 0
+
+amplitude_Back = numpy.pi / 4
+frequency_Back = 1
+phaseOffset_Back = numpy.pi / 4
 
 #numpy vector to save sensor values, same iterations as for loop
 backLegSensorValues = numpy.zeros(timevalue)
@@ -49,18 +53,20 @@ for i in range(timevalue):
     #pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = random.uniform(-1.57, 1.57), maxForce = 50)
 
         #sin
-    targetAngles = numpy.zeros(timevalue)
+    targetAngles_Front = numpy.zeros(timevalue)
+    targetAngles_Back = numpy.zeros(timevalue)
     #targetAngles[i] = numpy.sin((numpy.pi * i/1000)/4)
 
-    targetAngles[i] = amplitude * numpy.sin(frequency * i + phaseOffset)
+    targetAngles_Front[i] = amplitude_Front * numpy.sin(frequency_Front * i + phaseOffset_Front)
+    targetAngles_Front[i] = amplitude_Back * numpy.sin(frequency_Back * i + phaseOffset_Back)
 
 
     #print(targetAngles[i])
     print(i)
     #numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/sinTargetAngles.npy', targetAngles)
 
-    pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_BackLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles[i]), maxForce = 50)
-    pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles[i]), maxForce = 50)
+    pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_BackLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles_Front[i]), maxForce = 50)
+    pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles_Back[i]), maxForce = 50)
 
     #time.sleep(1/240)
 
