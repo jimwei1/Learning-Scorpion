@@ -4,6 +4,8 @@ import pybullet_data
 import pyrosim.pyrosim as pyrosim
 import numpy as numpy
 import random as random
+import constants as c
+from simulation import SIMULATION
 
 physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
@@ -23,22 +25,15 @@ robotID = p.loadURDF("body.urdf")
 pyrosim.Prepare_To_Simulate(robotID)
 
 #Values
-timevalue = 10000
 
-amplitude_Front = numpy.pi / 4
-frequency_Front = 1
-phaseOffset_Front = 0
 
-amplitude_Back = numpy.pi / 4
-frequency_Back = 1
-phaseOffset_Back = numpy.pi / 4
 
 #numpy vector to save sensor values, same iterations as for loop
-backLegSensorValues = numpy.zeros(timevalue)
-frontLegSensorValues = numpy.zeros(timevalue)
+backLegSensorValues = numpy.zeros(c.timevalue)
+frontLegSensorValues = numpy.zeros(c.timevalue)
 
 
-for i in range(timevalue):
+for i in range(c.timevalue):
 
     p.stepSimulation()
     backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
@@ -53,12 +48,12 @@ for i in range(timevalue):
     #pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = random.uniform(-1.57, 1.57), maxForce = 50)
 
         #sin
-    targetAngles_Front = numpy.zeros(timevalue)
-    targetAngles_Back = numpy.zeros(timevalue)
+    targetAngles_Front = numpy.zeros(c.timevalue)
+    targetAngles_Back = numpy.zeros(c.timevalue)
     #targetAngles[i] = numpy.sin((numpy.pi * i/1000)/4)
 
-    targetAngles_Front[i] = amplitude_Front * numpy.sin(frequency_Front * i + phaseOffset_Front)
-    targetAngles_Front[i] = amplitude_Back * numpy.sin(frequency_Back * i + phaseOffset_Back)
+    targetAngles_Front[i] = c.amplitude_Front * numpy.sin(c.frequency_Front * i + c.phaseOffset_Front)
+    targetAngles_Front[i] = c.amplitude_Back * numpy.sin(c.frequency_Back * i + c.phaseOffset_Back)
 
 
     #print(targetAngles[i])
