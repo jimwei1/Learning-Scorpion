@@ -10,12 +10,14 @@ class SENSOR:
 
     def __init__(self, linkname): #constructor
 
-        self.backLegSensorValues = numpy.zeros(c.timevalue)
-        self.frontLegSensorValues = numpy.zeros(c.timevalue)
+        self.SensorValues = numpy.zeros(c.timevalue)
         self.linkname = linkname
     
     def Get_Value(self, t):
         self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+
+        numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/tempValuesforH.npy', self.sensorValues)
+
 
         #print("VALUES HERE")
         #print(self.values)

@@ -20,6 +20,14 @@ class MOTOR:
         
         self.motorValues = self.amplitude * numpy.sin(self.frequency + self.offset)
 
+        if self.jointName == b'Torso_FrontLeg':
+            self.frequency = self.frequency / 2
+
+
 
     def SetValue(self,t):
         pyrosim.Set_Motor_For_Joint(bodyIndex = (robot.self.robot), jointName = self.jointName, controlMode = p.POSITION_CONTROL, targetPosition = self.motorValues[t], maxForce = 50)
+
+    def Save_Values(self):
+        numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/tempMotorValuesforH.npy', self.motorValues)
+
