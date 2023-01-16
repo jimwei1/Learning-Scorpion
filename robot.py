@@ -30,10 +30,14 @@ class ROBOT: #class name
                 self.values = numpy.zeros(c.timevalue)
 
     def Sense(self):
-        pass
+        for i in self.sensors:
+            self.Get_Value(i)
+
         
 
-    def Get_Value(self):
-        self.values = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+    def Get_Value(self, t):
+        self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+        print("VALUES HERE")
+        print(self.values)
 
                 
