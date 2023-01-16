@@ -13,7 +13,7 @@ class ROBOT: #class name
 
     def __init__(self): #constructor
 
-        self.motors = {}
+        #self.motors = {}
 
         self.robotID = p.loadURDF("body.urdf")
 
@@ -35,9 +35,17 @@ class ROBOT: #class name
 
         
 
-    def Get_Value(self, t):
-        self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-        print("VALUES HERE")
-        print(self.values)
+
+
+    def Prepare_To_Act(self):
+        self.motors = {}
+        for jointName in pyrosim.jointNamesToIndices:
+            self.sensors[jointName] = SENSOR(jointName)
+                
+            self.values = numpy.zeros(c.timevalue)
+    
+    def Act(self):
+        for i in self.motors:
+            self.Set_Value(i)
 
                 
