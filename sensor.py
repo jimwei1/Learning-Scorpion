@@ -16,8 +16,11 @@ class SENSOR:
     def Get_Value(self, t):
         self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
 
-        numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/tempValuesforH.npy', self.sensorValues)
+        
 
 
         #print("VALUES HERE")
         #print(self.values)
+
+    def SaveValues(self):
+        numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/tempValuesforH.npy', self.sensorValues)

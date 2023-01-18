@@ -35,6 +35,7 @@ class SIMULATION: #class name
         for t in range(c.timevalue):
                 p.stepSimulation()
                 SENSOR.Sense()
+                self.robot.Act()
 
 
 
@@ -44,9 +45,8 @@ class SIMULATION: #class name
                 targetAngles_Front[t] = c.amplitude_Front * numpy.sin(c.frequency_Front * t + c.phaseOffset_Front)
                 targetAngles_Front[t] = c.amplitude_Back * numpy.sin(c.frequency_Back * t + c.phaseOffset_Back)
 
-                pyrosim.Set_Motor_For_Joint(bodyIndex = self.robot.robotID, jointName = b'Torso_BackLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles_Front[t]), maxForce = 50)
-                pyrosim.Set_Motor_For_Joint(bodyIndex = self.robot.robotID, jointName = b'Torso_FrontLeg', controlMode = p.POSITION_CONTROL, targetPosition = numpy.sin(targetAngles_Back[t]), maxForce = 50)
                 
-                p.gc.collect
+                
+                #   p.gc.collect
     def __del__(self):
         p.disconnect()

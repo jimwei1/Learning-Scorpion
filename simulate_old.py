@@ -5,7 +5,7 @@ import pyrosim.pyrosim as pyrosim
 import numpy as numpy
 import random as random
 import constants as c
-from simulation import SIMULATION
+#from simulation import SIMULATION
 
 physicsClient = p.connect(p.GUI)
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
