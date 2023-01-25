@@ -9,7 +9,9 @@ import robot as robot
 
 class MOTOR:
 
-    def __init__(self): #constructor
+    def __init__(self, jointName): #constructor
+
+        self.jointName = jointName
 
         self.Prepare_To_Act()
 
@@ -18,15 +20,14 @@ class MOTOR:
         self.frequency = c.frequency_Back
         self.offset = c.phaseOffset_Back
         
-        self.motorValues = self.amplitude * numpy.sin(self.frequency + self.offset)
+        self.motorValues = self.amplitude * numpy.sin(self.frequency * numpy.linspace(0, 2 * numpy.pi, 10000) + self.offset)
 
         if self.jointName == b'Torso_FrontLeg':
             self.frequency = self.frequency / 2
 
 
-
-    def SetValue(self,t):
-        pyrosim.Set_Motor_For_Joint(bodyIndex = (robot.self.robot), jointName = self.jointName, controlMode = p.POSITION_CONTROL, targetPosition = self.motorValues[t], maxForce = 50)
+    def Set_Value(self,t, robotID):
+        pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = self.jointName, controlMode = p.POSITION_CONTROL, targetPosition = self.motorValues[t], maxForce = 50)
 
     def Save_Values(self):
         numpy.save('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/tempMotorValuesforH.npy', self.motorValues)

@@ -23,31 +23,14 @@ class SIMULATION: #class name
         self.world = WORLD()
         self.robot = ROBOT()
 
-        for i in range(c.timevalue):
-            p.stepSimulation()
-        
-        p.disconnect()
-
-        #simulation = SIMULATION()
-
-
     def Run(self):
         for t in range(c.timevalue):
                 p.stepSimulation()
-                SENSOR.Sense()
-                self.robot.Think()
-                self.robot.Act()
+                self.robot.Sense(t)
+                #self.robot.Think()
+                self.robot.Act(t)
 
+                time.sleep(1/60)
 
-
-                targetAngles_Front = numpy.zeros(c.timevalue)
-                targetAngles_Back = numpy.zeros(c.timevalue)
-
-                targetAngles_Front[t] = c.amplitude_Front * numpy.sin(c.frequency_Front * t + c.phaseOffset_Front)
-                targetAngles_Front[t] = c.amplitude_Back * numpy.sin(c.frequency_Back * t + c.phaseOffset_Back)
-
-                
-                
-                #   p.gc.collect
     def __del__(self):
         p.disconnect()

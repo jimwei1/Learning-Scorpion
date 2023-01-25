@@ -8,15 +8,13 @@ import constants as c
 
 class SENSOR:
 
-    def __init__(self, linkname): #constructor
+    def __init__(self, linkName): #constructor
 
         self.SensorValues = numpy.zeros(c.timevalue)
-        self.linkname = linkname
+        self.linkName = linkName
     
     def Get_Value(self, t):
-        self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-
-        
+        self.SensorValues[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
 
 
         #print("VALUES HERE")

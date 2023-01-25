@@ -19,19 +19,21 @@ class ROBOT: #class name
 
         self.motors = {}
 
+        self.sensors = {}
+
         pyrosim.Prepare_To_Simulate(self.robotID)
 
         self.Prepare_To_Sense()
 
-        self.nn = NEURAL_NETWORK("brain.nndf")
+        self.Prepare_To_Act()
+
+        #self.nn = NEURAL_NETWORK("brain.nndf")
 
     def Prepare_To_Sense(self):
-            self.sensors = {}
+    
             for linkName in pyrosim.linkNamesToIndices:
 
                 self.sensors[linkName] = SENSOR(linkName)
-    
-                self.values = numpy.zeros(c.timevalue)
 
     def Sense(self, t):
         for i in self.sensors:
@@ -39,17 +41,14 @@ class ROBOT: #class name
 
 
     def Prepare_To_Act(self):
-
         for jointName in pyrosim.jointNamesToIndices:
-            self.motors[jointName] = SENSOR(jointName)
-                
-            self.values = numpy.zeros(c.timevalue)
+            self.motors[jointName] = MOTOR(jointName)
     
-    def Act(self):
+    def Act(self, t):
         for i in self.motors:
-            self.Set_Value(i)
+            self.motors[i].Set_Value(t, self.robotID)
 
-    def Think(self):
-        self.nn.Print()
+    #def Think(self):
+        #self.nn.Print()
 
                 
