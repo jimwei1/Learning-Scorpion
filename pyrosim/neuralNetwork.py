@@ -29,7 +29,23 @@ class NEURAL_NETWORK:
         print("")
     
     def Update(self):
-        pass
+
+        for neuronName in self.neurons:
+            if self.neurons[neuronName].Is_Sensor_Neuron():
+                self.neurons[neuronName].Update_Sensor_Neuron()
+
+            else: #is hidden or motor neuron
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron()
+    
+    def Get_Neuron_Names(self):
+
+        return self.neurons.keys()
+        #might not work, step 57 neurons
+
+    def Is_Motor_Neuron(self, neuronName):
+
+        self.neurons[neuronName].Is_Motor_Neuron()
+        
 
 # ---------------- Private methods --------------------------------------
 
