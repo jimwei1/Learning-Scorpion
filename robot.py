@@ -27,7 +27,7 @@ class ROBOT: #class name
 
         self.Prepare_To_Act()
 
-        #self.nn = NEURAL_NETWORK("brain.nndf")
+        self.nn = NEURAL_NETWORK("brain.nndf")
 
     def Prepare_To_Sense(self):
     
@@ -48,7 +48,9 @@ class ROBOT: #class name
         for i in self.motors:
             self.motors[i].Set_Value(t, self.robotID)
 
-    #def Think(self):
-        #self.nn.Print()
+    def Think(self):
+        self.nn.Update()
+        self.nn.Print()
+        
 
                 
