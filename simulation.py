@@ -35,6 +35,7 @@ class SIMULATION: #class name
         for t in range(c.timevalue):
                 p.stepSimulation()
                 SENSOR.Sense()
+                self.robot.Think()
                 self.robot.Act()
 
 
