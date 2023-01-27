@@ -49,7 +49,8 @@ class NEURON:
 
     def Update_Hidden_Or_Motor_Neuron(self):
 
-        self.Set_Value(0)
+        self.Set_Value(-100)
+
         #this isnt working now? wtf?
 
 
