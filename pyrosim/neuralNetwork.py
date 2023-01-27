@@ -16,6 +16,11 @@ class NEURAL_NETWORK:
 
             self.Digest(line)
 
+            print("XXXXXX")
+            print(self.synapses.keys())
+
+            exit()
+
         f.close()
 
     def Print(self):
