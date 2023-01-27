@@ -40,7 +40,6 @@ class NEURAL_NETWORK:
     def Get_Neuron_Names(self):
 
         return self.neurons.keys()
-        #might not work, step 57 neurons
 
     def Is_Motor_Neuron(self, neuronName):
         return self.neurons[neuronName].Is_Motor_Neuron()
