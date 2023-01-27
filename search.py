@@ -10,5 +10,8 @@ from hillclimber import HILL_CLIMBER
 # L step 7
 hc = HILL_CLIMBER()
 
+# L Step 20
+HILL_CLIMBER.Evolve()
+
 
 
