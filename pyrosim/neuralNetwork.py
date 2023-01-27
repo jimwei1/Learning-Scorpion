@@ -43,13 +43,13 @@ class NEURAL_NETWORK:
         #might not work, step 57 neurons
 
     def Is_Motor_Neuron(self, neuronName):
-        self.neurons[neuronName].Is_Motor_Neuron()
+        return self.neurons[neuronName].Is_Motor_Neuron()
 
     def Get_Motor_Neurons_Joint(self, neuronName):
-        self.neurons[neuronName].Get_Joint_Name()
+        return self.neurons[neuronName].Get_Joint_Name()
 
     def Get_Value_Of(self, neuronName):
-        self.neurons[neuronName].Get_Value()
+        return self.neurons[neuronName].Get_Value()
 
         
 
