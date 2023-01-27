@@ -37,9 +37,8 @@ class NEURAL_NETWORK:
 
             else: #is hidden or motor neuron
                 
-                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(neuronName, self.synapses)
-                print("hi are we here yet")
-                #this might not be right ^^^
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(self.neurons, self.synapses)
+
     
     def Get_Neuron_Names(self):
 

@@ -53,14 +53,11 @@ class NEURON:
 
         for synapse in synapses.keys():
             if(synapse[1] == self.Get_Name()):
-
-                self.Allow_Presynaptic_Neuron_To_Influence_Me(synapses[synapse].Get_Weight(), neurons[synapse[0]].Get_Value())
-            
-        #J Step 38
+                weight = int(synapses[synapse].Get_Weight())
+                value =  int(neurons[synapse[0]].Get_Value())
+                print(f'DEBUG: WEIGHT = {weight} VALUE = {value}')
+                self.Allow_Presynaptic_Neuron_To_Influence_Me(weight, value)
         self.Threshold()
-        
-        exit()
-
 
     def Is_Hidden_Neuron(self):
 
