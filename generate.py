@@ -1,4 +1,6 @@
 import pyrosim.pyrosim as pyrosim
+from robot import ROBOT
+import random as random
 
 
 
@@ -55,21 +57,24 @@ def Generate_Brain():
     pyrosim.Send_Motor_Neuron(name = 3 , jointName = "Torso_BackLeg")
     pyrosim.Send_Motor_Neuron(name = 4 , jointName = "Torso_FrontLeg")
 
-    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 3 , weight = 5)
-    pyrosim.Send_Synapse(sourceNeuronName = 1 , targetNeuronName = 3 , weight = 5)
+    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 3 , weight = 1)
+    pyrosim.Send_Synapse(sourceNeuronName = 1 , targetNeuronName = 3 , weight = 1)
 
     #J Step 46
-    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 5)
-    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 5)
+    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1)
+    pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1)
+    
 
+
+    for i in [0,1,2]:
+        for j in [3,4]:
+            pyrosim.Send_Synapse(sourceNeuronName = i , targetNeuronName = j , weight = random.randint(-1,1))
+    
     pyrosim.End()
-
-def tempname(self):
-    for i in self.sensors:
-        for j in self.motors:
-            pyrosim.Send_Synapse(sourceNeuronName = i , targetNeuronName = j , weight = 1)
 
 
 
 Generate_Body()
 Generate_Brain()
+#Random_Search()
+
