@@ -64,6 +64,12 @@ def Generate_Brain():
 
     pyrosim.End()
 
+def tempname(self):
+    for i in self.sensors:
+        for j in self.motors:
+            pyrosim.Send_Synapse(sourceNeuronName = i , targetNeuronName = j , weight = 1)
+
+
 
 Generate_Body()
 Generate_Brain()
