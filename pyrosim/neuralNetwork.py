@@ -16,10 +16,6 @@ class NEURAL_NETWORK:
 
             self.Digest(line)
 
-            print("XXXXXX")
-            print(self.synapses.keys())
-
-            exit()
 
         f.close()
 
@@ -40,7 +36,10 @@ class NEURAL_NETWORK:
                 self.neurons[neuronName].Update_Sensor_Neuron()
 
             else: #is hidden or motor neuron
-                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron()
+                
+                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(neuronName, self.synapses)
+                print("hi are we here yet")
+                #this might not be right ^^^
     
     def Get_Neuron_Names(self):
 
