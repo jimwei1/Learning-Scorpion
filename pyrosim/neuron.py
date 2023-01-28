@@ -55,7 +55,7 @@ class NEURON:
             if(synapse[1] == self.Get_Name()):
                 weight = int(synapses[synapse].Get_Weight())
                 value =  int(neurons[synapse[0]].Get_Value())
-                print(f'DEBUG: WEIGHT = {weight} VALUE = {value}')
+                #print(f'DEBUG: WEIGHT = {weight} VALUE = {value}')
                 self.Allow_Presynaptic_Neuron_To_Influence_Me(weight, value)
         self.Threshold()
 
