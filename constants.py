@@ -15,3 +15,5 @@ phaseOffset_Front = 0
 amplitude_Back = numpy.pi / 4
 frequency_Back = 1
 phaseOffset_Back = numpy.pi / 4
+
+numberofGenerations = 2
