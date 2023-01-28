@@ -31,6 +31,9 @@ class SIMULATION: #class name
                 self.robot.Act(t)
 
                 #time.sleep(1/60)
+        
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()
 
     def __del__(self):
         p.disconnect()
