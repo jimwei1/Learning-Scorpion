@@ -64,6 +64,10 @@ class ROBOT: #class name
         stateofLinkZero = p.getLinkState(self.robotID, 0)
         positionOfLinkZero = stateofLinkZero[0]
         xCoordinateofLinkZero = positionOfLinkZero[0]
+
+        f = open("fitness.txt", "w")
+        f.write(str(xCoordinateofLinkZero))
+        f.close()
         
 
                 
