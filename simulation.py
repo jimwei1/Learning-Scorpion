@@ -12,9 +12,14 @@ from sensor import SENSOR
 
 class SIMULATION: #class name
 
-    def __init__(self): #constructor
+    def __init__(self, directOrGUI): #constructor
 
-        physicsClient = p.connect(p.GUI)
+        self.directOrGUI = directOrGUI
+
+        if directOrGUI == "DIRECT":
+            physicsClient = p.connect(p.DIRECT)
+        elif directOrGUI == "GUI":
+            physicsClient = p.connect(p.GUI)
         
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
@@ -23,14 +28,14 @@ class SIMULATION: #class name
         self.world = WORLD()
         self.robot = ROBOT()
 
+
+
     def Run(self):
         for t in range(c.timevalue):
                 p.stepSimulation()
                 self.robot.Sense(t)
                 self.robot.Think()
                 self.robot.Act(t)
-
-                #time.sleep(1/60)
         
     def Get_Fitness(self):
         self.robot.Get_Fitness()

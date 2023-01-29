@@ -11,13 +11,15 @@ class SOLUTION:
         self.weights = numpy.random.rand(3, 2)
         self.weights = self.weights * 2 - 1
 
-    #L Step 21
+    def Evaluate(self, directOrGUI):
+        #self.Create_World()
+        #self.Create_Body()
+        #self.Create_Brain()
 
-    def Evaluate(self):
-        os.system("python3 simulate.py")
+        os.system("python3 simulate.py " + directOrGUI)
 
         f = open("fitness.txt", "r")
-        self.fitness = f.read()
+        self.fitness = float(f.read())
         f.close()
 
     def Create_World():
@@ -60,7 +62,7 @@ class SOLUTION:
         randomRow = random.randint(0 , 2)
         randomColumn = random.randint(0, 1)
 
-        self.weights[randomRow][randomColumn] = random.random()* 2 - 1
+        self.weights[randomRow][randomColumn] = random.random() * 2 - 1
 
 
 
