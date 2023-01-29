@@ -3,6 +3,7 @@ import pyrosim.pyrosim as pyrosim
 from robot import ROBOT
 import random as random
 import os as os
+from world import WORLD
 
 class SOLUTION:
 
@@ -12,21 +13,21 @@ class SOLUTION:
         self.weights = self.weights * 2 - 1
 
     def Evaluate(self, directOrGUI):
-        #self.Create_World()
-        #self.Create_Body()
-        #self.Create_Brain()
 
         os.system("python3 simulate.py " + directOrGUI)
-
+        
+        self.Create_World()
+        self.Create_Body()
+        self.Create_Brain()
         f = open("fitness.txt", "r")
         self.fitness = float(f.read())
         f.close()
 
-    def Create_World():
+    def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
         pyrosim.End()
 
-    def Create_Body():
+    def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
         pyrosim.Send_Cube(name="Torso", pos=[1.5,0,1.5] , size=[1,1,1])
         pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [1,0,1])
@@ -35,7 +36,6 @@ class SOLUTION:
         pyrosim.Send_Cube(name="FrontLeg", pos=[0.5,0,-0.5] , size=[1,1,1])
         pyrosim.End()
 
-    #THIS SELF DOWN HERE MIGHT CAUSE PROBLEMS. NEEDED TO ADD IN L STEP 24.
     def Create_Brain(self):
         pyrosim.Start_NeuralNetwork("brain.nndf")
         pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")
@@ -45,12 +45,13 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 3 , jointName = "Torso_BackLeg")
         pyrosim.Send_Motor_Neuron(name = 4 , jointName = "Torso_FrontLeg")
 
-        pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 3 , weight = 1)
-        pyrosim.Send_Synapse(sourceNeuronName = 1 , targetNeuronName = 3 , weight = 1)
-        pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1)
-        pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 1)
+        pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 3 , weight = 3)
+        pyrosim.Send_Synapse(sourceNeuronName = 1 , targetNeuronName = 3 , weight = 3)
+        pyrosim.Send_Synapse(sourceNeuronName = 0 , targetNeuronName = 4 , weight = 3)
+        pyrosim.Send_Synapse(sourceNeuronName = 1 , targetNeuronName = 4 , weight = 3)
+        pyrosim.Send_Synapse(sourceNeuronName = 2 , targetNeuronName = 4 , weight = 3)
+        pyrosim.Send_Synapse(sourceNeuronName = 2 , targetNeuronName = 3 , weight = 3)
         
-        #Random Search
         for currentRow in [0,1,2]:
             for currentColumn in [0,1]:
                 pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = currentColumn + 3, weight = self.weights[currentRow][currentColumn])

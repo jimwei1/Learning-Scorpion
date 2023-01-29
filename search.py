@@ -4,7 +4,6 @@ from hillclimber import HILL_CLIMBER
 
 hill_climber = HILL_CLIMBER()
 
-
 hill_climber.Evolve()
 
 
