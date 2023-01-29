@@ -3,7 +3,6 @@ import pyrosim.pyrosim as pyrosim
 from robot import ROBOT
 import random as random
 import os as os
-from world import WORLD
 
 class SOLUTION:
 
@@ -16,25 +15,25 @@ class SOLUTION:
 
         os.system("python3 simulate.py " + directOrGUI)
         
-        self.Create_World()
-        self.Create_Body()
-        self.Create_Brain()
+        #self.Create_World()
+        #self.Create_Body()
+        #self.Create_Brain()
         f = open("fitness.txt", "r")
         self.fitness = float(f.read())
         f.close()
 
-    def Create_World(self):
-        pyrosim.Start_SDF("world.sdf")
-        pyrosim.End()
+    #def Create_World():
+        #pyrosim.Start_SDF("world.sdf")
+        #pyrosim.End()
 
-    def Create_Body(self):
-        pyrosim.Start_URDF("body.urdf")
-        pyrosim.Send_Cube(name="Torso", pos=[1.5,0,1.5] , size=[1,1,1])
-        pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [1,0,1])
-        pyrosim.Send_Cube(name="BackLeg", pos=[-0.5,0,-0.5] , size=[1,1,1])
-        pyrosim.Send_Joint( name = "Torso_FrontLeg" , parent= "Torso" , child = "FrontLeg" , type = "revolute", position = [2,0,1])
-        pyrosim.Send_Cube(name="FrontLeg", pos=[0.5,0,-0.5] , size=[1,1,1])
-        pyrosim.End()
+    #def Create_Body():
+        #pyrosim.Start_URDF("body.urdf")
+        #pyrosim.Send_Cube(name="Torso", pos=[1.5,0,1.5] , size=[1,1,1])
+        #pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [1,0,1])
+        #pyrosim.Send_Cube(name="BackLeg", pos=[-0.5,0,-0.5] , size=[1,1,1])
+        #pyrosim.Send_Joint( name = "Torso_FrontLeg" , parent= "Torso" , child = "FrontLeg" , type = "revolute", position = [2,0,1])
+        #pyrosim.Send_Cube(name="FrontLeg", pos=[0.5,0,-0.5] , size=[1,1,1])
+        #pyrosim.End()
 
     def Create_Brain(self):
         pyrosim.Start_NeuralNetwork("brain.nndf")
