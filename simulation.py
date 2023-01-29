@@ -29,7 +29,6 @@ class SIMULATION: #class name
         self.robot = ROBOT()
 
 
-
     def Run(self):
         for t in range(c.timevalue):
                 p.stepSimulation()
