@@ -50,10 +50,8 @@ def Get_Touch_Sensor_Value_For_Link(linkName):
 
     pts = p.getContactPoints()
 
-    #breakpoint()
-
     for pt in pts:
-        
+
         linkIndex = pt[4]
 
         if ( linkIndex == desiredLinkIndex ):
@@ -72,7 +70,7 @@ def Prepare_Link_Dictionary(bodyID):
 
         jointInfo = p.getJointInfo( bodyID , jointIndex )
 
-        jointName = jointInfo[1] #.decode("utf-8")
+        jointName = jointInfo[1]
 
         jointName = jointName.decode("utf-8")
 
