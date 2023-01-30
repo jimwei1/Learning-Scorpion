@@ -2,7 +2,7 @@ import math
 
 import pyrosim.pyrosim as pyrosim
 
-import pyrosim.constants as c
+import constants as c
 
 class SYNAPSE: 
 

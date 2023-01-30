@@ -1,6 +1,6 @@
 import math
 
-import pybullet
+import pybullet as pybullet
 
 import pyrosim.pyrosim as pyrosim
 
