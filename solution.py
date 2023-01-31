@@ -6,14 +6,16 @@ import os as os
 
 class SOLUTION:
 
-    def __init__(self): #constructor
+    def __init__(self, nextAvailableID): #constructor
+        
+        self.myID = nextAvailableID
         
         self.weights = numpy.random.rand(3, 2)
         self.weights = (self.weights * 2) - 1
 
     def Evaluate(self, directOrGUI):
 
-        os.system("python3 simulate.py " + directOrGUI)
+        os.system("python3 simulate.py " + directOrGUI + " &")
         
         self.Create_World()
         self.Create_Body()
