@@ -7,6 +7,17 @@ class PARALLEL_HILL_CLIMBER:
     def __init__(self) -> None: #constructor
 
         self.parent = SOLUTION()
+        self.parents = {}
+
+        for parent in range(0, c.populationSize):
+            
+            #M Step 18, might be wrong
+            self.parents[parent] = SOLUTION(self)
+        
+        #print("SELF.PARENTS:")
+        #print(self.parents)
+
+
 
     def Evolve(self):
 
@@ -19,11 +30,14 @@ class PARALLEL_HILL_CLIMBER:
                 self.Show_Best()
     
     def Evolve_For_One_Generation(self):
-        self.Spawn()
-        self.Mutate()
-        self.child.Evaluate("DIRECT")
-        self.Print()
-        self.Select()
+        for parent in self.parents:
+
+            self.Spawn()
+            self.Mutate()
+            self.child.Evaluate("DIRECT")
+            self.Print()
+            self.Select()
+        
     
     def Spawn(self):
         self.child = copy.deepcopy(self.parent)

@@ -17,3 +17,5 @@ frequency_Back = 1
 phaseOffset_Back = numpy.pi / 4
 
 numberofGenerations = 10
+
+populationSize = 2
