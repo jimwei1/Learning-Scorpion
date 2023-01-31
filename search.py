@@ -1,10 +1,10 @@
 import os as os
 import numpy as numpy
-from hillclimber import HILL_CLIMBER
+from parallelHillClimber import PARALLEL_HILL_CLIMBER
 
-hill_climber = HILL_CLIMBER()
+phc = PARALLEL_HILL_CLIMBER()
 
-hill_climber.Evolve()
+phc.Evolve()
 
 
 
