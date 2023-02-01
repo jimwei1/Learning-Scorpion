@@ -9,6 +9,9 @@ class SOLUTION:
     def __init__(self, nextAvailableID): #constructor
         
         self.myID = nextAvailableID
+
+        print("MY ID:")
+        print(self.myID)
         
         self.weights = numpy.random.rand(3, 2)
         self.weights = (self.weights * 2) - 1
@@ -42,7 +45,14 @@ class SOLUTION:
 
     def Create_Brain(self):
         print("CREATE BRAIN")
-        pyrosim.Start_NeuralNetwork("brain.nndf")
+
+        print("CREATE_BRAIN self.myID")
+        print(self.myID)
+        brainID = "brain" + str(self.myID) +".nndf"
+        print("BRAINID:")
+        print(brainID)
+
+        pyrosim.Start_NeuralNetwork(brainID)
         pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")
         pyrosim.Send_Sensor_Neuron(name = 1, linkName = "BackLeg")
         pyrosim.Send_Sensor_Neuron(name = 2, linkName = "FrontLeg")
