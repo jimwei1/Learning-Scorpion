@@ -13,8 +13,9 @@ class SOLUTION:
         self.weights = (self.weights * 2) - 1
 
     def Evaluate(self, directOrGUI):
-
-        os.system("python3 simulate.py " + directOrGUI + " &")
+        #print("XXXX")
+        #print("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " &")
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " &")
         
         self.Create_World()
         self.Create_Body()

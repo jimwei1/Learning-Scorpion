@@ -37,7 +37,7 @@ class SIMULATION: #class name
                 self.robot.Act(t)
                 
                 if self.directOrGUI == "GUI":
-                    time.sleep(1/10000)
+                    time.sleep(1/1000)
         
     def Get_Fitness(self):
         self.robot.Get_Fitness()

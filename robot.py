@@ -31,8 +31,8 @@ class ROBOT: #class name
         brainID = "brain" + solutionID + ".nndf"
 
         self.nn = NEURAL_NETWORK(brainID)
-        
-        os.system("rm " + brainID + ".nndf")
+
+        #os.system("rm " + brainID + ".nndf")
 
     def Prepare_To_Sense(self):
     
