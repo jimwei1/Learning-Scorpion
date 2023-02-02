@@ -23,20 +23,18 @@ class SOLUTION:
 
     def Wait_For_Simulation_To_End(self):
 
-        fitnessFileName = "fitness" + str(self._myID) + ".txt"
-
-        while not os.path.exists(fitnessFileName):
+        while not os.path.exists("fitness" + str(self._myID) + ".txt"):
             time.sleep(0.01)
 
-        print("SOLUTION FITNESSFILENAME")
-        print(fitnessFileName)
+        fitnessFile = open("fitness" + str(self._myID) + ".txt", "r")
         
-        f = open(fitnessFileName, "r")
+        self.fitness = float(fitnessFile.read())
 
-        self.fitness = float(f.read())
-        f.close()
+        print("SOLUTION self.fitness")
+        print(self.fitness)
+        fitnessFile.close()
 
-        os.system("del " + fitnessFileName)
+        os.system("del " + "fitness" + str(self._myID) + ".txt")
 
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
