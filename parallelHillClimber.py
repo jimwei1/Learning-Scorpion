@@ -23,11 +23,11 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i].Evaluate("GUI")
             #self.parent.Evaluate("GUI")
 
-            #for currentGeneration in range(0, c.numberofGenerations):
-                #self.Evolve_For_One_Generation()
+        for currentGeneration in range(0, c.numberofGenerations):
+                self.Evolve_For_One_Generation()
 
-            #if currentGeneration == c.numberofGenerations - 1:
-                #self.Show_Best()
+        if currentGeneration == c.numberofGenerations - 1:
+            self.Show_Best()
     
     def Evolve_For_One_Generation(self):
 
@@ -54,7 +54,7 @@ class PARALLEL_HILL_CLIMBER:
     def Print(self):
         print("/n")
         print("Parent Fitness: ")
-        print(self.parent.fitness)
+        print(self.parents[nextavailableID].fitness)
         print("Child Fitness: ")
         print(self.child.fitness)
 
