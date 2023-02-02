@@ -42,10 +42,6 @@ class PARALLEL_HILL_CLIMBER:
         for i in self.children:
             self.Mutate()
         self.Evaluate(self.children)
-        exit()
-        for i in self.children:
-            self.Mutate()
-        self.Evaluate(self.children)
         self.Print()
         self.Select()
         
@@ -64,7 +60,8 @@ class PARALLEL_HILL_CLIMBER:
         
 
     def Mutate(self):
-        self.Spawn.child.Mutate()
+        length = len(self.children)
+        self.children[length].Mutate()
 
     def Evaluate(self, solutions):
         #STEP 96 MIGHT BE WRONG. MIGHT NEED TO ALSO COPY THE OTHER FOR LOOP FROM EVOLVE()
@@ -94,8 +91,6 @@ class PARALLEL_HILL_CLIMBER:
         pass
 
     def Show_Best(self):
-        self.parent.Evaluate("GUI")
-        quit()
 
         for i in self.parents:
             if self.children[i].fitness > self.parents[i].fitness:
