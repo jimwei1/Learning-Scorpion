@@ -12,7 +12,7 @@ from sensor import SENSOR
 
 class SIMULATION: #class name
 
-    def __init__(self, directOrGUI): #constructor
+    def __init__(self, directOrGUI, solutionID): #constructor
 
         self.directOrGUI = directOrGUI
 
@@ -26,7 +26,7 @@ class SIMULATION: #class name
         p.setGravity(0,0,-9.8)
 
         self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = ROBOT(solutionID)
 
 
     def Run(self):
