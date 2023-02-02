@@ -31,10 +31,10 @@ class PARALLEL_HILL_CLIMBER:
                 self.Evolve_For_One_Generation()
 
         for i in self.parents:
-            #self.parents[i].Wait_For_Simulation_To_End()
-            #print("YYYYYYY")
-            #print(self.parents[i].fitness)
-            pass
+            self.parents[i].Wait_For_Simulation_To_End()
+            print("YYYYYYY")
+            print(self.parents[i].fitness)
+            #pass
 
 
         if currentGeneration == c.numberofGenerations - 1:
@@ -50,7 +50,11 @@ class PARALLEL_HILL_CLIMBER:
         
     
     def Spawn(self):
-        self.child = copy.deepcopy(self.parent)
+        #self.child = copy.deepcopy(self.parent)
+        self.children = {}
+
+        for i in self.parents:
+            self.children[i] = copy.deepcopy(self.parents[i])
 
     def Mutate(self):
         self.child.Mutate()
