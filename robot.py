@@ -30,11 +30,11 @@ class ROBOT: #class name
 
         self.Prepare_To_Act()
 
-        brainID = "brain" + solutionID + ".nndf"
+        #brainID = "brain" + solutionID + ".nndf"
 
-        self.nn = NEURAL_NETWORK(brainID)
+        self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
 
-        os.system("rm " + brainID + ".nndf")
+        os.system("rm " + "brain" + solutionID + ".nndf")
 
     def Prepare_To_Sense(self):
     
