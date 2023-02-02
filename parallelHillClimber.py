@@ -1,10 +1,14 @@
 from solution import SOLUTION
 import constants as c
 import copy as copy
+import os as os
 
 class PARALLEL_HILL_CLIMBER:
 
     def __init__(self) -> None: #constructor
+
+        os.system("rm brain*.nndf")
+        os.system("rm fitness*.txt")
 
         self.nextAvailableID = 0
 
@@ -23,17 +27,18 @@ class PARALLEL_HILL_CLIMBER:
             self.parents[i].Start_Simulation("DIRECT")
             #self.parent.Evaluate("GUI")
 
-        #for currentGeneration in range(0, c.numberofGenerations):
-                #self.Evolve_For_One_Generation()
+        for currentGeneration in range(0, c.numberofGenerations):
+                self.Evolve_For_One_Generation()
 
         for i in self.parents:
-            self.parents[i].Wait_For_Simulation_To_End()
-            print("YYYYYYY")
-            print(self.parents[i].fitness)
+            #self.parents[i].Wait_For_Simulation_To_End()
+            #print("YYYYYYY")
+            #print(self.parents[i].fitness)
+            pass
 
 
-        #if currentGeneration == c.numberofGenerations - 1:
-            #self.Show_Best()
+        if currentGeneration == c.numberofGenerations - 1:
+            self.Show_Best()
     
     def Evolve_For_One_Generation(self):
 
