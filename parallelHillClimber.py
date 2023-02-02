@@ -52,11 +52,13 @@ class PARALLEL_HILL_CLIMBER:
             self.parent = self.child
 
     def Print(self):
-        print("/n")
-        print("Parent Fitness: ")
-        print(self.parents[nextavailableID].fitness)
-        print("Child Fitness: ")
-        print(self.child.fitness)
+        #printID = self.nextAvailableID
+        #print("/n")
+        #print("Parent Fitness: ")
+        #print(self.parents[printID].fitness)
+        #print("Child Fitness: ")
+        #print(self.child.fitness)
+        pass
 
     def Show_Best(self):
         self.parent.Evaluate("GUI")

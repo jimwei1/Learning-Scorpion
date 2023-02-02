@@ -16,6 +16,8 @@ class ROBOT: #class name
 
     def __init__(self, solutionID): #constructor
 
+        self.solutionID = solutionID
+
         self.robotID = p.loadURDF("body.urdf")
 
         self.motors = {}
@@ -66,16 +68,16 @@ class ROBOT: #class name
         self.nn.Update()
         #self.nn.Print()
 
-    def Get_Fitness(self, solutionID):
+    def Get_Fitness(self):
         stateofLinkZero = p.getLinkState(self.robotID, 0)
         positionOfLinkZero = stateofLinkZero[0]
         xCoordinateofLinkZero = positionOfLinkZero[0]
 
-        fitnessID = "fitness" + str(solutionID) + ".txt"
-        print("Fitness ID:")
-        print(fitnessID)
-        f = open(fitnessID, "w")
+        print("GET_FITNESS:")
+        print("tmp" + self.solutionID + ".txt", "w")
+        f = open("tmp" + self.solutionID + ".txt", "w")
         f.write(str(xCoordinateofLinkZero))
+        os.rename("tmp" + str(self.solutionID) + ".txt", "fitness" + str(self.solutionID) + ".txt")
         f.close()
         
 

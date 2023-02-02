@@ -3,6 +3,7 @@ import pyrosim.pyrosim as pyrosim
 from robot import ROBOT
 import random as random
 import os as os
+import time as time
 
 class SOLUTION:
 
@@ -13,13 +14,22 @@ class SOLUTION:
         self.weights = (self.weights * 2) - 1
 
     def Evaluate(self, directOrGUI):
-        os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " &")
         
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
 
-        f = open("fitness.txt", "r")
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " &")
+
+        fitnessFileName = "fitness" + str(self._myID) + ".txt"
+
+        while not os.path.exists(fitnessFileName):
+            time.sleep(0.01)
+
+        print("SOLUTION FITNESSFILENAME")
+        print(fitnessFileName)
+        
+        f = open("fitnessFileName", "r")
         self.fitness = float(f.read())
         f.close()
 
