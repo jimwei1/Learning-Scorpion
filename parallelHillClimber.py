@@ -11,17 +11,16 @@ class PARALLEL_HILL_CLIMBER:
         self.parent = SOLUTION(self.nextAvailableID)
         self.parents = {}
 
-        for parent in range(0, c.populationSize):
+        for parent in range(c.populationSize):
             
             self.parents[parent] = SOLUTION(self.nextAvailableID)
             self.nextAvailableID += 1
-
-
+        
+        
     def Evolve(self):
 
-        for parent in self.parents:
-
-            self.parent.Evaluate("DIRECT")
+        for i in self.parents:
+            self.parents[i].Evaluate("DIRECT")
             #self.parent.Evaluate("GUI")
 
             #for currentGeneration in range(0, c.numberofGenerations):

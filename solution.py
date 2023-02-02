@@ -8,11 +8,7 @@ class SOLUTION:
 
     def __init__(self, nextAvailableID): #constructor
         
-        self.myID = nextAvailableID
-
-        print("MY ID:")
-        print(self.myID)
-        
+        self._myID = nextAvailableID
         self.weights = numpy.random.rand(3, 2)
         self.weights = (self.weights * 2) - 1
 
@@ -29,12 +25,10 @@ class SOLUTION:
         f.close()
 
     def Create_World(self):
-        print("CREATE WORLD")
         pyrosim.Start_SDF("world.sdf")
         pyrosim.End()
 
     def Create_Body(self):
-        print("CREATE BODY")
         pyrosim.Start_URDF("body.urdf")
         pyrosim.Send_Cube(name="Torso", pos=[1.5,0,1.5] , size=[1,1,1])
         pyrosim.Send_Joint( name = "Torso_BackLeg" , parent= "Torso" , child = "BackLeg" , type = "revolute", position = [1,0,1])
@@ -44,12 +38,9 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Brain(self):
-        print("CREATE BRAIN")
 
-        print("CREATE_BRAIN self.myID")
-        print(self.myID)
-        brainID = "brain" + str(self.myID) +".nndf"
-        print("BRAINID:")
+        brainID = "brain" + str(self._myID) +".nndf"
+        print("CREATING BRAIN:")
         print(brainID)
 
         pyrosim.Start_NeuralNetwork(brainID)
@@ -74,7 +65,6 @@ class SOLUTION:
         pyrosim.End()
 
     def Mutate(self):
-        print("MUTATING")
         randomRow = random.randint(0 , 2)
         randomColumn = random.randint(0, 1)
 
