@@ -22,8 +22,8 @@ class SOLUTION:
 
 
     def Wait_For_Simulation_To_End(self):
-        #while not os.path.exists("fitness" + str(self._myID) + ".txt"):
-            #time.sleep(0.01)
+        while not os.path.exists("fitness" + str(self._myID) + ".txt"):
+            time.sleep(0.01)
         fitnessFile = open("fitness" + str(self._myID) + ".txt", "r")
         self.fitness = float(fitnessFile.read())
         print("SOLUTION self.fitness")

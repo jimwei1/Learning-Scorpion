@@ -24,8 +24,8 @@ class PARALLEL_HILL_CLIMBER:
         
     def Evolve(self):
 
-        for i in self.parents:
-            self.parents[i].Start_Simulation("DIRECT")
+        self.Evaluate(self.parents)
+            
 
         for currentGeneration in range(c.numberofGenerations):
             self.Evolve_For_One_Generation()
@@ -38,9 +38,7 @@ class PARALLEL_HILL_CLIMBER:
     def Evolve_For_One_Generation(self):
 
         self.Spawn()
-        for i in self.children:
-            self.childID = i
-            self.Mutate()
+        self.Mutate()
         self.Evaluate(self.children)
         self.Print()
         self.Select()
@@ -53,16 +51,19 @@ class PARALLEL_HILL_CLIMBER:
             self.children[i] = copy.deepcopy(self.parents[i])
             self.child = self.children[i]
 
-            self.children[i].setID(self.nextAvailableID)
+            self.children[i].Set_ID(self.nextAvailableID)
             self.nextAvailableID += 1 
         
 
     def Mutate(self):
-        self.children[self.childID].Mutate()
+        for i in self.children:
+            self.children[i].Mutate()
 
     def Evaluate(self, solutions):
-        #STEP 96 MIGHT BE WRONG. MIGHT NEED TO ALSO COPY THE OTHER FOR LOOP FROM EVOLVE()
    
+        for i in solutions:
+            solutions[i].Start_Simulation("DIRECT")
+        
         for i in solutions:
             solutions[i].Wait_For_Simulation_To_End()
             print("YYYYYYY")
@@ -93,12 +94,18 @@ class PARALLEL_HILL_CLIMBER:
     def Print(self):
         for i in self.parents:
             print("")
-            print("PARENT FITNESS: " + self.parents[i].fitness + ", CHILD FITNESS:" + self.children[i].fitness)
+            print("PARENT FITNESS: " + str(self.parents[i].fitness) + ", CHILD FITNESS:" + str(self.children[i].fitness))
             print("")
 
     def Show_Best(self):
-        length = len(self.parents)
-        self.parents[length].Evaluate("GUI")
+        bestfitness = 10000000
+        bestparent2 = None
+        for i in self.parents:
+            if self.parents[i].fitness < bestfitness:
+                bestparent2 = self.parents[i]
+                bestfitness = self.parents[i].fitness
+            
+        bestparent2.Start_Simulation("GUI")
 
 
 

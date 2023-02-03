@@ -76,8 +76,8 @@ class ROBOT: #class name
         print("GET_FITNESS:")
         print("tmp" + self.solutionID + ".txt", "w")
         f = open("tmp" + self.solutionID + ".txt", "w")
+        os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
         f.write(str(xCoordinateofLinkZero))
-        os.rename("tmp" + str(self.solutionID) + ".txt", "fitness" + str(self.solutionID) + ".txt")
         f.close()
         
 
