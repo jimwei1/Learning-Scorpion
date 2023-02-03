@@ -69,9 +69,13 @@ class ROBOT: #class name
         #self.nn.Print()
 
     def Get_Fitness(self):
-        stateofLinkZero = p.getLinkState(self.robotID, 0)
-        positionOfLinkZero = stateofLinkZero[0]
-        xCoordinateofLinkZero = positionOfLinkZero[0]
+        #stateofLinkZero = p.getLinkState(self.robotID, 0)
+        #positionOfLinkZero = stateofLinkZero[0]
+        #xCoordinateofLinkZero = positionOfLinkZero[0]
+
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotID)
+        basePosition = basePositionAndOrientation[0]
+        xCoordinateofLinkZero = basePosition[0]
 
         print("GET_FITNESS:")
         print("tmp" + self.solutionID + ".txt", "w")
