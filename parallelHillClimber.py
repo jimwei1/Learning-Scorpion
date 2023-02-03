@@ -2,6 +2,7 @@ from solution import SOLUTION
 import constants as c
 import copy as copy
 import os as os
+import time as time
 
 class PARALLEL_HILL_CLIMBER:
 
@@ -25,21 +26,20 @@ class PARALLEL_HILL_CLIMBER:
 
         for i in self.parents:
             self.parents[i].Start_Simulation("DIRECT")
-            #self.parent.Evaluate("GUI")
 
-        for currentGeneration in range(0, c.numberofGenerations):
+        for currentGeneration in range(c.numberofGenerations):
             self.Evolve_For_One_Generation()
 
-        if currentGeneration == c.numberofGenerations - 1:
-            self.Show_Best()
+            if currentGeneration == c.numberofGenerations - 1:
+                self.Show_Best()
 
         SOLUTION.Start_Simulation("GUI")
     
     def Evolve_For_One_Generation(self):
 
         self.Spawn()
-
         for i in self.children:
+            self.childID = i
             self.Mutate()
         self.Evaluate(self.children)
         self.Print()
@@ -55,13 +55,13 @@ class PARALLEL_HILL_CLIMBER:
             self.child = self.children[i]
 
             #IF NO WORK, THIS (STEP 88) MIGHT HAVE TO CALL SOLUTION!
-            self.children[i]._myID = self.nextAvailableID
-            self.nextAvailableID += 1
+            #self.children[i]._myID = self.nextAvailableID
+            #self.nextAvailableID += 1 
+            self.children[i]._myID = self.parents[i]._myID
         
 
     def Mutate(self):
-        length = len(self.children)
-        self.children[length].Mutate()
+        self.children[self.childID].Mutate()
 
     def Evaluate(self, solutions):
         #STEP 96 MIGHT BE WRONG. MIGHT NEED TO ALSO COPY THE OTHER FOR LOOP FROM EVOLVE()
@@ -69,17 +69,14 @@ class PARALLEL_HILL_CLIMBER:
         for i in solutions:
             solutions[i].Wait_For_Simulation_To_End()
             print("YYYYYYY")
-            print(self.parents[i].fitness)
+            print(solutions[i].fitness)
 
 
     def Select(self):
-        intID = int(self.nextAvailableID) - 1
-        print("INTID:")
-        print(intID)
-        print(self.parents[intID].fitness)
-        print(self.child.fitness)
-        if self.child.fitness >= self.parents[intID].fitness:
-            self.parent = self.child
+
+        for i in self.parents:
+            if self.children[i].fitness > self.parents[i].fitness:
+                self.parents[i] = self.children[i]
 
     def Print(self):
         printID = self.nextAvailableID
