@@ -59,7 +59,7 @@ class ROBOT: #class name
                 
                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
 
-                desiredAngle = self.nn.Get_Value_Of(neuronName)
+                desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange
 
                 self.motors[jointName].Set_Value(self.robotID, desiredAngle)
                 
@@ -76,6 +76,7 @@ class ROBOT: #class name
         print("GET_FITNESS:")
         print("tmp" + self.solutionID + ".txt", "w")
         f = open("tmp" + self.solutionID + ".txt", "w")
+
         os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
         f.write(str(xCoordinateofLinkZero))
         f.close()
