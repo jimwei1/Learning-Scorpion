@@ -44,20 +44,17 @@ class PARALLEL_HILL_CLIMBER:
         self.Evaluate(self.children)
         self.Print()
         self.Select()
-        
     
     def Spawn(self):
-        #self.child = copy.deepcopy(self.parent)
+
         self.children = {}
 
         for i in self.parents:
             self.children[i] = copy.deepcopy(self.parents[i])
             self.child = self.children[i]
 
-            #IF NO WORK, THIS (STEP 88) MIGHT HAVE TO CALL SOLUTION!
-            #self.children[i]._myID = self.nextAvailableID
-            #self.nextAvailableID += 1 
-            self.children[i]._myID = self.parents[i]._myID
+            self.children[i].setID(self.nextAvailableID)
+            self.nextAvailableID += 1 
         
 
     def Mutate(self):
@@ -102,5 +99,7 @@ class PARALLEL_HILL_CLIMBER:
     def Show_Best(self):
         length = len(self.parents)
         self.parents[length].Evaluate("GUI")
+
+
 
 

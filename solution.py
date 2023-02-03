@@ -78,5 +78,8 @@ class SOLUTION:
 
         self.weights[randomRow][randomColumn] = (random.random() * 2) - 1
 
+    def Set_ID(self, nextAvailableID):
+        self._myID = nextAvailableID
+
 
 
