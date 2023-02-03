@@ -11,7 +11,7 @@ class SOLUTION:
     def __init__(self, nextAvailableID): #constructor
         
         self._myID = nextAvailableID
-        self.weights = numpy.random.rand(3, 2)
+        self.weights = numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)
         self.weights = (self.weights * 2) - 1
 
 
@@ -94,20 +94,20 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 5 , jointName = "BackLeg_BackLowerLeg")
         pyrosim.Send_Motor_Neuron(name = 6 , jointName = "LeftLeg_LeftLowerLeg")
         pyrosim.Send_Motor_Neuron(name = 7 , jointName = "RightLeg_RightLowerLeg")
-        #pyrosim.Send_Motor_Neuron(name = 8 , jointName = "Torso_FrontLeg")
-        #pyrosim.Send_Motor_Neuron(name = 9 , jointName = "Torso_BackLeg")
-        #pyrosim.Send_Motor_Neuron(name = 10 , jointName = "Torso_LeftLeg")
-        #pyrosim.Send_Motor_Neuron(name = 11 , jointName = "Torso_RightLeg")
+        pyrosim.Send_Motor_Neuron(name = 8 , jointName = "Torso_FrontLeg")
+        pyrosim.Send_Motor_Neuron(name = 9 , jointName = "Torso_BackLeg")
+        pyrosim.Send_Motor_Neuron(name = 10 , jointName = "Torso_LeftLeg")
+        pyrosim.Send_Motor_Neuron(name = 11 , jointName = "Torso_RightLeg")
         
-        for currentRow in range(c.numSensorNeurons):
-            for currentColumn in range(c.numMotorNeurons):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = (currentColumn + c.numSensorNeurons), weight = self.weights[currentRow][currentColumn])
+        for currentRow in range(c.numSensorNeurons - 1):
+            for currentColumn in range(c.numMotorNeurons - 1):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = (currentColumn + c.numSensorNeurons - 1), weight = self.weights[currentRow][currentColumn])
         pyrosim.End()
 
 
     def Mutate(self):
-        randomRow = random.randint(0, c.numSensorNeurons)
-        randomColumn = random.randint(0, c.numMotorNeurons)
+        randomRow = random.randint(0, c.numSensorNeurons - 1)
+        randomColumn = random.randint(0, c.numMotorNeurons - 1)
 
         self.weights[randomRow][randomColumn] = (random.random() * 2) - 1
 
