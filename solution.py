@@ -114,5 +114,3 @@ class SOLUTION:
     def Set_ID(self, nextAvailableID):
         self._myID = nextAvailableID
 
-
-
