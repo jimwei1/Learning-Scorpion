@@ -77,6 +77,13 @@ class SOLUTION:
 
         pyrosim.End()
 
+    def Create_Ball(self):
+        pyrosim.Start_URDF("ball.urdf")
+
+        pyrosim.Send_Cube(name="tempBall", pos=[0, -1.5, 1] , size=[1,1,1])
+
+        pyrosim.End()
+
 
     def Create_Brain(self):
 
