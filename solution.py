@@ -46,31 +46,33 @@ class SOLUTION:
 
         LinkSizeConstant = [0.5, 0.5, 0.5]
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.5] , size=[0.5,0.5,0.5])
+        LinkPositionConstant = [0, 0.5, 0]
 
-        pyrosim.Send_Joint( name = "Torso_Link1" , parent= "Torso" , child = "Link1" , type = "revolute", position = [0, 0.5, 0.5], jointAxis = jointAxisConstant)
+        pyrosim.Send_Sphere(name="Torso", pos=[0, 0, 0.5] , size=[0.5,0.5,0.5])
 
-        pyrosim.Send_Cube(name="Link1", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Joint( name = "Torso_Link1" , parent= "Torso" , child = "Link1" , type = "revolute", position = [0, 0, 0.25], jointAxis = jointAxisConstant)
+
+        pyrosim.Send_Sphere(name="Link1", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.Send_Joint( name = "Link1_Link2" , parent= "Link1" , child = "Link2" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link2", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link2", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.Send_Joint( name = "Link2_Link3" , parent= "Link2" , child = "Link3" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link3", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link3", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.Send_Joint( name = "Link3_Link4" , parent= "Link3" , child = "Link4" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link4", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link4", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.Send_Joint( name = "Link4_Link5" , parent= "Link4" , child = "Link5" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link5", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link5", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.Send_Joint( name = "Link5_Link6" , parent= "Link5" , child = "Link6" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link6", pos=[0, 1, 0] , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant)
 
         pyrosim.End()
 
@@ -106,7 +108,7 @@ class SOLUTION:
     
     def Create_Ball(self):
         pyrosim.Start_URDF("ball.urdf")
-        pyrosim.Send_Cube(name="tempBall", pos=[0, -2, 1] , size=[1,1,1])
+        pyrosim.Send_Cube(name="tempBall", pos=[0, -0.5, 0.5] , size=[0.5,0.5,0.5])
         pyrosim.End()
 
 
