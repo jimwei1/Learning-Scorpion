@@ -44,7 +44,8 @@ class SOLUTION:
 
         jointAxisConstant = "1 1 0"
 
-        LinkSizeConstant = [0.5, 0.5, 0.5]
+        LinkSizeConstant1 = [0.5, 0.5, 0.5]
+        LinkSizeConstant2 = [0.35, 0.35, 0.35]
 
         LinkPositionConstant = [0, 0.5, 0]
 
@@ -52,27 +53,35 @@ class SOLUTION:
 
         pyrosim.Send_Joint( name = "Torso_Link1" , parent= "Torso" , child = "Link1" , type = "revolute", position = [0, 0, 0.25], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link1", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link1", pos=LinkPositionConstant , size=LinkSizeConstant1)
 
         pyrosim.Send_Joint( name = "Link1_Link2" , parent= "Link1" , child = "Link2" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link2", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link2", pos=LinkPositionConstant , size=LinkSizeConstant2)
 
         pyrosim.Send_Joint( name = "Link2_Link3" , parent= "Link2" , child = "Link3" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link3", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link3", pos=LinkPositionConstant , size=LinkSizeConstant1)
 
         pyrosim.Send_Joint( name = "Link3_Link4" , parent= "Link3" , child = "Link4" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link4", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link4", pos=LinkPositionConstant , size=LinkSizeConstant2)
 
         pyrosim.Send_Joint( name = "Link4_Link5" , parent= "Link4" , child = "Link5" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link5", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link5", pos=LinkPositionConstant , size=LinkSizeConstant1)
 
         pyrosim.Send_Joint( name = "Link5_Link6" , parent= "Link5" , child = "Link6" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Sphere(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant)
+        pyrosim.Send_Sphere(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant2)
+
+        pyrosim.Send_Joint( name = "Link6_Link7" , parent= "Link6" , child = "Link7" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+
+        pyrosim.Send_Sphere(name="Link7", pos=LinkPositionConstant , size=LinkSizeConstant1)  
+
+        pyrosim.Send_Joint( name = "Link7_Link8" , parent= "Link7" , child = "Link8" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+
+        pyrosim.Send_Sphere(name="Link8", pos=LinkPositionConstant , size=LinkSizeConstant2)     
 
         pyrosim.End()
 
@@ -84,19 +93,26 @@ class SOLUTION:
         print(brainID)
 
         pyrosim.Start_NeuralNetwork(brainID)
-        pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")
-        pyrosim.Send_Sensor_Neuron(name = 1, linkName = "Link1")
-        pyrosim.Send_Sensor_Neuron(name = 2, linkName = "Link2")
-        pyrosim.Send_Sensor_Neuron(name = 3, linkName = "Link3")
-        pyrosim.Send_Sensor_Neuron(name = 4, linkName = "Link4")
-        pyrosim.Send_Sensor_Neuron(name = 5, linkName = "Link5")
+        #pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Torso")
+        pyrosim.Send_Sensor_Neuron(name = 0, linkName = "Link1")
+        pyrosim.Send_Sensor_Neuron(name = 1, linkName = "Link2")
+        pyrosim.Send_Sensor_Neuron(name = 2, linkName = "Link3")
+        pyrosim.Send_Sensor_Neuron(name = 3, linkName = "Link4")
+        pyrosim.Send_Sensor_Neuron(name = 4, linkName = "Link5")
+        pyrosim.Send_Sensor_Neuron(name = 5, linkName = "Link6")
+        pyrosim.Send_Sensor_Neuron(name = 6, linkName = "Link7")
+        pyrosim.Send_Sensor_Neuron(name = 7, linkName = "Link8")
 
 
-        pyrosim.Send_Motor_Neuron(name = 6 , jointName = "Torso_Link1")
-        pyrosim.Send_Motor_Neuron(name = 7 , jointName = "Link1_Link2")
-        pyrosim.Send_Motor_Neuron(name = 8 , jointName = "Link2_Link3")
-        pyrosim.Send_Motor_Neuron(name = 9 , jointName = "Link3_Link4")
-        pyrosim.Send_Motor_Neuron(name = 10 , jointName = "Link4_Link5")
+        pyrosim.Send_Motor_Neuron(name = 8 , jointName = "Torso_Link1")
+        pyrosim.Send_Motor_Neuron(name = 9 , jointName = "Link1_Link2")
+        pyrosim.Send_Motor_Neuron(name = 10 , jointName = "Link2_Link3")
+        pyrosim.Send_Motor_Neuron(name = 11 , jointName = "Link3_Link4")
+        pyrosim.Send_Motor_Neuron(name = 12 , jointName = "Link4_Link5")
+        pyrosim.Send_Motor_Neuron(name = 13 , jointName = "Link5_Link6")
+        pyrosim.Send_Motor_Neuron(name = 14 , jointName = "Link6_Link7")
+        pyrosim.Send_Motor_Neuron(name = 15 , jointName = "Link7_Link8")
+
         #pyrosim.Send_Motor_Neuron(name = 9 , jointName = "Torso_BackLeg")
         #pyrosim.Send_Motor_Neuron(name = 10 , jointName = "Torso_LeftLeg")
         #pyrosim.Send_Motor_Neuron(name = 11 , jointName = "Torso_RightLeg")

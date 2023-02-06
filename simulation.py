@@ -23,7 +23,7 @@ class SIMULATION: #class name
         
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-        p.setGravity(0,0,-5.0)
+        p.setGravity(0,0,-6.5)
         #p.setGravity(0,0,-9.8)
 
         self.world = WORLD()
