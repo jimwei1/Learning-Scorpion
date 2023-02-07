@@ -16,9 +16,9 @@ amplitude_Back = numpy.pi / 4
 frequency_Back = 1
 phaseOffset_Back = numpy.pi / 4
 
-numberofGenerations = 3
+numberofGenerations = 1
 
-populationSize = 3
+populationSize = 1
 
 numSensorNeurons = 8
 numMotorNeurons = 8

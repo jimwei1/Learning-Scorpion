@@ -21,16 +21,16 @@ main semaphore destroyed
 Traceback (most recent call last):
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulate.py", line 7, in <module>
     simulation.Run()
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 36, in Run
-    self.robot.Sense(t)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/robot.py", line 49, in Sense
-    self.sensors[i].Get_Value(t)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/sensor.py", line 17, in Get_Value
-    self.SensorValues[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/pyrosim/pyrosim.py", line 51, in Get_Touch_Sensor_Value_For_Link
-    pts = p.getContactPoints()
+  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 38, in Run
+    self.robot.Act(t)
+  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/robot.py", line 66, in Act
+    self.motors[jointName].Set_Value(self.robotID, desiredAngle)
+  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/motor.py", line 28, in Set_Value
+    pyrosim.Set_Motor_For_Joint(bodyIndex = robotID, jointName = self.jointName, controlMode = p.POSITION_CONTROL, targetPosition = desiredAngle, maxForce = 50)
+  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/pyrosim/pyrosim.py", line 158, in Set_Motor_For_Joint
+    p.setJointMotorControl2(
 pybullet.error: Not connected to physics server.
-Exception ignored in: <function SIMULATION.__del__ at 0x1067ad900>
+Exception ignored in: <function SIMULATION.__del__ at 0x106cd5900>
 Traceback (most recent call last):
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 47, in __del__
 pybullet.error: Not connected to physics server.
