@@ -64,7 +64,7 @@ class SOLUTION:
 
         LinkPositionConstant = [0, 0.5, 0]
 
-        self.randomLink = [0] * 4
+        self.randomLink = dict.fromkeys(range(4), None)
 
         for i in self.randomLink:
             self.randomLink[i] = "Link" + str(random.randint(1, 7))
@@ -73,13 +73,15 @@ class SOLUTION:
                 if self.randomLink[i] == self.randomLink[a]:
                     self.randomLink[i] = "Link" + str(random.randint(1, 7))
 
-        color = [None] * 8
+
+        color = dict.fromkeys(range(8), None)
+
 
         for i in color:
             color[i] = '    <color rgba="0 1.0 1.0 1.0"/>'
 
         for i in range(len(self.randomLink)):
-            linkNum = self.randomLink[i][4]
+            linkNum = str(self.randomLink[i])[4]
 
             color[linkNum] = '    <color rgba="0 1.0 0 0"/>'
             
@@ -110,7 +112,7 @@ class SOLUTION:
 
         pyrosim.Send_Cube(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant6, colorID = color[5])
 
-        pyrosim.Send_Cube( name = "Link6_Link7" , parent= "Link6" , child = "Link7" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+        pyrosim.Send_Joint( name = "Link6_Link7" , parent= "Link6" , child = "Link7" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
         pyrosim.Send_Cube(name="Link7", pos=LinkPositionConstant , size=LinkSizeConstant7, colorID = color[6])  
 
