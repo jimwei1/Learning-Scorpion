@@ -32,8 +32,6 @@ class ROBOT: #class name
 
         self.Prepare_To_Act()
 
-        #brainID = "brain" + solutionID + ".nndf"
-
         self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
 
         os.system("rm " + "brain" + solutionID + ".nndf")

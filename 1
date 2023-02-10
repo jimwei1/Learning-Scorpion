@@ -15,14 +15,14 @@ Traceback (most recent call last):
     simulation.Run()
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 36, in Run
     self.robot.Sense(t)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/robot.py", line 49, in Sense
+  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/robot.py", line 47, in Sense
     self.sensors[i].Get_Value(t)
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/sensor.py", line 17, in Get_Value
     self.SensorValues[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/pyrosim/pyrosim.py", line 53, in Get_Touch_Sensor_Value_For_Link
     for pt in pts:
 TypeError: 'NoneType' object is not iterable
-Exception ignored in: <function SIMULATION.__del__ at 0x1073b9870>
+Exception ignored in: <function SIMULATION.__del__ at 0x1031c5d80>
 Traceback (most recent call last):
   File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 47, in __del__
 pybullet.error: Not connected to physics server.
