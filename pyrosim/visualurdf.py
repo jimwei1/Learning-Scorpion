@@ -4,17 +4,15 @@ from pyrosim.commonFunctions import Save_Whitespace
 
 class VISUAL_URDF: 
 
-    def __init__(self,origin,geometry, colorID):
+    def __init__(self,origin,geometry, colorName, colorID):
 
         self.origin = origin
 
         self.geometry = geometry 
 
-        self.material = MATERIAL(colorID)
+        self.material = MATERIAL(colorName, colorID)
 
         self.depth = 2
-
-        self.colorID = colorID
 
     def Save(self,f):
 

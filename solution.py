@@ -67,58 +67,71 @@ class SOLUTION:
         self.randomLink = dict.fromkeys(range(4), None)
 
         for i in self.randomLink:
-            self.randomLink[i] = "Link" + str(random.randint(1, 7))
+            while True:
+                self.randomLink[i] = "Link" + str(random.randint(1, 7))
+                unique = True
 
-            for a in range(len(self.randomLink)):
-                if self.randomLink[i] == self.randomLink[a]:
-                    self.randomLink[i] = "Link" + str(random.randint(1, 7))
+                for a in range(i):
+                    if self.randomLink[i] == self.randomLink[a]:
+                        unique = False
 
+                if unique == True:
+                    break
+                    
+        colorID = dict.fromkeys(range(8), None)
 
-        color = dict.fromkeys(range(8), None)
-
-
-        for i in color:
-            color[i] = '    <color rgba="0 1.0 1.0 1.0"/>'
+        for i in colorID:
+            colorID[i] = '<color rgba="0 1.0 1.0 1.0"/>'
 
         for i in range(len(self.randomLink)):
             linkNum = str(self.randomLink[i])[4]
+            intlinkNum = int(linkNum)
 
-            color[linkNum] = '    <color rgba="0 1.0 0 0"/>'
+            colorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
+
+        colorName = dict.fromkeys(range(8), None)
+
+        for i in colorName:
+            if colorID[i] == '<color rgba="0 1.0 1.0 1.0"/>':
+                colorName[i] = '<material name="Cyan">'
+            
+            if colorID[i] == '<color rgba="0 1.0 0 1.0"/>':
+                colorName[i] = '<material name="Green">'
             
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.5] , size=[0.5,0.5,0.5], colorID = '    <color rgba="0 1.0 1.0 1.0"/>')
+        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.5] , size=[0.5,0.5,0.5], colorName = '<material name="Cyan">', colorID = '<color rgba="0 1.0 1.0 1.0"/>')
 
         pyrosim.Send_Joint( name = "Torso_Link1" , parent= "Torso" , child = "Link1" , type = "revolute", position = [0, 0, 0.25], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link1", pos=LinkPositionConstant , size=LinkSizeConstant1, colorID = color[0])
+        pyrosim.Send_Cube(name="Link1", pos=LinkPositionConstant , size=LinkSizeConstant1, colorName = colorName[0], colorID = colorID[0])
 
         pyrosim.Send_Joint( name = "Link1_Link2" , parent= "Link1" , child = "Link2" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link2", pos=LinkPositionConstant , size=LinkSizeConstant2, colorID = color[1])
+        pyrosim.Send_Cube(name="Link2", pos=LinkPositionConstant , size=LinkSizeConstant2, colorName = colorName[1], colorID = colorID[1])
 
         pyrosim.Send_Joint( name = "Link2_Link3" , parent= "Link2" , child = "Link3" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link3", pos=LinkPositionConstant , size=LinkSizeConstant3, colorID = color[2])
+        pyrosim.Send_Cube(name="Link3", pos=LinkPositionConstant , size=LinkSizeConstant3, colorName = colorName[2], colorID = colorID[2])
 
         pyrosim.Send_Joint( name = "Link3_Link4" , parent= "Link3" , child = "Link4" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link4", pos=LinkPositionConstant , size=LinkSizeConstant4, colorID = color[3])
+        pyrosim.Send_Cube(name="Link4", pos=LinkPositionConstant , size=LinkSizeConstant4, colorName = colorName[3], colorID = colorID[3])
 
         pyrosim.Send_Joint( name = "Link4_Link5" , parent= "Link4" , child = "Link5" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link5", pos=LinkPositionConstant , size=LinkSizeConstant5, colorID = color[4])
+        pyrosim.Send_Cube(name="Link5", pos=LinkPositionConstant , size=LinkSizeConstant5, colorName = colorName[4], colorID = colorID[4])
 
         pyrosim.Send_Joint( name = "Link5_Link6" , parent= "Link5" , child = "Link6" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant6, colorID = color[5])
+        pyrosim.Send_Cube(name="Link6", pos=LinkPositionConstant , size=LinkSizeConstant6, colorName = colorName[5], colorID = colorID[5])
 
         pyrosim.Send_Joint( name = "Link6_Link7" , parent= "Link6" , child = "Link7" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link7", pos=LinkPositionConstant , size=LinkSizeConstant7, colorID = color[6])  
+        pyrosim.Send_Cube(name="Link7", pos=LinkPositionConstant , size=LinkSizeConstant7, colorName = colorName[6], colorID = colorID[6])  
 
         pyrosim.Send_Joint( name = "Link7_Link8" , parent= "Link7" , child = "Link8" , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
 
-        pyrosim.Send_Cube(name="Link8", pos=LinkPositionConstant , size=LinkSizeConstant8, colorID = color[7])     
+        pyrosim.Send_Cube(name="Link8", pos=LinkPositionConstant , size=LinkSizeConstant8, colorName = colorName[7], colorID = colorID[7])     
 
         pyrosim.End()
 

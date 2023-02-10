@@ -106,7 +106,7 @@ def Prepare_To_Simulate(bodyID):
 
     Prepare_Joint_Dictionary(bodyID)
 
-def Send_Link(name,pos,size,objectType, colorID):
+def Send_Link(name,pos,size,objectType, colorName, colorID):
 
     global availableLinkIndex
 
@@ -116,11 +116,11 @@ def Send_Link(name,pos,size,objectType, colorID):
 
         Start_Model(name,pos)
 
-        link = LINK_SDF(name,pos,size, objectType, colorID)
+        link = LINK_SDF(name,pos,size, objectType, colorName, colorID)
 
         links.append(link)
     else:
-        link = LINK_URDF(name,pos,size, colorID)
+        link = LINK_URDF(name,pos,size, colorName, colorID)
 
         links.append(link)
 
@@ -247,9 +247,9 @@ def Start_Model(modelName,pos):
 
     model.Save_Start_Tag(f)
 
-def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1], colorID = '    <color rgba="0 1.0 1.0 1.0"/>'):
+def Send_Cube(name="default",pos=[0,0,0],size=[1,1,1], colorName = '<material name="Cyan">', colorID = '    <color rgba="0 1.0 1.0 1.0"/>'):
 
-    Send_Link(name,pos,size,"box", colorID)
+    Send_Link(name,pos,size,"box", colorName, colorID)
 
 def Send_Sphere(name="default",pos=[0,0,0],size=[0.5]):
 
