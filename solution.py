@@ -79,6 +79,7 @@ class SOLUTION:
         #Randomly Selected Link Dictionary
         self.randomLink = dict.fromkeys(range(4), None)
 
+        #Makes sure each Random Link is unique
         for i in self.randomLink:
             while True:
                 self.randomLink[i] = "Link" + str(random.randint(1, 7))
