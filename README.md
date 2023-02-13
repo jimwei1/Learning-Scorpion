@@ -11,11 +11,11 @@ be motorized. Links with sensors are colored green, while links without sensors 
 
 ## Random Behavior:
 
-Links: Random number between 8 to 12
+**Links:** Random number between 8 to 12
 
-Size of Links: Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension.
+**Size of Links:** Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension.
 
-Placement of Sensors/Motors: 4 Sensors placed randomly within the chain. Each sensor is placed at a different link so there will always be 4 sensors and motors.
+**Placement of Sensors/Motors:** 4 Sensors placed randomly within the chain. Each sensor is placed at a different link so there will always be 4 sensors and motors.
 
 
 ## Video Example:
