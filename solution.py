@@ -114,8 +114,8 @@ class SOLUTION:
                 colorName[i] = '<material name="Green">'
             
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 0, 0.5] , size=[0.5,0.5,0.5])
-        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [0, 0, 0.25], jointAxis = jointAxisConstant)
+        pyrosim.Send_Cube(name="Torso", pos=[-3, -3, 0.5] , size=[0.5,0.5,0.5])
+        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [-3, -3, 0.25], jointAxis = jointAxisConstant)
         for i in range(self.numofLinks):
             
             pyrosim.Send_Cube(name=self.linkNames[i], pos=LinkPositionConstant , size=linkSizeConstants[i], colorName = colorName[i], colorID = colorID[i])
