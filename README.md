@@ -9,6 +9,10 @@ This chain has a random number (between 8 to 12) of randomly shaped links with r
 of 4 sensors and motors connected to these sensors. Links without sensors are still connected to each other, but won't
 be motorized. Links with sensors are colored green, while links without sensors are cyan.
 
+## Video Example:
+
+https://youtu.be/AWV2cExR79g 
+
 ## How to Run:
 
 Download repository, run search.py and it will generate one snake for viewing :). Must have python3 and pybullet installed.

@@ -76,14 +76,6 @@ class SOLUTION:
         #Constant Link Position
         LinkPositionConstant = [0, 0.50, 0]
 
-        #Link Position Dictionary
-        self.LinkPositions = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in self.LinkPositions:
-            #yPos = int(linkSizeConstants[i + 1][1]) // 2
-            yPos = 0.25
-            self.LinkPositions[i] = [0, yPos, 0]
-
         #Randomly Selected Link Dictionary
         self.randomLink = dict.fromkeys(range(4), None)
 
@@ -122,11 +114,11 @@ class SOLUTION:
                 colorName[i] = '<material name="Green">'
             
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 2, 0.5] , size=[0.5,0.5,0.5])
-        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [0, 2.25, 0.5], jointAxis = jointAxisConstant)
+        pyrosim.Send_Cube(name="Torso", pos=[-3, -3, 0.5] , size=[0.5,0.5,0.5])
+        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [-3, -3, 0.25], jointAxis = jointAxisConstant)
         for i in range(self.numofLinks):
             
-            pyrosim.Send_Cube(name=self.linkNames[i], pos=self.LinkPositions[i] , size=linkSizeConstants[i], colorName = colorName[i], colorID = colorID[i])
+            pyrosim.Send_Cube(name=self.linkNames[i], pos=LinkPositionConstant , size=linkSizeConstants[i], colorName = colorName[i], colorID = colorID[i])
             print("SENDING CUBE:")
             print("name: " + str(self.linkNames[i]) + " size: "+ str(linkSizeConstants[i]))
 
