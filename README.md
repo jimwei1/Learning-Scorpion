@@ -9,6 +9,15 @@ This chain has a random number (between 8 to 12) of randomly shaped links with r
 of 4 sensors and motors connected to these sensors. Links without sensors are still connected to each other, but won't
 be motorized. Links with sensors are colored green, while links without sensors are cyan.
 
+## Random Behavior:
+
+**Links:** Random number between 8 to 12
+
+**Size of Links:** Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension.
+
+**Placement of Sensors/Motors:** 4 Sensors placed randomly within the chain. Each sensor is placed at a different link so there will always be 4 sensors and motors.
+
+
 ## Video Example:
 
 https://youtu.be/AWV2cExR79g 
