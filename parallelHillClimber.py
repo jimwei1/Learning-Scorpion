@@ -34,6 +34,7 @@ class PARALLEL_HILL_CLIMBER:
                 self.Show_Best()
 
         SOLUTION.Start_Simulation("GUI")
+        
     
     def Evolve_For_One_Generation(self):
 
