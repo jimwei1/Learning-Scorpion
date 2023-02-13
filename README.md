@@ -7,7 +7,7 @@ This is a submission for Assignemnt 6 for CS 396: Artificial Life at Northwester
 In Assignment 6, I created a program that generates a kinematic chain (a chain of links connected by motorized joints).
 This chain has a random number (between 8 to 12) of randomly shaped links with random sensor placement along the chain
 of 4 sensors and motors connected to these sensors. Links without sensors are still connected to each other, but won't
-be motorized. Links with sensors are colored green, while links without sensors are cyan.
+be motorized. Links with sensors are colored green, while links without sensors are cyan (blue).
 
 ## Random Behavior:
 
@@ -15,7 +15,7 @@ be motorized. Links with sensors are colored green, while links without sensors 
 
 **Size of Links:** Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension.
 
-**Placement of Sensors/Motors:** 4 Sensors placed randomly within the chain. Each sensor is placed at a different link so there will always be 4 sensors and motors.
+**Placement of Sensors/Motors:** 4 Sensors placed randomly within the chain. Each sensor is placed at a different link so there will always be 4 sensors and motors. Sensor links are colored Green, while non-sensor links are colored Blue (Cyan).
 
 
 ## Video Example:
