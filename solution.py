@@ -12,9 +12,12 @@ class SOLUTION:
     def __init__(self, nextAvailableID): #constructor
         
         self._myID = nextAvailableID
-        self.weights = numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)
-        self.weights = (self.weights * 2) - 1
+        #self.weights = [numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)]
+        self.weights = []
+        #self.weights = (self.weights * 2) - 1
 
+        self.Links = []
+        self.Joints = []
 
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
@@ -51,6 +54,8 @@ class SOLUTION:
         pyrosim.Start_URDF("body.urdf")
 
         jointAxisConstant = "1 1 0"
+
+        jointAxisConstant2 = "0 1 1"
 
         #Random number of links
         self.numofLinks = random.randint(8, 12)
@@ -287,15 +292,17 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 14 , jointName = rightRandomJoint3)
         pyrosim.Send_Motor_Neuron(name = 15 , jointName = rightRandomJoint4)
 
-    
-        for currentRow in range(c.numSensorNeurons - 1):
-            for currentColumn in range(c.numMotorNeurons - 1):
+
+        #Row is # of sensors, Col is # of Joints!
+        for currentRow in range(self.numofLinks):
+            for currentColumn in range(self.numofLinks - 1):
                 pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = (currentColumn + c.numSensorNeurons - 1), weight = self.weights[currentRow][currentColumn])
 
         pyrosim.End()
 
 
     def Mutate(self):
+        #prob have to change this to change 1 in each function
         randomRow = random.randint(0, c.numSensorNeurons - 1)
         randomColumn = random.randint(0, c.numMotorNeurons - 1)
 

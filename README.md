@@ -7,6 +7,8 @@ This is a submission for Assignemnt 7 for CS 396: Artificial Life at Northwester
 
 prob gonna use multiple diff dictionaries to generate all the diff branches, then just generate the same way as snake. will ask in class tmrw prob
 
+so basically we're making a function that makes a random number of legs for the snake. There should be a root + joint + root2 for each direction, and then just add an iteratable for every function within the function. I'm confused.
+
 
 ## Random Behavior:
 
