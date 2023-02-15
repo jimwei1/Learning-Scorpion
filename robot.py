@@ -20,7 +20,7 @@ class ROBOT: #class name
 
         self.robotID = p.loadURDF("body.urdf")
 
-        self.ballID = p.loadURDF("ball.urdf")
+        #self.ballID = p.loadURDF("ball.urdf")
 
         self.motors = {}
 
@@ -73,7 +73,7 @@ class ROBOT: #class name
         #positionOfLinkZero = stateofLinkZero[0]
         #xCoordinateofLinkZero = positionOfLinkZero[0]
 
-        basePositionAndOrientation = p.getBasePositionAndOrientation(self.ballID)
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotID)
 
         basePosition = basePositionAndOrientation[0]
 

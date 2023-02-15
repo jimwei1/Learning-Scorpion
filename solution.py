@@ -27,7 +27,7 @@ class SOLUTION:
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists("fitness" + str(self._myID) + ".txt"):
             time.sleep(0.01)
-            #print("stuck sleeping")
+            print("stuck sleeping")
         
         while os.path.exists("fitness" + str(self._myID) + ".txt"):
             
@@ -183,7 +183,7 @@ class SOLUTION:
                 rightColorName[i] = '<material name="Green">'
             
 
-        pyrosim.Send_Cube(name="Torso", pos=[0, 2, 5] , size=[0.5,0.5,0.5], colorName = '<material name="Blue">', colorID = '<color rgba="0 0 1.0 1.0"/>')
+        pyrosim.Send_Cube(name="Torso", pos=[0, 2, 10] , size=[0.5,0.5,0.5], colorName = '<material name="Blue">', colorID = '<color rgba="0 0 1.0 1.0"/>')
        
         pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [0, 2.25, 4.75], jointAxis = jointAxisConstant)
         
