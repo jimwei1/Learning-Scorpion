@@ -144,7 +144,7 @@ class SOLUTION:
             leftColorID[i] = '<color rgba="0 0 1.0 1.0"/>'
 
         for i in range(len(self.leftRandomLink)):
-            linkNum = str(self.leftRandomLink[i])[4]
+            linkNum = int(''.join(filter(str.isdigit, self.leftRandomLink[i])))
             intlinkNum = int(linkNum)
 
             leftColorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
@@ -156,7 +156,7 @@ class SOLUTION:
             rightColorID[i] = '<color rgba="0 0 1.0 1.0"/>'
 
         for i in range(len(self.rightRandomLink)):
-            linkNum = str(self.rightRandomLink[i])[4]
+            linkNum = int(''.join(filter(str.isdigit, self.rightRandomLink[i])))
             intlinkNum = int(linkNum)
 
             rightColorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
@@ -196,17 +196,17 @@ class SOLUTION:
 
         for i in range(self.numofLinks - 1):
             if i < 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = self.leftJointNames[i][0:5] , child = self.leftJointNames[i][6:11] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i<9")
+                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = self.leftJointNames[i][0:9] , child = self.leftJointNames[i][11:20] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                #print("Link i<9") LeftJoint1_LeftJoint2
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
 
             if i == 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:5]) , child = str(self.leftJointNames[i][6:12]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i=9")
+                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:9]) , child = str(self.leftJointNames[i][11:21]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                #print("Link i=9") LeftJoint9_LeftJoint10
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
             if i > 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:6]) , child = str(self.leftJointNames[i][7:13]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i>9")
+                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:10]) , child = str(self.leftJointNames[i][12:22]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                #print("Link i>9") LeftJoint10_LeftJoint11
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
 
         #Right Wing
@@ -218,16 +218,16 @@ class SOLUTION:
 
         for i in range(self.numofLinks - 1):
             if i < 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = self.rightJointNames[i][0:5] , child = self.rightJointNames[i][6:11] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = self.rightJointNames[i][0:10] , child = self.rightJointNames[i][12:21] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
                 #print("Link i<9")
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
 
             if i == 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:5]) , child = str(self.rightJointNames[i][6:12]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:10]) , child = str(self.rightJointNames[i][12:22]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
                 #print("Link i=9")
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
             if i > 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:6]) , child = str(self.rightJointNames[i][7:13]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:11]) , child = str(self.rightJointNames[i][13:23]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
                 #print("Link i>9")
                 #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
         pyrosim.End()
@@ -242,15 +242,15 @@ class SOLUTION:
         pyrosim.Start_NeuralNetwork(brainID)
 
         #Left Neurons
-        pyrosim.Send_Sensor_Neuron(name = 0, linkName = self.randomLink[0])
-        pyrosim.Send_Sensor_Neuron(name = 1, linkName = self.randomLink[1])
-        pyrosim.Send_Sensor_Neuron(name = 2, linkName = self.randomLink[2])
-        pyrosim.Send_Sensor_Neuron(name = 3, linkName = self.randomLink[3])
+        pyrosim.Send_Sensor_Neuron(name = 0, linkName = self.leftRandomLink[0])
+        pyrosim.Send_Sensor_Neuron(name = 1, linkName = self.leftRandomLink[1])
+        pyrosim.Send_Sensor_Neuron(name = 2, linkName = self.leftRandomLink[2])
+        pyrosim.Send_Sensor_Neuron(name = 3, linkName = self.leftRandomLink[3])
 
-        leftRandomJoint1 = str(self.leftRandomLink[0]) + "_LeftLink" + str(int(self.randomLink[0][4]) + 1)
-        leftRandomJoint2 = str(self.leftRandomLink[1]) + "_LeftLink" + str(int(self.leftRandomLink[1][4]) + 1)
-        leftRandomJoint3 = str(self.leftRandomLink[2]) + "_LeftLink" + str(int(self.leftRandomLink[2][4]) + 1)
-        leftRandomJoint4 = str(self.leftRandomLink[3]) + "_LeftLink" + str(int(self.leftRandomLink[3][4]) + 1)
+        leftRandomJoint1 = str(self.leftRandomLink[0]) + "_LeftLink" + str(int(self.leftRandomLink[0][8]) + 1)
+        leftRandomJoint2 = str(self.leftRandomLink[1]) + "_LeftLink" + str(int(self.leftRandomLink[1][8]) + 1)
+        leftRandomJoint3 = str(self.leftRandomLink[2]) + "_LeftLink" + str(int(self.leftRandomLink[2][8]) + 1)
+        leftRandomJoint4 = str(self.leftRandomLink[3]) + "_LeftLink" + str(int(self.leftRandomLink[3][8]) + 1)
 
 
         print("LEFT RANDOM JOINTS:")
@@ -270,22 +270,22 @@ class SOLUTION:
         pyrosim.Send_Sensor_Neuron(name = 10, linkName = self.rightRandomLink[2])
         pyrosim.Send_Sensor_Neuron(name = 11, linkName = self.rightRandomLink[3])
 
-        leftRandomJoint1 = str(self.rightRandomLink[0]) + "_LeftLink" + str(int(self.randomLink[0][4]) + 1)
-        leftRandomJoint2 = str(self.randomLink[1]) + "_LeftLink" + str(int(self.randomLink[1][4]) + 1)
-        leftRandomJoint3 = str(self.randomLink[2]) + "_LeftLink" + str(int(self.randomLink[2][4]) + 1)
-        leftRandomJoint4 = str(self.randomLink[3]) + "_LeftLink" + str(int(self.randomLink[3][4]) + 1)
+        rightRandomJoint1 = str(self.rightRandomLink[0]) + "_RightLink" + str(int(self.rightRandomLink[0][9]) + 1)
+        rightRandomJoint2 = str(self.rightRandomLink[1]) + "_RightLink" + str(int(self.rightRandomLink[1][9]) + 1)
+        rightRandomJoint3 = str(self.rightRandomLink[2]) + "_RightLink" + str(int(self.rightRandomLink[2][9]) + 1)
+        rightRandomJoint4 = str(self.rightRandomLink[3]) + "_RightLink" + str(int(self.rightRandomLink[3][9]) + 1)
 
 
-        print("LEFT RANDOM JOINTS:")
-        print(leftRandomJoint1)
-        print(leftRandomJoint2)
-        print(leftRandomJoint3)
-        print(leftRandomJoint4)
+        print("RIGHT RANDOM JOINTS:")
+        print(rightRandomJoint1)
+        print(rightRandomJoint2)
+        print(rightRandomJoint3)
+        print(rightRandomJoint4)
 
-        pyrosim.Send_Motor_Neuron(name = 4 , jointName = leftRandomJoint1)
-        pyrosim.Send_Motor_Neuron(name = 5 , jointName = leftRandomJoint2)
-        pyrosim.Send_Motor_Neuron(name = 6 , jointName = leftRandomJoint3)
-        pyrosim.Send_Motor_Neuron(name = 7 , jointName = leftRandomJoint4)
+        pyrosim.Send_Motor_Neuron(name = 12 , jointName = rightRandomJoint1)
+        pyrosim.Send_Motor_Neuron(name = 13 , jointName = rightRandomJoint2)
+        pyrosim.Send_Motor_Neuron(name = 14 , jointName = rightRandomJoint3)
+        pyrosim.Send_Motor_Neuron(name = 15 , jointName = rightRandomJoint4)
 
     
         for currentRow in range(c.numSensorNeurons - 1):
