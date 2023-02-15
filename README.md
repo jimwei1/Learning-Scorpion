@@ -5,6 +5,8 @@
 This is a submission for Assignemnt 7 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
 
 
+prob gonna use multiple diff dictionaries to generate all the diff branches, then just generate the same way as snake. will ask in class tmrw prob
+
 
 ## Random Behavior:
 
@@ -29,5 +31,7 @@ Snake spawns to the left of the camera, might have to pan camera to the left to 
 
 ## References:
 Base code from: https://www.reddit.com/r/ludobots
+
+
 
 
