@@ -29,7 +29,9 @@ Download repository, run search.py and it will generate one snake for viewing :)
 
 ## Notes:
 
-Snake spawns to the left of the camera, might have to pan camera to the left to see him. Cube generated on origin can be tossed away by the mouse. It is not part of the snake.
+To revert to evolving behavior, uncomment changes in search, parallelHillClimber, and simulate.
+
+
 
 ## References:
 Base code from: https://www.reddit.com/r/ludobots

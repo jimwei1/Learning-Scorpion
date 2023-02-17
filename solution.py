@@ -22,7 +22,7 @@ class SOLUTION:
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
         self.Create_Body()
-        self.Create_Brain()
+        #self.Create_Brain()
         #self.Create_Ball()
 
         os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " 2&>1 &")
@@ -147,27 +147,36 @@ class SOLUTION:
             self.randomLinkDict[i] = dict.fromkeys(range(4), None)
 
             #Make sure each Random Link is unique
-            #for x in self.randomLinkDict[i]:
-                #while True:
-                    #self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
-                    #unique = True
+            for x in self.randomLinkDict[i]:
+                while True:
+                    self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
+                    unique = True
 
-                    #for a in range(i):
-                        #if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
-                            #unique = False
+                    for a in range(x):
+                        if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
+                            unique = False
 
-                    #if unique == True:
-                        #break
+                    if unique == True:
+                        break
 
             #Generate Color IDs, saved in self.colorIdDict[i], fill them in as default
             self.colorIdDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), '<color rgba="0 0 1.0 1.0"/>')
             
             for x in range(len(self.randomLinkDict[i])):
-                if self.randomLinkDict[i][x] is not None:
-                    linkNum = int(''.join(filter(str.isdigit, self.randomLinkDict[i][x])))
-                    self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
-                else:
-                    pass
+                linkNumArray = []
+
+                for char in self.randomLinkDict[i][x]:
+                    if char.isdigit():
+                        linkNumArray.append(char)
+
+                if len(linkNumArray) == 2:
+                    linkNum = linkNumArray[1]
+                
+                if len(linkNumArray) == 3:
+                    linkNum = linkNumArray[1-2]
+                    
+                self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
+                
                 
             #Fill in ColorNames
             self.colorNameDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)

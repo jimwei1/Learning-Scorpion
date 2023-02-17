@@ -8,18 +8,21 @@ class PARALLEL_HILL_CLIMBER:
 
     def __init__(self) -> None: #constructor
 
-        os.system("rm brain*.nndf")
-        os.system("rm fitness*.txt")
+        #os.system("rm brain*.nndf")
+        #os.system("rm fitness*.txt")
 
         self.nextAvailableID = 0
 
-        self.parent = SOLUTION(self.nextAvailableID)
-        self.parents = {}
+        #self.parent = SOLUTION(self.nextAvailableID)
+        #self.parents = {}
 
-        for parent in range(c.populationSize):
+        #for parent in range(c.populationSize):
             
-            self.parents[parent] = SOLUTION(self.nextAvailableID)
-            self.nextAvailableID += 1
+            #self.parents[parent] = SOLUTION(self.nextAvailableID)
+            #self.nextAvailableID += 1
+
+        testRun = SOLUTION(self.nextAvailableID)
+        testRun.Start_Simulation("GUI")
         
         
     def Evolve(self):
