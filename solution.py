@@ -60,6 +60,12 @@ class SOLUTION:
 
         self.linkPositionsDict = []
 
+        self.randomLinkDict = []
+
+        self.colorIdDict = []
+
+        self.colorNameDict = []
+
         for i in range(self.numofLegs):
             self.numofLinksDict[i] = random.randint(8, 12)
 
@@ -87,124 +93,113 @@ class SOLUTION:
             #Link Positions Dictionary, in the i location of array self.linkPositionsDict
             self.linkPositionsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
 
+            #Setting Link Positions based on Leg Number
             for x in self.linkPositionsDict[i]:
-                if i == 0:
-                    xPos = 
-
-
-
-            
                 
+                #Neg z Leg
+                if i == 0:
+                    xPos = 0
+                    yPos = 0
+                    zPos = -1 *  self.linkSizeConstantsDict[i][x][2] // 2
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
 
+                #Neg x Leg
+                if i == 1:
+                    xPos = -1 *  self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = 0
+                    zPos = 0
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
 
+                #Pos z Leg
+                if i == 2:
+                    xPos = 0
+                    yPos = 0
+                    zPos = self.linkSizeConstantsDict[i][x][2] // 2
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
 
+                #Pos x Leg
+                if i == 3:
+                    xPos = self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = 0
+                    zPos = 0
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
+                
+                #Neg y Leg
+                if i == 4:
+                    xPos = 0
+                    yPos = -1 * self.linkSizeConstantsDict[i][x][0] // 2  
+                    zPos = 0
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
+                    
+                #Pos y Leg
+                if i == 5:
+                    xPos = 0
+                    yPos = self.linkSizeConstantsDict[i][x][0] // 2  
+                    zPos = 0
+                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
+                
+            #4 Random Links Generated, saved in location i of self.randomLinkDict
+            self.randomLinkDict[i] = dict.fromkeys(range(4), None)
 
+            #Make sure each Random Link is unique
+            for x in self.randomLinkDict[i]:
+                while True:
+                    self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
+                    unique = True
 
+                    for a in range(i):
+                        if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
+                            unique = False
+
+                    if unique == True:
+                        break
+
+            #Generate Color IDs, saved in self.colorIdDict[i]
+            self.colorIdDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
+
+            #Fill in Color IDs
+            for x in self.colorIdDict[i]:
+                self.colorIdDict[i][x] = '<color rgba="0 0 1.0 1.0"/>'
+            
+            for x in range(len(self.randomLinkDict[i])):
+                linkNum = int(''.join(filter(str.isdigit, self.randomLinkDict[i][x])))
+
+                self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
+
+            #Fill in ColorNames
+            self.colorNameDict[i] = dict.fromkeys(range(self.numofLinks), None)
+
+            for x in self.colorNameDict[i]:
+
+                if self.colorIdDict[i][x] == '<color rgba="0 0 1.0 1.0"/>':
+                    self.colorNameDict[i][x] = '<material name="Blue">'
+                
+                if self.colorIdDict[i][x] == '<color rgba="0 1.0 0 1.0"/>':
+                    self.colorNameDict[i][x] = '<material name="Green">'
+                
 
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
 
         jointAxisConstant = "1 1 0"
 
+        self.Create_Leg_Dictionaries()
+        
+        startPos = [0, 2, 10]
 
-
-        for i in self.leftLinkPositions:
-            #yPos = int(linkSizeConstants[i + 1][1]) // 2
-            yPos = 0.25
-            zPos = -0.25
-            self.leftLinkPositions[i] = [0, yPos, zPos]
-
-        #Right Position Dictionary
-        self.rightLinkPositions = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in self.rightLinkPositions:
-            #yPos = int(linkSizeConstants[i + 1][1]) // 2
-            yPos = -0.25
-            zPos = -0.25
-            self.rightLinkPositions[i] = [0, yPos, zPos]
-
-        #Left Randomly Selected Link Dictionary
-        self.leftRandomLink = dict.fromkeys(range(4), None)
-
-        #Makes sure each Left Random Link is unique
-        for i in self.leftRandomLink:
-            while True:
-                self.leftRandomLink[i] = "LeftLink" + str(random.randint(1, 7))
-                unique = True
-
-                for a in range(i):
-                    if self.leftRandomLink[i] == self.leftRandomLink[a]:
-                        unique = False
-
-                if unique == True:
-                    break
-            
-        #Right Randomly Selected Link Dictionary
-        self.rightRandomLink = dict.fromkeys(range(4), None)
-
-        #Makes sure each Right Random Link is unique
-        for i in self.rightRandomLink:
-            while True:
-                self.rightRandomLink[i] = "RightLink" + str(random.randint(1, 7))
-                unique = True
-
-                for a in range(i):
-                    if self.rightRandomLink[i] == self.rightRandomLink[a]:
-                        unique = False
-
-                if unique == True:
-                    break
-
-                    
-        #Left ColorID Dictionary
-        leftColorID = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in leftColorID:
-            leftColorID[i] = '<color rgba="0 0 1.0 1.0"/>'
-
-        for i in range(len(self.leftRandomLink)):
-            linkNum = int(''.join(filter(str.isdigit, self.leftRandomLink[i])))
-            intlinkNum = int(linkNum)
-
-            leftColorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
-
-        #Right ColorID Dictionary
-        rightColorID = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in rightColorID:
-            rightColorID[i] = '<color rgba="0 0 1.0 1.0"/>'
-
-        for i in range(len(self.rightRandomLink)):
-            linkNum = int(''.join(filter(str.isdigit, self.rightRandomLink[i])))
-            intlinkNum = int(linkNum)
-
-            rightColorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
-
-
-        #Left ColorID --> ColorName
-        leftColorName = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in leftColorName:
-            if leftColorID[i] == '<color rgba="0 0 1.0 1.0"/>':
-                leftColorName[i] = '<material name="Blue">'
-            
-            if leftColorID[i] == '<color rgba="0 1.0 0 1.0"/>':
-                leftColorName[i] = '<material name="Green">'
-
-        #Right ColorID --> ColorName
-        rightColorName = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in rightColorName:
-            if rightColorID[i] == '<color rgba="0 0 1.0 1.0"/>':
-                rightColorName[i] = '<material name="Blue">'
-            
-            if rightColorID[i] == '<color rgba="0 1.0 0 1.0"/>':
-                rightColorName[i] = '<material name="Green">'
-            
-
-        pyrosim.Send_Cube(name="Torso", pos=[0, 2, 10] , size=[0.5,0.5,0.5], colorName = '<material name="Blue">', colorID = '<color rgba="0 0 1.0 1.0"/>')
+        pyrosim.Send_Cube(name="Torso", pos = startPos , size=[0.5,0.5,0.5], colorName = '<material name="Red">', colorID = '<color rgba="1.0 0 0 1.0"/>')
        
-        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [0, 2.25, 4.75], jointAxis = jointAxisConstant)
+       #First (# of Legs) Cubes. Basically creating a base to generate the rest of each leg.
+        for i in range(self.numofLegs):
+            jointPos = numpy.add(startPos, self.linkPositionsDict[i][0])
+            firstChildName = "Base" + str(i)
+            firstJointName = "Torso_" + firstChildName
+
+            pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = jointPos, jointAxis = jointAxisConstant)
+
+
+
+
         
         #Left Wing
         for i in range(self.numofLinks):
