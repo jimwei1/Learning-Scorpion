@@ -48,7 +48,7 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Leg_Dictionaries(self):
-        self.numofLegs = random.randint(3,6)
+        self.numofLegs = random.randint(2,5)
 
         self.numofLinksDict = dict.fromkeys(range(self.numofLegs), None)
 
@@ -64,7 +64,7 @@ class SOLUTION:
             self.numofLinksDict[i] = random.randint(8, 12)
 
             #Link Size Constants Dictionary, in the i location of array self.LinkSizeConstants
-            self.linkSizeConstantsDict[i] = dict.fromkeys(range(self.numofLinks), None)
+            self.linkSizeConstantsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
 
             #Link Size Constants Array input, in the Link Size Constants Dictionary. I'm confused.
             for x in range(self.numofLinksDict[i]):
@@ -74,7 +74,7 @@ class SOLUTION:
             self.linkNamesDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
 
             #Creating Link Names for each leg
-            for x in range(self.numofLinks):
+            for x in range(self.numofLinksDict[i]):
                 self.linkNamesDict[i][x] = str(i) + "Link" + str(x)
 
             #Joint Names Dictionary, in the i location of array self.jointNamesDict
@@ -86,6 +86,12 @@ class SOLUTION:
             
             #Link Positions Dictionary, in the i location of array self.linkPositionsDict
             self.linkPositionsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
+
+            for x in self.linkPositionsDict[i]:
+                if i == 0:
+                    xPos = 
+
+
 
             
                 
@@ -101,9 +107,6 @@ class SOLUTION:
         jointAxisConstant = "1 1 0"
 
 
-
-        #Link Position Dictionary
-        self.leftLinkPositions = dict.fromkeys(range(self.numofLinks), None)
 
         for i in self.leftLinkPositions:
             #yPos = int(linkSizeConstants[i + 1][1]) // 2
