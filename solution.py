@@ -47,43 +47,59 @@ class SOLUTION:
         pyrosim.Start_SDF("world.sdf")
         pyrosim.End()
 
+    def Create_Leg_Dictionaries(self):
+        self.numofLegs = random.randint(3,6)
+
+        self.numofLinksDict = dict.fromkeys(range(self.numofLegs), None)
+
+        self.linkSizeConstantsDict = []
+
+        self.linkNamesDict = []
+
+        self.jointNamesDict = []
+
+        self.linkPositionsDict = []
+
+        for i in range(self.numofLegs):
+            self.numofLinksDict[i] = random.randint(8, 12)
+
+            #Link Size Constants Dictionary, in the i location of array self.LinkSizeConstants
+            self.linkSizeConstantsDict[i] = dict.fromkeys(range(self.numofLinks), None)
+
+            #Link Size Constants Array input, in the Link Size Constants Dictionary. I'm confused.
+            for x in range(self.numofLinksDict[i]):
+                self.linkSizeConstantsDict[i][x] = [random.random(), random.random(), random.random()]
+
+            #Link Names Dictionary, in the i location of array self.linkNamesDict
+            self.linkNamesDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
+
+            #Creating Link Names for each leg
+            for x in range(self.numofLinks):
+                self.linkNamesDict[i][x] = str(i) + "Link" + str(x)
+
+            #Joint Names Dictionary, in the i location of array self.jointNamesDict
+            self.jointNamesDict[i] = dict.fromkeys(range(self.numofLinksDict[i] - 1), None)
+
+            #Creating Joint Names for each leg
+            for x in range(self.numofLinksDict[i] - 1):
+                self.jointNamesDict[i][x] = str(i) + "Link" + str(x) + "_" + str(i) + "Link" + str(x+1)
+            
+            #Link Positions Dictionary, in the i location of array self.linkPositionsDict
+            self.linkPositionsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
+
+            
+                
+
+
+
+
+
+
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
 
         jointAxisConstant = "1 1 0"
 
-        #Random number of links
-        self.numofLinks = random.randint(8, 12)
-
-        #Random Sizes Dictionary
-        linkSizeConstants = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in range(self.numofLinks):
-            linkSizeConstants[i] = [random.random(), random.random(), random.random()]
-
-        #Left Link Names Dictionary
-        self.leftLinkNames = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in range(self.numofLinks):
-            self.leftLinkNames[i] = "LeftLink" + str(i)
-
-        #Right Link Names Dictionary
-        self.rightLinkNames = dict.fromkeys(range(self.numofLinks), None)
-
-        for i in range(self.numofLinks):
-            self.rightLinkNames[i] = "RightLink" + str(i)
-
-        #Left Joint Names Dictionary
-        self.leftJointNames = dict.fromkeys(range(self.numofLinks - 1), None)
-
-        for i in range(self.numofLinks - 1):
-            self.leftJointNames[i] = "LeftLink" + str(i) + "_LeftLink" + str(i+1)
-
-        #Right Joint Names Dictionary
-        self.rightJointNames = dict.fromkeys(range(self.numofLinks - 1), None)
-
-        for i in range(self.numofLinks - 1):
-            self.rightJointNames[i] = "RightLink" + str(i) + "_RightLink" + str(i+1)
 
 
         #Link Position Dictionary
