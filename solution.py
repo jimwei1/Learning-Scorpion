@@ -197,53 +197,50 @@ class SOLUTION:
 
             pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = jointPos, jointAxis = jointAxisConstant)
 
-
-
-
         
-        #Left Wing
-        for i in range(self.numofLinks):
+        #Making Legs
+        for leg in range(self.numofLegs):
             
-            pyrosim.Send_Cube(name=self.leftLinkNames[i], pos=self.leftLinkPositions[i] , size=linkSizeConstants[i], colorName = leftColorName[i], colorID = leftColorID[i])
-            print("SENDING CUBE:")
-            print("name: " + str(self.leftLinkNames[i]) + " size: "+ str(linkSizeConstants[i]))
+            #Making Links for each Leg
+            for link in range(self.numofLinksDict[leg]):
+                pyrosim.Send_Cube(name=self.linkNamesDict[leg][link], pos = self.linkPositionsDict[leg][link], size = self.linkSizeConstantsDict[leg][link], colorName = self.colorNameDict[leg][link], colorID = self.colorIdDict[leg][link])
 
-        for i in range(self.numofLinks - 1):
-            if i < 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = self.leftJointNames[i][0:9] , child = self.leftJointNames[i][11:20] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i<9") LeftJoint1_LeftJoint2
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
+                print("SENDING CUBE:")
+                print("Name: " + str(self.linkNamesDict[leg][link]) + "Size: " + str(self.linkSizeConstantsDict[leg][link]))
 
-            if i == 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:9]) , child = str(self.leftJointNames[i][11:21]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i=9") LeftJoint9_LeftJoint10
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
-            if i > 9:
-                pyrosim.Send_Joint(name = self.leftJointNames[i] , parent = str(self.leftJointNames[i][0:10]) , child = str(self.leftJointNames[i][12:22]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i>9") LeftJoint10_LeftJoint11
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
+            #Making Joints for each Leg
+            for joint in range(self.numofLinksDict[leg] - 1):
+                jointName = self.jointNamesDict[leg][joint]
 
-        #Right Wing
-        for i in range(self.numofLinks):
-            
-            pyrosim.Send_Cube(name=self.rightLinkNames[i], pos=self.rightLinkPositions[i] , size=linkSizeConstants[i], colorName = rightColorName[i], colorID = rightColorID[i])
-            print("SENDING CUBE:")
-            print("name: " + str(self.leftLinkNames[i]) + " size: "+ str(linkSizeConstants[i]))
+                numArray = []
 
-        for i in range(self.numofLinks - 1):
-            if i < 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = self.rightJointNames[i][0:10] , child = self.rightJointNames[i][12:21] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i<9")
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
+                #Get all digits from each Joint
+                for char in jointName:
+                    if char.isdigit():
+                        numArray.append(char)
+                
+                #Joint looks like this: 1Link0_1Link1, or 1Link9_1link10, or 1Link10_1link11. Thus, if len(numArray) is 4, then we're getting [1] and [3]. If len(numArray) is 5, then we're getting [1][3,4]. If len(numArray is 5), then we're getting [1,2], [4,5].
+                if len(numArray) == 4:
+                    parentNum = numArray[1]
+                    parentLink = str(leg) + "Link" + parentNum
+                    childNum = numArray[3]
+                    childLink = str(leg) + "Link" + childNum
 
-            if i == 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:10]) , child = str(self.rightJointNames[i][12:22]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i=9")
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
-            if i > 9:
-                pyrosim.Send_Joint(name = self.rightJointNames[i] , parent = str(self.rightJointNames[i][0:11]) , child = str(self.rightJointNames[i][13:23]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                #print("Link i>9")
-                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
+                if len(numArray) == 5:
+                    parentNum = numArray[1]
+                    parentLink = str(leg) + "Link" + parentNum
+                    childNum = numArray[3,4]
+                    childLink = str(leg) + "Link" + childNum
+
+                if len(numArray) == 6:
+                    parentNum = numArray[1,2]
+                    parentLink = str(leg) + "Link" + parentNum
+                    childNum = numArray[4,5]
+                    childLink = str(leg) + "Link" + childNum
+                
+                #Now, generate joints with those numbers.
+                pyrosim.Send_Joint(name = self.jointNamesDict[leg][joint], parent = parentLink, child = childLink, type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                
         pyrosim.End()
 
 
