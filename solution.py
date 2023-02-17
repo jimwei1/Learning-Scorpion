@@ -55,22 +55,24 @@ class SOLUTION:
 
         self.numofLinksDict = dict.fromkeys(range(self.numofLegs), None)
 
-        self.linkSizeConstantsDict = []
+        self.linkSizeConstantsDict = [None] * self.numofLegs
 
-        self.linkNamesDict = []
+        self.linkNamesDict = [None] * self.numofLegs
 
-        self.jointNamesDict = []
+        self.jointNamesDict = [None] * self.numofLegs
 
-        self.linkPositionsDict = []
+        self.linkPositionsDict = [None] * self.numofLegs
 
-        self.randomLinkDict = []
+        self.randomLinkDict = [None] * self.numofLegs
 
-        self.colorIdDict = []
+        self.colorIdDict = [None] * self.numofLegs
 
-        self.colorNameDict = []
+        self.colorNameDict = [None] * self.numofLegs
 
         for i in range(self.numofLegs):
             self.numofLinksDict[i] = random.randint(8, 12)
+
+            print(self.numofLinksDict[i])
 
             #Link Size Constants Dictionary, in the i location of array self.LinkSizeConstants
             self.linkSizeConstantsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
@@ -145,32 +147,30 @@ class SOLUTION:
             self.randomLinkDict[i] = dict.fromkeys(range(4), None)
 
             #Make sure each Random Link is unique
-            for x in self.randomLinkDict[i]:
-                while True:
-                    self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
-                    unique = True
+            #for x in self.randomLinkDict[i]:
+                #while True:
+                    #self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
+                    #unique = True
 
-                    for a in range(i):
-                        if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
-                            unique = False
+                    #for a in range(i):
+                        #if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
+                            #unique = False
 
-                    if unique == True:
-                        break
+                    #if unique == True:
+                        #break
 
-            #Generate Color IDs, saved in self.colorIdDict[i]
-            self.colorIdDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
-
-            #Fill in Color IDs
-            for x in self.colorIdDict[i]:
-                self.colorIdDict[i][x] = '<color rgba="0 0 1.0 1.0"/>'
+            #Generate Color IDs, saved in self.colorIdDict[i], fill them in as default
+            self.colorIdDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), '<color rgba="0 0 1.0 1.0"/>')
             
             for x in range(len(self.randomLinkDict[i])):
-                linkNum = int(''.join(filter(str.isdigit, self.randomLinkDict[i][x])))
-
-                self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
-
+                if self.randomLinkDict[i][x] is not None:
+                    linkNum = int(''.join(filter(str.isdigit, self.randomLinkDict[i][x])))
+                    self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
+                else:
+                    pass
+                
             #Fill in ColorNames
-            self.colorNameDict[i] = dict.fromkeys(range(self.numofLinks), None)
+            self.colorNameDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
 
             for x in self.colorNameDict[i]:
 
@@ -232,13 +232,13 @@ class SOLUTION:
                 if len(numArray) == 5:
                     parentNum = numArray[1]
                     parentLink = str(leg) + "Link" + parentNum
-                    childNum = numArray[3,4]
+                    childNum = numArray[3-4]
                     childLink = str(leg) + "Link" + childNum
 
                 if len(numArray) == 6:
-                    parentNum = numArray[1,2]
+                    parentNum = numArray[1-2]
                     parentLink = str(leg) + "Link" + parentNum
-                    childNum = numArray[4,5]
+                    childNum = numArray[4-5]
                     childLink = str(leg) + "Link" + childNum
                 
                 #Now, generate joints with those numbers.
