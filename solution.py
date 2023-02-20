@@ -63,6 +63,8 @@ class SOLUTION:
 
         self.linkPositionsDict = [None] * self.numofLegs
 
+        self.jointPositionsDict = [None] * self.numofLegs
+
         self.randomLinkDict = [None] * self.numofLegs
 
         self.colorIdDict = [None] * self.numofLegs
@@ -105,12 +107,12 @@ class SOLUTION:
                 if i == 0:
                     xPos = 0
                     yPos = 0
-                    zPos = -1 *  self.linkSizeConstantsDict[i][x][2] // 2
+                    zPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][2] // 2
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
 
                 #Neg x Leg
                 if i == 1:
-                    xPos = -1 *  self.linkSizeConstantsDict[i][x][0] // 2  
+                    xPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][0] // 2  
                     yPos = 0
                     zPos = 0
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
@@ -119,12 +121,12 @@ class SOLUTION:
                 if i == 2:
                     xPos = 0
                     yPos = 0
-                    zPos = self.linkSizeConstantsDict[i][x][2] // 2
+                    zPos = 0.5#self.linkSizeConstantsDict[i][x][2] // 2
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
 
                 #Pos x Leg
                 if i == 3:
-                    xPos = self.linkSizeConstantsDict[i][x][0] // 2  
+                    xPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
                     yPos = 0
                     zPos = 0
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
@@ -132,16 +134,67 @@ class SOLUTION:
                 #Neg y Leg
                 if i == 4:
                     xPos = 0
-                    yPos = -1 * self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = -0.5 #-1 * self.linkSizeConstantsDict[i][x][0] // 2  
                     zPos = 0
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
                     
                 #Pos y Leg
                 if i == 5:
                     xPos = 0
-                    yPos = self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
                     zPos = 0
                     self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
+
+            #Joint Positions: Same as Link Positions except -1 total size.
+            numofJoints = int(self.numofLinksDict[i]) - 1
+            self.jointPositionsDict[i] = dict.fromkeys(range(numofJoints), None)
+
+            #Setting Link Positions based on Leg Number
+            for x in self.jointPositionsDict[i]:
+                
+                #Neg z Leg
+                if i == 0:
+                    xPos = 0
+                    yPos = 0
+                    zPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][2] // 2
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+
+                #Neg x Leg
+                if i == 1:
+                    xPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = 0
+                    zPos = 0
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+
+                #Pos z Leg
+                if i == 2:
+                    xPos = 0
+                    yPos = 0
+                    zPos = 0.5#self.linkSizeConstantsDict[i][x][2] // 2
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+
+                #Pos x Leg
+                if i == 3:
+                    xPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
+                    yPos = 0
+                    zPos = 0
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+                
+                #Neg y Leg
+                if i == 4:
+                    xPos = 0
+                    yPos = -0.5 #-1 * self.linkSizeConstantsDict[i][x][0] // 2  
+                    zPos = 0
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+                    
+                #Pos y Leg
+                if i == 5:
+                    xPos = 0
+                    yPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
+                    zPos = 0
+                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
+
+
                 
             #4 Random Links Generated, saved in location i of self.randomLinkDict
             self.randomLinkDict[i] = dict.fromkeys(range(4), None)
@@ -237,24 +290,30 @@ class SOLUTION:
                 #Joint looks like this: 1Link0_1Link1, or 1Link9_1link10, or 1Link10_1link11. Thus, if len(numArray) is 4, then we're getting [1] and [3]. If len(numArray) is 5, then we're getting [1][3,4]. If len(numArray is 5), then we're getting [1,2], [4,5].
                 if len(numArray) == 4:
                     parentNum = numArray[1]
-                    parentLink = str(leg) + "Link" + parentNum
+                    parentLink = str(leg) + "Link" + str(parentNum)
                     childNum = numArray[3]
-                    childLink = str(leg) + "Link" + childNum
+                    childLink = str(leg) + "Link" + str(childNum)
 
                 if len(numArray) == 5:
                     parentNum = numArray[1]
-                    parentLink = str(leg) + "Link" + parentNum
-                    childNum = numArray[3-4]
-                    childLink = str(leg) + "Link" + childNum
+                    parentLink = str(leg) + "Link" + str(parentNum)
+                    childArray = numArray[3:5]
+                    childNum = int(''.join(map(str, childArray)))
+                    childLink = str(leg) + "Link" + str(childNum)
 
                 if len(numArray) == 6:
-                    parentNum = numArray[1-2]
-                    parentLink = str(leg) + "Link" + parentNum
-                    childNum = numArray[4-5]
-                    childLink = str(leg) + "Link" + childNum
+                    parentArray= numArray[1:3]
+                    parentNum = int(''.join(map(str, parentArray)))
+                    parentLink = str(leg) + "Link" + str(parentNum)
+                    childArray = numArray[4:6]
+                    childNum = int(''.join(map(str, childArray)))
+                    childLink = str(leg) + "Link" + str(childNum)
                 
                 #Now, generate joints with those numbers.
-                pyrosim.Send_Joint(name = self.jointNamesDict[leg][joint], parent = parentLink, child = childLink, type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                pyrosim.Send_Joint(name = self.jointNamesDict[leg][joint], parent = parentLink, child = childLink, type = "revolute", position = self.jointPositionsDict[leg][joint], jointAxis = jointAxisConstant)
+                print("SENDING JOINT:")
+                print("Joint Name: " + str(self.jointNamesDict[leg][joint]) + " Parent: " + str(parentLink) + " Child: " + str(childLink))
+                print("Joint Position: " +  str(self.jointPositionsDict[leg][joint]) + " Joint Axis: " + str(jointAxisConstant))
                 
         pyrosim.End()
 
