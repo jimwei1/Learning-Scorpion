@@ -28,13 +28,13 @@ class ROBOT: #class name
 
         pyrosim.Prepare_To_Simulate(self.robotID)
 
-        self.Prepare_To_Sense()
+        #self.Prepare_To_Sense()
 
-        self.Prepare_To_Act()
+        #self.Prepare_To_Act()
 
-        self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
+        #self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
 
-        os.system("rm " + "brain" + solutionID + ".nndf")
+        #os.system("rm " + "brain" + solutionID + ".nndf")
 
     def Prepare_To_Sense(self):
     
@@ -53,20 +53,22 @@ class ROBOT: #class name
     
     
     def Act(self, t):
-        for neuronName in self.nn.Get_Neuron_Names():
+        # for neuronName in self.nn.Get_Neuron_Names():
             
-            if self.nn.Is_Motor_Neuron(neuronName):
+        #     if self.nn.Is_Motor_Neuron(neuronName):
                 
-                jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
+        #         jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
 
-                desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange
+        #         desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange
 
-                self.motors[jointName].Set_Value(self.robotID, desiredAngle)
+        #         self.motors[jointName].Set_Value(self.robotID, desiredAngle)
+        pass
                 
 
     def Think(self):
-        self.nn.Update()
+        #self.nn.Update()
         #self.nn.Print()
+        pass
 
     def Get_Fitness(self):
         #stateofLinkZero = p.getLinkState(self.robotID, 0)

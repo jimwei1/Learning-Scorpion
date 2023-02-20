@@ -12,20 +12,19 @@ class SOLUTION:
     def __init__(self, nextAvailableID): #constructor
         
         self._myID = nextAvailableID
-        #self.weights = [numpy.random.rand(c.numSensorNeurons, c.numMotorNeurons)]
-        self.weights = []
-        #self.weights = (self.weights * 2) - 1
 
-        self.Links = []
-        self.Joints = []
+        #self.Links = []
+        #self.Joints = []
 
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
         self.Create_Body()
-        #self.Create_Brain()
+        self.counter = 0
+        self.Create_Brain()
         #self.Create_Ball()
 
-        os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " 2&>1 &")
+        #os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID) + " 2&>1 &")
+        os.system("python3 simulate.py " + directOrGUI + " " + str(self._myID))
 
     def Wait_For_Simulation_To_End(self):
         while not os.path.exists("fitness" + str(self._myID) + ".txt"):
@@ -51,7 +50,7 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Leg_Dictionaries(self):
-        self.numofLegs = random.randint(2,5)
+        self.numofLegs = random.randint(3,6)
 
         self.numofLinksDict = dict.fromkeys(range(self.numofLegs), None)
 
@@ -95,7 +94,7 @@ class SOLUTION:
 
             #Creating Joint Names for each leg
             for x in range(self.numofLinksDict[i] - 1):
-                self.jointNamesDict[i][x] = str(i) + "Link" + str(x) + "_" + str(i) + "Link" + str(x+1)
+                self.jointNamesDict[i][x] = str(i) + "Link" + str(x) + "_" + str(i) + "Link" + str(x + 1)
             
             #Link Positions Dictionary, in the i location of array self.linkPositionsDict
             self.linkPositionsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
@@ -255,18 +254,12 @@ class SOLUTION:
         startPos = [0, 2, 10]
 
         pyrosim.Send_Cube(name="Torso", pos = startPos , size=[0.5,0.5,0.5], colorName = '<material name="Red">', colorID = '<color rgba="1.0 0 0 1.0"/>')
-       
-       #First (# of Legs) Cubes. Basically creating a base to generate the rest of each leg.
-        for i in range(self.numofLegs):
-            jointPos = numpy.add(startPos, self.linkPositionsDict[i][0])
-            firstChildName = "Base" + str(i)
-            firstJointName = "Torso_" + firstChildName
 
-            pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = jointPos, jointAxis = jointAxisConstant)
 
         
         #Making Legs
         for leg in range(self.numofLegs):
+    
             
             #Making Links for each Leg
             for link in range(self.numofLinksDict[leg]):
@@ -277,6 +270,16 @@ class SOLUTION:
                 print("Pos: "+ str(self.linkPositionsDict[leg][link]) + " ColorName: " + str(self.colorNameDict[leg][link]) + " ColorID: " + str(self.colorIdDict[leg][link]))
 
             #Making Joints for each Leg
+            initJointPos = numpy.add(startPos, self.linkPositionsDict[leg][0])
+            print("INITIAL JOINT POSITION:")
+            print(initJointPos)
+            firstChildName = str(leg) + "Link0"
+            firstJointName = "Torso_" + firstChildName
+
+            pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = initJointPos, jointAxis = jointAxisConstant)
+            print("Creating Initial Joint:")
+            print("Joint Name: " + str(firstJointName) + " Child: " + str(firstChildName))
+            print("Joint Position: " +  str(initJointPos) + " Joint Axis: " + str(jointAxisConstant))
             for joint in range(self.numofLinksDict[leg] - 1):
                 jointName = self.jointNamesDict[leg][joint]
 
@@ -316,7 +319,7 @@ class SOLUTION:
                 print("Joint Position: " +  str(self.jointPositionsDict[leg][joint]) + " Joint Axis: " + str(jointAxisConstant))
                 
         pyrosim.End()
-
+        pass
 
     def Create_Brain(self):
 
@@ -326,57 +329,50 @@ class SOLUTION:
     
         pyrosim.Start_NeuralNetwork(brainID)
 
-        #Left Neurons
-        pyrosim.Send_Sensor_Neuron(name = 0, linkName = self.leftRandomLink[0])
-        pyrosim.Send_Sensor_Neuron(name = 1, linkName = self.leftRandomLink[1])
-        pyrosim.Send_Sensor_Neuron(name = 2, linkName = self.leftRandomLink[2])
-        pyrosim.Send_Sensor_Neuron(name = 3, linkName = self.leftRandomLink[3])
+        randomJointNames = []
 
-        leftRandomJoint1 = str(self.leftRandomLink[0]) + "_LeftLink" + str(int(self.leftRandomLink[0][8]) + 1)
-        leftRandomJoint2 = str(self.leftRandomLink[1]) + "_LeftLink" + str(int(self.leftRandomLink[1][8]) + 1)
-        leftRandomJoint3 = str(self.leftRandomLink[2]) + "_LeftLink" + str(int(self.leftRandomLink[2][8]) + 1)
-        leftRandomJoint4 = str(self.leftRandomLink[3]) + "_LeftLink" + str(int(self.leftRandomLink[3][8]) + 1)
+        for leg in range(self.numofLegs):
+            numofSensors = 0
+            numofJoints = 0
+            sensorsArray = []
+            jointsArray = []
+            #Creating Sensors with Random Links
+            for randomLink in self.randomLinkDict[leg]:
+                pyrosim.Send_Sensor_Neuron(name = self.counter, linkName = self.randomLinkDict[leg][randomLink])
+                sensorsArray.append(self.counter)
+                self.counter += 1
+                numofSensors += 1
+                print("CREATING SENSOR:")
+                print("Sensor Name: " + str(self.counter) + " Link Name:" + str(self.randomLinkDict[leg][randomLink]))
 
+            #Creating Random Joint Names:
+            for randomLink in self.randomLinkDict[leg]:
+                if len(str(self.randomLinkDict[leg][randomLink])) == 6:
+                    Num = int(self.randomLinkDict[leg][randomLink][5])
+                    randomJointNames.append(str(self.randomLinkDict[leg][randomLink]) + "_" + str(self.randomLinkDict[leg][randomLink][0:5]) + str(Num+ 1))
+                
+                if len(str(self.randomLinkDict[leg][randomLink])) == 7:
+                    array = self.randomLinkDict[leg][randomLink][5:7]
+                    Num = int(''.join(map(str, array)))
+                    randomJointNames.append(str(self.randomLinkDict[leg][randomLink]) + "_" + str(self.randomLinkDict[leg][randomLink][0:5]) + str(Num + 1))
+                
+            for randomJoint in range(len(randomJointNames)):
+                pyrosim.Send_Motor_Neuron(name = self.counter , jointName = randomJointNames[randomJoint])
+                jointsArray.append(self.counter)
+                self.counter += 1
+                numofJoints += 1
+                print("CREATING MOTOR:")
+                print("Name: " + str(self.counter) + " JointName: " + str(randomJointNames[randomJoint]))
 
-        print("LEFT RANDOM JOINTS:")
-        print(leftRandomJoint1)
-        print(leftRandomJoint2)
-        print(leftRandomJoint3)
-        print(leftRandomJoint4)
+            self.weights = numpy.random.rand(numofSensors, numofJoints)
+            self.weights = (self.weights * 100000000)
 
-        pyrosim.Send_Motor_Neuron(name = 4 , jointName = leftRandomJoint1)
-        pyrosim.Send_Motor_Neuron(name = 5 , jointName = leftRandomJoint2)
-        pyrosim.Send_Motor_Neuron(name = 6 , jointName = leftRandomJoint3)
-        pyrosim.Send_Motor_Neuron(name = 7 , jointName = leftRandomJoint4)
-
-        #Right Neurons
-        pyrosim.Send_Sensor_Neuron(name = 8, linkName = self.rightRandomLink[0])
-        pyrosim.Send_Sensor_Neuron(name = 9, linkName = self.rightRandomLink[1])
-        pyrosim.Send_Sensor_Neuron(name = 10, linkName = self.rightRandomLink[2])
-        pyrosim.Send_Sensor_Neuron(name = 11, linkName = self.rightRandomLink[3])
-
-        rightRandomJoint1 = str(self.rightRandomLink[0]) + "_RightLink" + str(int(self.rightRandomLink[0][9]) + 1)
-        rightRandomJoint2 = str(self.rightRandomLink[1]) + "_RightLink" + str(int(self.rightRandomLink[1][9]) + 1)
-        rightRandomJoint3 = str(self.rightRandomLink[2]) + "_RightLink" + str(int(self.rightRandomLink[2][9]) + 1)
-        rightRandomJoint4 = str(self.rightRandomLink[3]) + "_RightLink" + str(int(self.rightRandomLink[3][9]) + 1)
-
-
-        print("RIGHT RANDOM JOINTS:")
-        print(rightRandomJoint1)
-        print(rightRandomJoint2)
-        print(rightRandomJoint3)
-        print(rightRandomJoint4)
-
-        pyrosim.Send_Motor_Neuron(name = 12 , jointName = rightRandomJoint1)
-        pyrosim.Send_Motor_Neuron(name = 13 , jointName = rightRandomJoint2)
-        pyrosim.Send_Motor_Neuron(name = 14 , jointName = rightRandomJoint3)
-        pyrosim.Send_Motor_Neuron(name = 15 , jointName = rightRandomJoint4)
-
-
-        #Row is # of sensors, Col is # of Joints!
-        for currentRow in range(self.numofLinks):
-            for currentColumn in range(self.numofLinks - 1):
-                pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = (currentColumn + c.numSensorNeurons - 1), weight = self.weights[currentRow][currentColumn])
+            #Row is # of sensors, Col is # of Joints
+            for currentRow in range(numofSensors):
+                for currentColumn in range(numofJoints):
+                    pyrosim.Send_Synapse(sourceNeuronName = sensorsArray[currentRow] , targetNeuronName = jointsArray[currentColumn], weight = self.weights[currentRow][currentColumn])
+                    print("SENDING SYNAPSE:")
+                    print("SourceNeuronName: " + str(currentRow) + " TargetNeuronName: " + str(currentColumn + numofSensors) + " Weight: " + str(self.weights[currentRow][currentColumn]))
 
         pyrosim.End()
 

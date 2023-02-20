@@ -9,7 +9,6 @@ class NEURAL_NETWORK:
         self.neurons = {}
 
         self.synapses = {}
-
         f = open(nndfFileName,"r")
 
         for line in f.readlines():
