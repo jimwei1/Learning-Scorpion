@@ -174,8 +174,10 @@ class SOLUTION:
                 
                 if len(linkNumArray) == 3:
                     linkNum = linkNumArray[1-2]
+                
+                intLinkNum = int(linkNum)
                     
-                self.colorIdDict[i][linkNum] = '<color rgba="0 1.0 0 1.0"/>'
+                self.colorIdDict[i][intLinkNum] = '<color rgba="0 1.0 0 1.0"/>'
                 
                 
             #Fill in ColorNames
@@ -218,7 +220,8 @@ class SOLUTION:
                 pyrosim.Send_Cube(name=self.linkNamesDict[leg][link], pos = self.linkPositionsDict[leg][link], size = self.linkSizeConstantsDict[leg][link], colorName = self.colorNameDict[leg][link], colorID = self.colorIdDict[leg][link])
 
                 print("SENDING CUBE:")
-                print("Name: " + str(self.linkNamesDict[leg][link]) + "Size: " + str(self.linkSizeConstantsDict[leg][link]))
+                print("Name: " + str(self.linkNamesDict[leg][link]) + " Size: " + str(self.linkSizeConstantsDict[leg][link]))
+                print("Pos: "+ str(self.linkPositionsDict[leg][link]) + " ColorName: " + str(self.colorNameDict[leg][link]) + " ColorID: " + str(self.colorIdDict[leg][link]))
 
             #Making Joints for each Leg
             for joint in range(self.numofLinksDict[leg] - 1):
