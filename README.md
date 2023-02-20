@@ -28,12 +28,11 @@ Note: for the sensors, motors, and synapses, I set an overall self.counter that 
 
 
 ## Video Example:
-
-
+https://youtu.be/L3ZA3SuhO1A
 
 ## How to Run:
 
-Download repository, run *assignment7.py* and it will generate Dr Octopus for viewing :). Must have python3 and pybullet installed.
+Download repository, run **assignment7.py** and it will generate Dr Octopus for viewing :). Must have python3 and pybullet installed.
 
 ## Notes:
 
