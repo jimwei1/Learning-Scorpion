@@ -365,7 +365,7 @@ class SOLUTION:
                 print("Name: " + str(self.counter) + " JointName: " + str(randomJointNames[randomJoint]))
 
             self.weights = numpy.random.rand(numofSensors, numofJoints)
-            self.weights = (self.weights * 100000000)
+            self.weights = (self.weights * 2) - 1
 
             #Row is # of sensors, Col is # of Joints
             for currentRow in range(numofSensors):

@@ -8,6 +8,13 @@ First, this assignment builds on Assignment 6 by generating a random number of l
 
 In order to do this, I created an array for each value I needed to generate, and then stored dictionaries in each array element so that each array is an array of dictionaries and each element of the array is the dictionary for that particular leg of Dr. Octopus.
 
+![assignment7](assignment7.png)
+
+The red center cube is the Torso. The coordinates indicate the positional location of the center cube and the starting cube of each leg. The arrows indicate whether Dr. Octopus is generating outwards or repeating the creation of that leg. Finally, each cube is labeled in a purple number that indicates the order of which it will be generated depending on the random # of legs.
+
+
+Note: for the sensors, motors, and synapses, I set an overall self.counter that keeps going up (that serves as the name for the sensors and motors. Then, for each individual leg, I count the number of Sensors and Joints (Motors), as well as arrays that save the name (self.count) of the sensors and motors. Finally, I set the synapses with two for loops that iterate through range(numOfSensors) and range(numofJoints), but the names don't match, so I take the names from the sensorsArray and the jointsArray.
+
 
 ## Random Behavior:
 
