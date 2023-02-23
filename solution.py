@@ -330,6 +330,9 @@ class SOLUTION:
         pyrosim.Start_NeuralNetwork(brainID)
 
         randomJointNames = []
+        self.allSensorsArray = []
+        self.allJointsArray = []
+        
 
         for leg in range(self.numofLegs):
             numofSensors = 0
@@ -363,6 +366,9 @@ class SOLUTION:
                 numofJoints += 1
                 print("CREATING MOTOR:")
                 print("Name: " + str(self.counter) + " JointName: " + str(randomJointNames[randomJoint]))
+            
+            self.allSensorsArray.append(numofSensors)
+            self.allJointsArray.append(numofJoints)
 
             self.weights = numpy.random.rand(numofSensors, numofJoints)
             self.weights = (self.weights * 2) - 1
@@ -376,13 +382,14 @@ class SOLUTION:
 
         pyrosim.End()
 
-
     def Mutate(self):
-        #prob have to change this to change 1 in each function
-        randomRow = random.randint(0, c.numSensorNeurons - 1)
-        randomColumn = random.randint(0, c.numMotorNeurons - 1)
+        for leg in range(self.numofLegs):
+            numOfSensors = self.allSensorsArray[leg]
+            numOfJoints = self.allJointsArray[leg]
+            randomRow = random.randint(0, numOfSensors - 1)
+            randomColumn = random.randint(0, numOfJoints - 1)
 
-        self.weights[randomRow][randomColumn] = (random.random() * 2) - 1
+            self.weights[randomRow][randomColumn] = (random.random() * 2) - 1
 
     def Set_ID(self, nextAvailableID):
         self._myID = nextAvailableID
