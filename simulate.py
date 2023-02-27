@@ -1,10 +1,10 @@
 from simulation import SIMULATION
 import sys as sys
+import os as os
 
-directOrGUI = sys.argv[1]
+directOrGui = sys.argv[1]
 solutionID = sys.argv[2]
-simulation = SIMULATION(directOrGUI, solutionID)
+
+simulation = SIMULATION(directOrGui, solutionID)
 simulation.Run()
-print("SOLUTIONID:")
-print(solutionID)
-#simulation.Get_Fitness()
+simulation.Get_Fitness()

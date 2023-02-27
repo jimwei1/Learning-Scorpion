@@ -1,8 +1,15 @@
-# CS 396 Artificial Life Assignment 7
+# CS 396 Artificial Life Assignment 8
 
 ## Overview
 
-This is a submission for Assignemnt 7 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
+Assignment 8:
+Store fitnesses in an array, append to .npy the greatest value of the generation
+
+
+
+
+
+This is a submission for Assignemnt 8 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
 
 First, this assignment builds on Assignment 6 by generating a random number of legs between 3 to 6, which then generate in different directions from a red center Torso, as shown in the diagram below. I call this creature Dr. Octopus. We can ignore the fact that he only has up to 6 legs.
 

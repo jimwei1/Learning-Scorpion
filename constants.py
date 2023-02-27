@@ -7,7 +7,7 @@ import random as random
 import constants as c
 import solution as solution
 
-timevalue = 10000
+timevalue = 100000
 
 amplitude_Front = numpy.pi / 4
 frequency_Front = 1
@@ -20,8 +20,11 @@ phaseOffset_Back = numpy.pi / 4
 numberofGenerations = 1
 
 populationSize = 1
-
-numSensorNeurons = 8
-numMotorNeurons = 8
+iterations = 5000
+maxForce = 100
+#numSensorNeurons = 8
+#numMotorNeurons = 8
 
 motorJointRange = 0.45
+
+seed = 1

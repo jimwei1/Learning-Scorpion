@@ -10,39 +10,33 @@ from world import WORLD
 from robot import ROBOT
 from sensor import SENSOR
 
-class SIMULATION: #class name
-
-    def __init__(self, directOrGUI, solutionID): #constructor
-
-        self.directOrGUI = directOrGUI
-
-        if directOrGUI == "DIRECT":
-            physicsClient = p.connect(p.DIRECT)
-        elif directOrGUI == "GUI":
-            physicsClient = p.connect(p.GUI)
-            p.configureDebugVisualizer(p.COV_ENABLE_GUI,0)
-        
+class SIMULATION:
+    def __init__(self, directOrGui, solutionID):
+        if directOrGui == "DIRECT":
+            self.physicsClient = p.connect(p.DIRECT)
+        else:
+            self.physicsClient = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
+        p.setGravity(0,0,-9.8)
 
-        p.setGravity(0,0,-6.5)
-        #p.setGravity(0,0,-9.8)
-
+        self.directOrGUI = directOrGui
+        self.solutionID = solutionID
         self.world = WORLD()
-        self.robot = ROBOT(solutionID)
-
+        self.robot = ROBOT(self.solutionID, self.world)
 
     def Run(self):
-        for t in range(c.timevalue):
-                p.stepSimulation()
-                self.robot.Sense(t)
-                self.robot.Think()
-                self.robot.Act(t)
-                
-                #if self.directOrGUI == "GUI":
-                    #time.sleep(1/1000)
+        sleepTime = 0
+        if self.directOrGUI == "GUI":
+            sleepTime = c.sleepTime
+        for i in range(c.iterations):
+            time.sleep(sleepTime)
+            p.stepSimulation()
+            self.robot.Sense(i)
+            self.robot.Think()
+            self.robot.Act(i)
         
+    def __del__(self):        
+        p.disconnect()
+
     def Get_Fitness(self):
         self.robot.Get_Fitness()
-
-    def __del__(self):
-        p.disconnect()

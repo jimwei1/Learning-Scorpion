@@ -6,87 +6,61 @@ import numpy as numpy
 import random as random
 import constants as c
 import os as os
+import math as math
 
 from pyrosim.neuralNetwork import NEURAL_NETWORK
 
 from sensor import SENSOR
 from motor import MOTOR
+#from simulate import SIULATION
 
-class ROBOT: #class name
-
-    def __init__(self, solutionID): #constructor
-
+class ROBOT:
+    def __init__(self, solutionID, world):
+        self.world = world
+        self.robotId = p.loadURDF("body.urdf")
         self.solutionID = solutionID
-
-        self.robotID = p.loadURDF("body.urdf")
-
-        #self.ballID = p.loadURDF("ball.urdf")
-
-        self.motors = {}
-
-        self.sensors = {}
-
-        pyrosim.Prepare_To_Simulate(self.robotID)
-
+        pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
-
         self.Prepare_To_Act()
-
-        self.nn = NEURAL_NETWORK("brain" + solutionID + ".nndf")
-
-        os.system("rm " + "brain" + solutionID + ".nndf")
+        self.nn = NEURAL_NETWORK("brain" + self.solutionID + ".nndf")
+        os.system("rm brain" + self.solutionID + ".nndf")
 
     def Prepare_To_Sense(self):
-    
-            for linkName in pyrosim.linkNamesToIndices:
-
-                self.sensors[linkName] = SENSOR(linkName)
-
-    def Sense(self, t):
-        for i in self.sensors:
-            self.sensors[i].Get_Value(t)
-
+        self.sensors = {}
+        for linkName in pyrosim.linkNamesToIndices:
+            self.sensors[linkName] = SENSOR(linkName)
 
     def Prepare_To_Act(self):
+        self.motors = {}
         for jointName in pyrosim.jointNamesToIndices:
             self.motors[jointName] = MOTOR(jointName)
-    
-    
-    def Act(self, t):
-         for neuronName in self.nn.Get_Neuron_Names():
-            
-             if self.nn.Is_Motor_Neuron(neuronName):
-                
-                 jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
 
-                 desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange
+    def Sense(self, element):
+        for sensorInstance in self.sensors.values():
+            sensorInstance.Get_Value(element)
 
-                 self.motors[jointName].Set_Value(self.robotID, desiredAngle)
-
-                
+    def Act(self, element):
+        for neuronName in self.nn.Get_Neuron_Names():
+            if self.nn.Is_Motor_Neuron(neuronName):
+                jointName = self.nn.Get_Motor_Neurons_Joint(neuronName)
+                desiredAngle = self.nn.Get_Value_Of(neuronName) * c.motorJointRange
+                #self.motors[bytes(jointName, encoding='utf-8')].Set_Value(self.robotId, desiredAngle)
+                self.motors[jointName].Set_Value(self.robotId, desiredAngle)
 
     def Think(self):
         self.nn.Update()
-        self.nn.Print()
+        #self.nn.Print()
 
     def Get_Fitness(self):
-        stateofLinkZero = p.getLinkState(self.robotID, 0)
-        positionOfLinkZero = stateofLinkZero[0]
-        xCoordinateofLinkZero = positionOfLinkZero[0]
+        stateOfLinkZero = p.getLinkState(self.robotId, 0)
+        positionOfLinkZero = stateOfLinkZero[0]
+        xCoordinateOfLinkZero = positionOfLinkZero[0]
 
-        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotID)
-
-        basePosition = basePositionAndOrientation[0]
-
-        xPosition = basePosition[0]
-
-        print("GET_FITNESS:")
-        print("tmp" + self.solutionID + ".txt", "w")
-        f = open("tmp" + self.solutionID + ".txt", "w")
-
-        os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
-        f.write(str(xPosition))
+        f = open("tmp" + str(self.solutionID) + ".txt", "w")
+        f.write(str(xCoordinateOfLinkZero))
         f.close()
+        os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
+        
         
 
                 
