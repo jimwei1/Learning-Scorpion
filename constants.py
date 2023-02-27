@@ -7,6 +7,14 @@ import random as random
 import constants as c
 import solution as solution
 
+#############################
+#CHANGE THESE:
+numberofGenerations = 10
+populationSize = 10
+seed = 100
+#############################
+
+
 timevalue = 100000
 sleepTime = 1/6000
 
@@ -18,14 +26,10 @@ amplitude_Back = numpy.pi / 4
 frequency_Back = 1
 phaseOffset_Back = numpy.pi / 4
 
-numberofGenerations = 1
-
-populationSize = 1
 iterations = 5000
-maxForce = 10000000
-#numSensorNeurons = 8
-#numMotorNeurons = 8
+maxForce = 100000
+gravity = -9.8
+numSensorNeurons = 8
+numMotorNeurons = 8
 
-motorJointRange = 0.8
-
-seed = 2001
+motorJointRange = 0.9

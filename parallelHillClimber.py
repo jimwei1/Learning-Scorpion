@@ -1,71 +1,79 @@
 from solution import SOLUTION
 import constants as c
-import copy as copy
-import os as os
-import time as time
+import copy
+import os
 
 class PARALLEL_HILL_CLIMBER:
+
     def __init__(self):
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
-        self.parents = {}
+        os.system("rm body*.urdf")
+        self.tempFile = c.populationSize + "_" + c.numberofGenerations + "_" + c.seed
+        os.system(f"rm temp\{self.tempFile}.txt")
+
         self.nextAvailableID = 0
+        self.parents = {}
         for i in range(c.populationSize):
-            newSolution = SOLUTION(self.nextAvailableID)
-            self.nextAvailableID += 1
-            self.parents[i] = newSolution
-    
+            self.parents[i] = SOLUTION(self.nextAvailableID)
+            self.nextAvailableID += 1 
+
     def Evolve(self):
         self.Evaluate(self.parents)
+        self.Save_Best()
+        self.Show_Best()
         for currentGeneration in range(c.numberofGenerations):
-            self.Evolve_For_One_Generation()
+            self.Evolve_For_One_Generation(currentGeneration)
+            self.Save_Best()
 
-    def Evolve_For_One_Generation(self):
+    def Evolve_For_One_Generation(self, gen):
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
-        self.Print()
+        self.Print(gen)
         self.Select()
+
+    def Evaluate(self, solutions):
+        for i in solutions.values():
+            i.Start_Simulation("DIRECT")
+        for i in solutions.values():
+            i.Wait_For_Simulation_To_End()
 
     def Spawn(self):
         self.children = {}
-        for i in self.parents:
-            self.children[i] = copy.deepcopy(self.parents[i])
-            self.children[i].Set_ID(self.nextAvailableID)
+        for key in self.parents.keys():
+            self.children[key] = copy.deepcopy(self.parents[key])
+            self.children[key].Set_ID(self.nextAvailableID)
             self.nextAvailableID += 1
 
     def Mutate(self):
-        for i in range(len(self.children)):
-            self.children[i].Mutate()
-            
-    def Select(self):
-        for i in self.parents:
-            if self.parents[i].fitness > self.children[i].fitness:
-                self.parents[i] = self.children[i]
+        for child in self.children.values():
+            child.Mutate()
 
-    def Print(self):
-        print("\n")
-        for i in self.parents:
-            print("\nParent fitness: " + str(self.parents[i].fitness) + " Child fitness: " + str(self.parents[i].fitness))
-        print("\n")
+    def Select(self):
+        for key in self.parents.keys(): 
+            if self.children[key].fitness > self.parents[key].fitness:
+                self.parents[key] = self.children[key]
 
     def Show_Best(self):
-        best_fitness = float('inf')
+        best = self.parents[0]
+        if len(self.parents) != 1:
+            for parent in self.parents.values():
+                if parent.fitness > best.fitness:
+                    best = parent
 
-        for key in self.parents.keys():
-            parent = self.parents[key]
-            if (parent.fitness < best_fitness):
-                best_parent = parent
-                best_fitness = parent.fitness
+        best.Start_Simulation("GUI")
 
-        best_parent.Start_Simulation("GUI")
+    def Save_Best(self):
+        bestFitness = self.parents[0].fitness
+        if len(self.parents) != 1:
+            for parent in self.parents.values():
+                if parent.fitness > bestFitness:
+                    bestFitness = parent.fitness
+        
+        f = open(f"temp/{self.tempFile}.txt", "a")
+        f.write(f"{bestFitness}\n")
+        f.close()
 
-    def Evaluate(self, solutions):
-        for i in solutions:
-            solutions[i].Start_Simulation("DIRECT")
-        for i in solutions:
-            solutions[i].Wait_For_Simulation_To_End()
-
-
-
-
+    def Print(self):
+        pass

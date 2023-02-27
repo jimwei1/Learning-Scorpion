@@ -12,7 +12,6 @@ class SOLUTION:
     def __init__(self, nextAvailableID): #constructor
         
         self.myID = nextAvailableID
-        self.counter = 0
 
     def Start_Simulation(self, directOrGUI):
         self.Create_World()
@@ -29,284 +28,141 @@ class SOLUTION:
         f.close()
         os.system("rm " + fileName)
 
+
     def Create_World(self):
         pyrosim.Start_SDF("world.sdf")
         pyrosim.End()
 
-    def Create_Leg_Dictionaries(self):
-        np.random.seed(c.seed)
-        self.numofLegs = random.randint(3,6)
-
-        self.numofLinksDict = dict.fromkeys(range(self.numofLegs), None)
-
-        self.linkSizeConstantsDict = [None] * self.numofLegs
-
-        self.linkNamesDict = [None] * self.numofLegs
-
-        self.jointNamesDict = [None] * self.numofLegs
-
-        self.linkPositionsDict = [None] * self.numofLegs
-
-        self.jointPositionsDict = [None] * self.numofLegs
-
-        self.randomLinkDict = [None] * self.numofLegs
-
-        self.colorIdDict = [None] * self.numofLegs
-
-        self.colorNameDict = [None] * self.numofLegs
-
-        for i in range(self.numofLegs):
-            np.random.seed(c.seed)
-            self.numofLinksDict[i] = random.randint(12, 18)
-
-            print(self.numofLinksDict[i])
-
-            #Link Size Constants Dictionary, in the i location of array self.LinkSizeConstants
-            self.linkSizeConstantsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
-
-            #Link Size Constants Array input, in the Link Size Constants Dictionary. I'm confused.
-            for x in range(self.numofLinksDict[i]):
-                np.random.seed(c.seed)
-                self.linkSizeConstantsDict[i][x] = [random.random(), random.random(), random.random()]
-
-            #Link Names Dictionary, in the i location of array self.linkNamesDict
-            self.linkNamesDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
-
-            #Creating Link Names for each leg
-            for x in range(self.numofLinksDict[i]):
-                self.linkNamesDict[i][x] = str(i) + "Link" + str(x)
-
-            #Joint Names Dictionary, in the i location of array self.jointNamesDict
-            self.jointNamesDict[i] = dict.fromkeys(range(self.numofLinksDict[i] - 1), None)
-
-            #Creating Joint Names for each leg
-            for x in range(self.numofLinksDict[i] - 1):
-                self.jointNamesDict[i][x] = str(i) + "Link" + str(x) + "_" + str(i) + "Link" + str(x + 1)
-            
-            #Link Positions Dictionary, in the i location of array self.linkPositionsDict
-            self.linkPositionsDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
-
-            #Setting Link Positions based on Leg Number
-            for x in self.linkPositionsDict[i]:
-                
-                #Neg z Leg
-                if i == 0:
-                    xPos = 0
-                    yPos = 0
-                    zPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][2] // 2
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Neg x Leg
-                if i == 1:
-                    xPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][0] // 2  
-                    yPos = 0
-                    zPos = 0
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Pos z Leg
-                if i == 2:
-                    xPos = 0
-                    yPos = 0
-                    zPos = 0.5#self.linkSizeConstantsDict[i][x][2] // 2
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Pos x Leg
-                if i == 3:
-                    xPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
-                    yPos = 0
-                    zPos = 0
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-                
-                #Neg y Leg
-                if i == 4:
-                    xPos = 0
-                    yPos = -0.5 #-1 * self.linkSizeConstantsDict[i][x][0] // 2  
-                    zPos = 0
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-                    
-                #Pos y Leg
-                if i == 5:
-                    xPos = 0
-                    yPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
-                    zPos = 0
-                    self.linkPositionsDict[i][x] = [xPos, yPos, zPos]
-
-            #Joint Positions: Same as Link Positions except -1 total size.
-            numofJoints = int(self.numofLinksDict[i]) - 1
-            self.jointPositionsDict[i] = dict.fromkeys(range(numofJoints), None)
-
-            #Setting Link Positions based on Leg Number
-            for x in self.jointPositionsDict[i]:
-                
-                #Neg z Leg
-                if i == 0:
-                    xPos = 0
-                    yPos = 0
-                    zPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][2] // 2
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Neg x Leg
-                if i == 1:
-                    xPos = -0.5 #-1 *  self.linkSizeConstantsDict[i][x][0] // 2  
-                    yPos = 0
-                    zPos = 0
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Pos z Leg
-                if i == 2:
-                    xPos = 0
-                    yPos = 0
-                    zPos = 0.5#self.linkSizeConstantsDict[i][x][2] // 2
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-
-                #Pos x Leg
-                if i == 3:
-                    xPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
-                    yPos = 0
-                    zPos = 0
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-                
-                #Neg y Leg
-                if i == 4:
-                    xPos = 0
-                    yPos = -0.5 #-1 * self.linkSizeConstantsDict[i][x][0] // 2  
-                    zPos = 0
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-                    
-                #Pos y Leg
-                if i == 5:
-                    xPos = 0
-                    yPos = 0.5 #self.linkSizeConstantsDict[i][x][0] // 2  
-                    zPos = 0
-                    self.jointPositionsDict[i][x] = [xPos, yPos, zPos]
-
-
-                
-            #4 Random Links Generated, saved in location i of self.randomLinkDict
-            self.randomLinkDict[i] = dict.fromkeys(range(4), None)
-
-            #Make sure each Random Link is unique
-            for x in self.randomLinkDict[i]:
-                while True:
-                    np.random.seed(c.seed)
-                    self.randomLinkDict[i][x] = str(i) + "Link" + str(random.randint(1, 11))
-                    unique = True
-
-                    for a in range(x):
-                        if self.randomLinkDict[i][x] == self.randomLinkDict[i][a]:
-                            unique = False
-
-                    if unique == True:
-                        break
-
-            #Generate Color IDs, saved in self.colorIdDict[i], fill them in as default
-            self.colorIdDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), '<color rgba="0 0 1.0 1.0"/>')
-            
-            for x in range(len(self.randomLinkDict[i])):
-                linkNumArray = []
-
-                for char in self.randomLinkDict[i][x]:
-                    if char.isdigit():
-                        linkNumArray.append(char)
-
-                if len(linkNumArray) == 2:
-                    linkNum = linkNumArray[1]
-                
-                if len(linkNumArray) == 3:
-                    linkNum = linkNumArray[1-2]
-                
-                intLinkNum = int(linkNum)
-                    
-                self.colorIdDict[i][intLinkNum] = '<color rgba="0 1.0 0 1.0"/>'
-                
-                
-            #Fill in ColorNames
-            self.colorNameDict[i] = dict.fromkeys(range(self.numofLinksDict[i]), None)
-
-            for x in self.colorNameDict[i]:
-
-                if self.colorIdDict[i][x] == '<color rgba="0 0 1.0 1.0"/>':
-                    self.colorNameDict[i][x] = '<material name="Blue">'
-                
-                if self.colorIdDict[i][x] == '<color rgba="0 1.0 0 1.0"/>':
-                    self.colorNameDict[i][x] = '<material name="Green">'
-                
 
     def Create_Body(self):
-        pyrosim.Start_URDF("body.urdf")
+        bodyID = "body" + str(self.myID) + ".urdf"
+        pyrosim.Start_URDF(bodyID)
 
         jointAxisConstant = "1 1 0"
 
-        self.Create_Leg_Dictionaries()
-        
-        startPos = [0, 2, 10]
+        #Random number of links
+        self.numofLinks = random.randint(13, 15)
 
-        pyrosim.Send_Cube(name="Torso", pos = startPos , size=[0.5,0.5,0.5], colorName = '<material name="Red">', colorID = '<color rgba="1.0 0 0 1.0"/>')
+        #Random Sizes Dictionary
+        self.linkSizeConstants = dict.fromkeys(range(self.numofLinks), None)
 
-        
-        #Making Legs
-        for leg in range(self.numofLegs):
-    
+        for i in range(self.numofLinks):
+            self.linkSizeConstants[i] = [random.random(), random.random(), random.random()]
+
+
+        #Link Names Dictionary
+        self.linkNames = dict.fromkeys(range(self.numofLinks), None)
+
+        for i in range(self.numofLinks):
+            self.linkNames[i] = "Link" + str(i)
+
+        #Joint Names Dictionary
+        self.jointNames = dict.fromkeys(range(self.numofLinks - 1), None)
+
+        for i in range(self.numofLinks - 1):
+            self.jointNames[i] = "Link" + str(i) + "_Link" + str(i+1)
+
+        #Constant Link Position
+        LinkPositionConstant = [0, 0.50, 0]
+
+        #Link Position Dictionary
+        self.LinkPositions = dict.fromkeys(range(self.numofLinks), None)
+
+        for i in self.LinkPositions:
+            #yPos = int(linkSizeConstants[i + 1][1]) // 2
+            yPos = 0.25
+            self.LinkPositions[i] = [0, yPos, 0]
+
+        #Randomly Selected Link Dictionary
+        self.randomLink = dict.fromkeys(range(4), None)
+
+        #Makes sure each Random Link is unique
+        for i in self.randomLink:
+            while True:
+                self.randomLink[i] = "Link" + str(random.randint(1, 7))
+                unique = True
+
+                for a in range(i):
+                    if self.randomLink[i] == self.randomLink[a]:
+                        unique = False
+
+                if unique == True:
+                    break
+                    
+        #ColorID Dictionary
+        colorID = dict.fromkeys(range(self.numofLinks), None)
+
+        for i in colorID:
+            colorID[i] = '<color rgba="0 1.0 1.0 1.0"/>'
+
+        for i in range(len(self.randomLink)):
+            linkNum = str(self.randomLink[i])[4]
+            intlinkNum = int(linkNum)
+
+            colorID[intlinkNum] = '<color rgba="0 1.0 0 1.0"/>'
+
+        colorName = dict.fromkeys(range(self.numofLinks), None)
+
+        for i in colorName:
+            if colorID[i] == '<color rgba="0 1.0 1.0 1.0"/>':
+                colorName[i] = '<material name="Cyan">'
             
-            #Making Links for each Leg
-            for link in range(self.numofLinksDict[leg]):
-                pyrosim.Send_Cube(name=self.linkNamesDict[leg][link], pos = self.linkPositionsDict[leg][link], size = self.linkSizeConstantsDict[leg][link], colorName = self.colorNameDict[leg][link], colorID = self.colorIdDict[leg][link])
+            if colorID[i] == '<color rgba="0 1.0 0 1.0"/>':
+                colorName[i] = '<material name="Green">'
+            
 
-                #print("SENDING CUBE:")
-                #print("Name: " + str(self.linkNamesDict[leg][link]) + " Size: " + str(self.linkSizeConstantsDict[leg][link]))
-                #print("Pos: "+ str(self.linkPositionsDict[leg][link]) + " ColorName: " + str(self.colorNameDict[leg][link]) + " ColorID: " + str(self.colorIdDict[leg][link]))
+        pyrosim.Send_Cube(name="Torso", pos=[0, 2, 2] , size=[0.5,0.5,0.5])
+        pyrosim.Send_Joint(name = "Torso_Link0" , parent= "Torso" , child = "Link0" , type = "revolute", position = [0, 2.25, 2], jointAxis = jointAxisConstant)
+        for i in range(self.numofLinks):
+            
+            pyrosim.Send_Cube(name=self.linkNames[i], pos=self.LinkPositions[i] , size=self.linkSizeConstants[i], colorName = colorName[i], colorID = colorID[i])
+            print("SENDING CUBE:")
+            print("name: " + str(self.linkNames[i]) + " size: "+ str(self.linkSizeConstants[i]))
 
-            #Making Joints for each Leg
-            initJointPos = np.add(startPos, self.linkPositionsDict[leg][0])
-            #print("INITIAL JOINT POSITION:")
-            #print(initJointPos)
-            firstChildName = str(leg) + "Link0"
-            firstJointName = "Torso_" + firstChildName
+        legJointAxis = "1 0 0"
+        for randLink in range(len(self.randomLink)):
+            randomLink = self.randomLink[randLink]
+            self.LeftjointName = str(randomLink) + "_LeftLeg" + str(randomLink)
+            self.LeftchildName = "LeftLeg" + str(randomLink)
+            pyrosim.Send_Joint( name = self.LeftjointName, parent= randomLink , child = self.LeftchildName , type = "revolute", position = [-0.25, 0, 0], jointAxis = jointAxisConstant)
 
-            pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = initJointPos, jointAxis = jointAxisConstant)
-            #print("Creating Initial Joint:")
-            #print("Joint Name: " + str(firstJointName) + " Child: " + str(firstChildName))
-            #print("Joint Position: " +  str(initJointPos) + " Joint Axis: " + str(jointAxisConstant))
-            for joint in range(self.numofLinksDict[leg] - 1):
-                jointName = self.jointNamesDict[leg][joint]
+            pyrosim.Send_Cube(name=self.LeftchildName, pos=[-0.5, 0, 0] , size=[1, 0.2, 0.2])
+            self.LeftlowerJointName = "LeftLeg" + str(randomLink) + "_LeftLowerLeg" + str(randomLink)
+            self.LeftlowerChildName = "LeftLowerLeg" + str(randomLink)
+            pyrosim.Send_Joint( name = self.LeftlowerJointName, parent= self.LeftchildName , child = self.LeftlowerChildName , type = "revolute", position = [-1, 0, 0], jointAxis = legJointAxis)
 
-                numArray = []
+            pyrosim.Send_Cube(name=self.LeftlowerChildName, pos=[0, 0, -0.5] , size=[0.2, 0.2, 1])
 
-                #Get all digits from each Joint
-                for char in jointName:
-                    if char.isdigit():
-                        numArray.append(char)
-                
-                #Joint looks like this: 1Link0_1Link1, or 1Link9_1link10, or 1Link10_1link11. Thus, if len(numArray) is 4, then we're getting [1] and [3]. If len(numArray) is 5, then we're getting [1][3,4]. If len(numArray is 5), then we're getting [1,2], [4,5].
-                if len(numArray) == 4:
-                    parentNum = numArray[1]
-                    parentLink = str(leg) + "Link" + str(parentNum)
-                    childNum = numArray[3]
-                    childLink = str(leg) + "Link" + str(childNum)
+        
+        for randLink in range(len(self.randomLink)):
+            randomLink = self.randomLink[randLink]
+            self.RightjointName = str(randomLink) + "_RightLeg" + str(randomLink)
+            self.RightchildName = "RightLeg" + str(randomLink)
+            pyrosim.Send_Joint( name = self.RightjointName, parent= randomLink , child = self.RightchildName , type = "revolute", position = [0.25, 0, 0], jointAxis = jointAxisConstant)
 
-                if len(numArray) == 5:
-                    parentNum = numArray[1]
-                    parentLink = str(leg) + "Link" + str(parentNum)
-                    childArray = numArray[3:5]
-                    childNum = int(''.join(map(str, childArray)))
-                    childLink = str(leg) + "Link" + str(childNum)
+            pyrosim.Send_Cube(name=self.RightchildName, pos=[0.5, 0, 0] , size=[1, 0.2, 0.2])
+            self.RightlowerJointName = "RightLeg" + str(randomLink) + "_RightLowerLeg" + str(randomLink)
+            self.RightlowerChildName = "RightLowerLeg" + str(randomLink)
+            pyrosim.Send_Joint( name = self.RightlowerJointName, parent= self.RightchildName , child = self.RightlowerChildName , type = "revolute", position = [1, 0, 0], jointAxis = legJointAxis)
 
-                if len(numArray) == 6:
-                    parentArray= numArray[1:3]
-                    parentNum = int(''.join(map(str, parentArray)))
-                    parentLink = str(leg) + "Link" + str(parentNum)
-                    childArray = numArray[4:6]
-                    childNum = int(''.join(map(str, childArray)))
-                    childLink = str(leg) + "Link" + str(childNum)
-                
-                #Now, generate joints with those numbers.
-                pyrosim.Send_Joint(name = self.jointNamesDict[leg][joint], parent = parentLink, child = childLink, type = "revolute", position = self.jointPositionsDict[leg][joint], jointAxis = jointAxisConstant)
-                #rint("SENDING JOINT:")
-                #print("Joint Name: " + str(self.jointNamesDict[leg][joint]) + " Parent: " + str(parentLink) + " Child: " + str(childLink))
-                #print("Joint Position: " +  str(self.jointPositionsDict[leg][joint]) + " Joint Axis: " + str(jointAxisConstant))
-                
+            pyrosim.Send_Cube(name=self.RightlowerChildName, pos= [0, 0, -0.5] , size=[0.2, 0.2, 1])
+
+        for i in range(self.numofLinks - 1):
+            if i < 9:
+                pyrosim.Send_Joint(name = self.jointNames[i] , parent = self.jointNames[i][0:5] , child = self.jointNames[i][6:11] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                print("Link i<9")
+                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
+
+            if i == 9:
+                pyrosim.Send_Joint(name = self.jointNames[i] , parent = str(self.jointNames[i][0:5]) , child = str(self.jointNames[i][6:12]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                print("Link i=9")
+                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
+            if i > 9:
+                pyrosim.Send_Joint(name = self.jointNames[i] , parent = str(self.jointNames[i][0:6]) , child = str(self.jointNames[i][7:13]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
+                print("Link i>9")
+                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
+
         pyrosim.End()
-
 
     def Create_Brain(self):
 
@@ -316,134 +172,66 @@ class SOLUTION:
     
         pyrosim.Start_NeuralNetwork(brainID)
 
-        #self.totalSensors = 0
+        pyrosim.Send_Sensor_Neuron(name = 0, linkName = self.randomLink[0])
+        pyrosim.Send_Sensor_Neuron(name = 1, linkName = self.randomLink[1])
+        pyrosim.Send_Sensor_Neuron(name = 2, linkName = self.randomLink[2])
+        pyrosim.Send_Sensor_Neuron(name = 3, linkName = self.randomLink[3])
+        pyrosim.Send_Sensor_Neuron(name = 4, linkName = self.LeftchildName)
+        pyrosim.Send_Sensor_Neuron(name = 5, linkName = self.LeftlowerChildName)
+        pyrosim.Send_Sensor_Neuron(name = 6, linkName = self.RightchildName)
+        pyrosim.Send_Sensor_Neuron(name = 7, linkName = self.RightlowerChildName)
 
-        self.jointNames = [None] * self.numofLegs
-        self.sensorNames = [None] * self.numofLegs
-        self.sensorLinks = [None] * self.numofLegs
-        self.motorNames = [None] * self.numofLegs
-        self.motorJoints = [None] * self.numofLegs
-        self.synapseSource = [None] * self.numofLegs
-        self.synapseTarget = [None] * self.numofLegs
-        self.synapseWeight = [None] * self.numofLegs
+        randomJoint1 = str(self.randomLink[0]) + "_Link" + str(int(self.randomLink[0][4]) + 1)
+        randomJoint2 = str(self.randomLink[1]) + "_Link" + str(int(self.randomLink[1][4]) + 1)
+        randomJoint3 = str(self.randomLink[2]) + "_Link" + str(int(self.randomLink[2][4]) + 1)
+        randomJoint4 = str(self.randomLink[3]) + "_Link" + str(int(self.randomLink[3][4]) + 1)
 
-        for leg in range(self.numofLegs):
-            #print(leg)
-            #Joint Names:
-            self.jointNames[leg] = []
-            self.numofLegSensors = 0
+        pyrosim.Send_Motor_Neuron(name = 8 , jointName = randomJoint1)
+        pyrosim.Send_Motor_Neuron(name = 9 , jointName = randomJoint2)
+        pyrosim.Send_Motor_Neuron(name = 10 , jointName = randomJoint3)
+        pyrosim.Send_Motor_Neuron(name = 11 , jointName = randomJoint4)
+        pyrosim.Send_Motor_Neuron(name = 12 , jointName = self.LeftjointName)
+        pyrosim.Send_Motor_Neuron(name = 13 , jointName = self.LeftlowerJointName)
+        pyrosim.Send_Motor_Neuron(name = 14 , jointName = self.RightjointName)
+        pyrosim.Send_Motor_Neuron(name = 15 , jointName = self.RightlowerJointName)
 
-            self.sensorNames[leg] = []
-            self.sensorLinks[leg] = []
-            self.motorNames[leg] = []
-            self.motorJoints[leg] = []
-            self.synapseSource[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
-            self.synapseTarget[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
-            self.synapseWeight[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
 
-            self.numofJoints = 0
+        self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)
+        self.weights = (self.weights * 2) - 1
+        for currentRow in range(c.numSensorNeurons - 1):
+            for currentColumn in range(c.numMotorNeurons - 1):
+                pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = (currentColumn + c.numSensorNeurons - 1), weight = self.weights[currentRow][currentColumn])
 
-            for link in range(len(self.linkNamesDict[leg]) - 1):
-                 if len(str(self.linkNamesDict[leg][link])) == 6:
-                     Num = int(self.linkNamesDict[leg][link][5])
-                     self.jointNames.append(str(self.linkNamesDict[leg][link]) + "_" + str(self.linkNamesDict[leg][link][0:5]) + str(Num + 1))
-                
-                 if len(str(self.linkNamesDict[leg][link])) == 7:
-                     array = self.linkNamesDict[leg][link][5:7]
-                     Num = int(''.join(map(str, array)))
-                     self.jointNames.append(str(self.linkNamesDict[leg][link]) + "_" + str(self.linkNamesDict[leg][link][0:5]) + str(Num + 1))
-            
-            for link in range(self.numofLinksDict[leg]):
-                pyrosim.Send_Sensor_Neuron(name = self.counter, linkName = str(self.linkNamesDict[leg][link]))
-                self.sensorNames[leg].append(self.counter)
-                self.sensorLinks[leg].append(self.linkNamesDict[leg][link])
-                #print("SENDING SENSOR:")
-                #print("Sensor Name: " + str(self.counter) + " Link Name: " + str(self.linkNamesDict[leg][link]))
-                self.counter += 1
-                self.numofLegSensors += 1
-                #self.totalSensors += 1
-            
-            for joint in self.jointNames:
-                pyrosim.Send_Motor_Neuron(name = self.counter , jointName = str(joint))
-                self.motorNames[leg].append(self.counter)
-                self.motorJoints[leg].append(joint)
-                #print("SENDING JOINT: ")
-                #print("Joint Name: " + str(self.counter) + " Joint Name: " + str(joint))
-
-            self.weights = np.random.rand(self.numofLegSensors, len(self.jointNames))
-            self.weights = self.weights * 2 - 1 
-
-            for link in range(len(self.linkNamesDict[leg]) - 1):
-                self.synapseSource[leg][link] = [None] * len(self.jointNames)
-                self.synapseTarget[leg][link] = [None] * len(self.jointNames)
-                self.synapseWeight[leg][link] = [None] * len(self.jointNames)
-                for joint in range(len(self.jointNames)):
-                    #synapseName = str(leg) + "Synapse" + str(link)
-                    pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = ((len(self.linkNamesDict[leg]) - 1) + joint), weight = self.weights[link, joint] )
-                    self.synapseSource[leg][link][joint] = link
-                    self.synapseTarget[leg][link][joint] = (len(self.linkNamesDict[leg]) - 1) + joint
-                    self.synapseWeight[leg][link][joint] = self.weights[link, joint]
-                    #print("SENDING SYNAPSE: ")
-                    #print("Synapse Source Neuron Name: " + str(link) + " Synapse Target Neuron Name: " + str((len(self.linkNamesDict[leg]) - 1) + joint) + " Weight: " + str(self.weights[link, joint]))
-
-    
         pyrosim.End()
-    
-    def Create_New_Brain(self):
-        brainID = "brain" + str(self.myID) +".nndf"
-        print("CREATING BRAIN:")
-        print(brainID)
-    
-        pyrosim.Start_NeuralNetwork(brainID)
 
-        for leg in range(self.numofLegs):
-       
-            for link in range(len(self.sensorNames)):
-                pyrosim.Send_Sensor_Neuron(name = self.sensorNames[leg][link], linkName = self.sensorLinks[leg][link])
-            
-            for joint in range(len(self.motorNames)):
-                pyrosim.Send_Motor_Neuron(name = self.motorNames[leg][joint] , jointName = str(self.motorJoints[leg][joint]))
-
-            for link in range(len(self.synapseSource[leg]) - 1):
-                for joint in range(len(self.synapseSource[leg][link]) - 1):
-                    pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = ((len(self.linkNamesDict[leg]) - 1) + joint), weight = self.weights[link, joint] )
-        pyrosim.End()
-    
-        
 
     def Mutate(self):
-        
-        # for leg in range(self.numofLegs):
-        #     numOfSensors = self.allSensorsArray[leg]
-        #     numOfJoints = self.allJointsArray[leg]
-        #     randomRow = random.randint(0, numOfSensors - 1)
-        #     randomColumn = random.randint(0, numOfJoints - 1)
-
-        #     self.weights[randomRow][randomColumn] = (random.random() * 2) - 1
-        
+        self.Mutate_Body()
+        self.Mutate_Brain()
+    
+    def Mutate_Body(self):
         # for leg in range(self.numofLegs):
         #     tempNum = int(self.numofLinksDict[leg])
-        #     print(tempNum)
+        #     #print(tempNum)
         #     randLink = random.randint(0, tempNum)
         #     self.linkSizeConstantsDict[leg][randLink] = [random.random(), random.random(), random.random()]
+        randLink = random.randint(0, self.numofLinks)
+        maxLink = len(self.numofLinks)
+        self.linkSizeConstants[maxLink] = [random.random(), random.random(), random.random()]
 
+    def Mutate_Brain(self):
+        # for leg in range(self.numofLegs):
+        #     tempLinkNum = len(self.weights[leg]) - 1
+        #     randLink = random.randint(0, tempLinkNum)
+        #     tempJointNum = len(self.weights[leg][randLink]) - 1
+        #     randJoint = random.randint(0, tempJointNum)
 
-        for leg in range(self.numofLegs):
-            #np.random.seed(c.seed)
-            tempLinkNum = len(self.synapseWeight) - 1
-            randLink = random.randint(0, tempLinkNum)
-            tempJointNum = len(self.synapseWeight[randLink]) - 1
-            randJoint = random.randint(0, tempJointNum)
+        #     self.weights[leg][randLink][randJoint]= int(random.random() * 2 - 1)
+        randLink = random.randint(0, self.numofLinks)
+        randJoint = random.randint(0, self.numofLinks - 1)
+        self.weights[randLink][randJoint]= int(random.random() * 2 - 1)
 
-            self.synapseWeight[leg][randLink][randJoint]= int(random.random() * 2 - 1)
-        
-        #self.Create_New_Brain()
-
-        
-            
-        
     
-
     def Set_ID(self, nextAvailableID):
         self.myID = nextAvailableID
 

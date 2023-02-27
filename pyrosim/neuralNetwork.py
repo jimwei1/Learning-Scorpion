@@ -9,6 +9,7 @@ class NEURAL_NETWORK:
         self.neurons = {}
 
         self.synapses = {}
+
         f = open(nndfFileName,"r")
 
         for line in f.readlines():
@@ -19,8 +20,6 @@ class NEURAL_NETWORK:
 
     def Print(self):
 
-        #print(self.leg)
-
         self.Print_Sensor_Neuron_Values()
 
         self.Print_Hidden_Neuron_Values()
@@ -30,13 +29,11 @@ class NEURAL_NETWORK:
         print("")
 
     def Update(self):
-        for neuronName in self.neurons:
-            if self.neurons[neuronName].Is_Sensor_Neuron():
-                self.neurons[neuronName].Update_Sensor_Neuron()
-            else: 
-                ## This else clause will trigger if the current neuron is not a sensor neuron: 
-                    ## that is, it is a hidden or motor neuron.
-                self.neurons[neuronName].Update_Hidden_Or_Motor_Neuron(self.neurons, self.synapses)
+        for k in self.neurons.keys():
+            if self.neurons[k].Is_Sensor_Neuron():
+                self.neurons[k].Update_Sensor_Neuron()
+            else: # hidden or motor neuron
+                self.neurons[k].Update_Hidden_Or_Motor_Neuron(self.neurons, self.synapses)
 
     def Get_Neuron_Names(self):
         return self.neurons.keys()
@@ -48,10 +45,6 @@ class NEURAL_NETWORK:
         return self.neurons[neuronName].Get_Joint_Name()
 
     def Get_Value_Of(self, neuronName):
-        #print("NEURON NAME:")
-        #print(neuronName)
-        #print("GET VALUE OF FROM NN.PY")
-        #print(self.neurons[neuronName].Get_Value())
         return self.neurons[neuronName].Get_Value()
 
 # ---------------- Private methods --------------------------------------

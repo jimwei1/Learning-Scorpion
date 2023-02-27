@@ -1,20 +1,18 @@
-import pybullet as p
-import time
-import pybullet_data
-import pyrosim.pyrosim as pyrosim
 import numpy as np
-import random as random
 import constants as c
+import pyrosim.pyrosim as pyrosim
 
 class SENSOR:
+
     def __init__(self, linkName):
         self.linkName = linkName
+        self.Prepare_To_Sense()
+
+    def Prepare_To_Sense(self):
         self.values = np.zeros(c.iterations)
 
-    def Get_Value(self, element):
-        self.values[element] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-        if element == c.iterations - 1:
-            self.Save_Values()
+    def Get_Value(self, step, counter):
+        self.values[step] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
 
     def Save_Values(self):
-        np.save("./data/sensor-" + self.linkName + ".npy", self.values)
+        np.save("data/" + self.linkName + "SensorValues", self.values)

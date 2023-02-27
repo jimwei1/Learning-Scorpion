@@ -1,18 +1,28 @@
-import numpy as numpy
-import matplotlib.pyplot as pyplot
+import numpy as np
+import matplotlib.pyplot as plt
+import os
 
-#backLegSensorValues = numpy.load('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/backLegSensorValues.npy')
-#frontLegSensorValues = numpy.load('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/frontLegSensorValues.npy')
+legend = []
+tempDir = os.listdir("temp")
 
-#pyplot.plot(backLegSensorValues, label = 'backLeg', linewidth=4)
-#pyplot.plot(frontLegSensorValues, label = 'frontLeg')
+for file in tempDir:
+    
+    name = file.split("_")
+    legend = f"{name[0]} Creatures, {name[1]} Generations, {name[2][0]} Seed"
+    
+    with open(f"temp/{file}") as f:
+        data = []
+        for line in f:
+            num = line.split("\n")[0]
+            if num != '':
+                data.append(float(num))
+        plt.plot(data, label=legend)
 
-sinTargetAngles = numpy.load('/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/data/sinTargetAngles.npy')
+plt.gca().invert_yaxis()
+plt.ylabel("Fitness")
+plt.xlabel("Generation Number")
+plt.title("Fitness Graph:")
+plt.legend()
 
-pyplot.plot(sinTargetAngles)
-pyplot.axis('tight')
-pyplot.show()
-
-#pyplot.legend()
-#pyplot.show()
-
+graphNum = len(os.listdir("graphs"))
+plt.savefig(f"graphs/Graph{graphNum}.png")
