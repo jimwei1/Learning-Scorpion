@@ -20,5 +20,6 @@ class MOTOR:
             maxForce = c.maxForce)
         if desiredAngle == c.iterations - 1:
             self.Save_Values()
+        #pyrosim.Set_Motor_For_Joint(bodyIndex = robot, jointName = self.jointName, controlMode = p.POSITION_CONTROL, targetPosition = desiredAngle, maxForce = 40000)
 
 

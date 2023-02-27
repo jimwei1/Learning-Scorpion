@@ -19,6 +19,8 @@ class NEURAL_NETWORK:
 
     def Print(self):
 
+        #print(self.leg)
+
         self.Print_Sensor_Neuron_Values()
 
         self.Print_Hidden_Neuron_Values()

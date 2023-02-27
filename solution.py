@@ -318,18 +318,30 @@ class SOLUTION:
 
         #self.totalSensors = 0
 
+        self.jointNames = [None] * self.numofLegs
+        self.sensorNames = [None] * self.numofLegs
+        self.sensorLinks = [None] * self.numofLegs
+        self.motorNames = [None] * self.numofLegs
+        self.motorJoints = [None] * self.numofLegs
+        self.synapseSource = [None] * self.numofLegs
+        self.synapseTarget = [None] * self.numofLegs
+        self.synapseWeight = [None] * self.numofLegs
+
         for leg in range(self.numofLegs):
+            #print(leg)
             #Joint Names:
-            self.jointNames = []
+            self.jointNames[leg] = []
             self.numofLegSensors = 0
 
-            self.sensorNames = []
-            self.sensorLinks = []
-            self.motorNames = []
-            self.motorJoints = []
-            self.synapseSource = []
-            self.synapseTarget = []
-            self.synapseWeight = []
+            self.sensorNames[leg] = []
+            self.sensorLinks[leg] = []
+            self.motorNames[leg] = []
+            self.motorJoints[leg] = []
+            self.synapseSource[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
+            self.synapseTarget[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
+            self.synapseWeight[leg] = [None] * (int(len(self.linkNamesDict[leg])) - 1)
+
+            self.numofJoints = 0
 
             for link in range(len(self.linkNamesDict[leg]) - 1):
                  if len(str(self.linkNamesDict[leg][link])) == 6:
@@ -342,9 +354,9 @@ class SOLUTION:
                      self.jointNames.append(str(self.linkNamesDict[leg][link]) + "_" + str(self.linkNamesDict[leg][link][0:5]) + str(Num + 1))
             
             for link in range(self.numofLinksDict[leg]):
-                pyrosim.Send_Sensor_Neuron(name = self.counter, linkName = self.linkNamesDict[leg][link])
-                self.sensorNames.append(self.counter)
-                self.sensorLinks.append(self.linkNamesDict[leg][link])
+                pyrosim.Send_Sensor_Neuron(name = self.counter, linkName = str(self.linkNamesDict[leg][link]))
+                self.sensorNames[leg].append(self.counter)
+                self.sensorLinks[leg].append(self.linkNamesDict[leg][link])
                 #print("SENDING SENSOR:")
                 #print("Sensor Name: " + str(self.counter) + " Link Name: " + str(self.linkNamesDict[leg][link]))
                 self.counter += 1
@@ -352,9 +364,9 @@ class SOLUTION:
                 #self.totalSensors += 1
             
             for joint in self.jointNames:
-                pyrosim.Send_Motor_Neuron(name = self.counter , jointName = joint)
-                self.motorNames.append(self.counter)
-                self.motorJoints.append(joint)
+                pyrosim.Send_Motor_Neuron(name = self.counter , jointName = str(joint))
+                self.motorNames[leg].append(self.counter)
+                self.motorJoints[leg].append(joint)
                 #print("SENDING JOINT: ")
                 #print("Joint Name: " + str(self.counter) + " Joint Name: " + str(joint))
 
@@ -362,14 +374,15 @@ class SOLUTION:
             self.weights = self.weights * 2 - 1 
 
             for link in range(len(self.linkNamesDict[leg]) - 1):
-                self.synapseSource.append([])
-                self.synapseTarget.append([])
-                self.synapseWeight.append([])
+                self.synapseSource[leg][link] = [None] * len(self.jointNames)
+                self.synapseTarget[leg][link] = [None] * len(self.jointNames)
+                self.synapseWeight[leg][link] = [None] * len(self.jointNames)
                 for joint in range(len(self.jointNames)):
+                    #synapseName = str(leg) + "Synapse" + str(link)
                     pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = ((len(self.linkNamesDict[leg]) - 1) + joint), weight = self.weights[link, joint] )
-                    self.synapseSource[link].append(link)
-                    self.synapseTarget[link].append((len(self.linkNamesDict[leg]) - 1) + joint)
-                    self.synapseWeight[link].append(self.weights[link, joint])
+                    self.synapseSource[leg][link][joint] = link
+                    self.synapseTarget[leg][link][joint] = (len(self.linkNamesDict[leg]) - 1) + joint
+                    self.synapseWeight[leg][link][joint] = self.weights[link, joint]
                     #print("SENDING SYNAPSE: ")
                     #print("Synapse Source Neuron Name: " + str(link) + " Synapse Target Neuron Name: " + str((len(self.linkNamesDict[leg]) - 1) + joint) + " Weight: " + str(self.weights[link, joint]))
 
@@ -385,25 +398,21 @@ class SOLUTION:
 
         for leg in range(self.numofLegs):
        
-            for link in range(self.numofLinksDict[leg]):
-                pyrosim.Send_Sensor_Neuron(name = self.sensorNames[link], linkName = self.sensorLinks[link])
+            for link in range(len(self.sensorNames)):
+                pyrosim.Send_Sensor_Neuron(name = self.sensorNames[leg][link], linkName = self.sensorLinks[leg][link])
             
-            for joint in range(len(self.jointNames)):
-                pyrosim.Send_Motor_Neuron(name = self.motorNames[joint] , jointName = self.motorJoints[joint])
+            for joint in range(len(self.motorNames)):
+                pyrosim.Send_Motor_Neuron(name = self.motorNames[leg][joint] , jointName = str(self.motorJoints[leg][joint]))
 
-            for link in range(len(self.linkNamesDict[leg]) - 1):
-                for joint in range(len(self.jointNames)):
-                    pyrosim.Send_Synapse(sourceNeuronName = self.synapseSource[link][joint], targetNeuronName = self.synapseTarget[link][joint], weight = self.synapseWeight[link][joint] )
-
-                    #print("SENDING SYNAPSE: ")
-                    #print("Synapse Source Neuron Name: " + str(link) + " Synapse Target Neuron Name: " + str((len(self.linkNamesDict[leg]) - 1) + joint) + " Weight: " + str(self.weights[link, joint]))
-
-    
+            for link in range(len(self.synapseSource[leg]) - 1):
+                for joint in range(len(self.synapseSource[leg][link]) - 1):
+                    pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = ((len(self.linkNamesDict[leg]) - 1) + joint), weight = self.weights[link, joint] )
         pyrosim.End()
     
         
 
     def Mutate(self):
+        
         # for leg in range(self.numofLegs):
         #     numOfSensors = self.allSensorsArray[leg]
         #     numOfJoints = self.allJointsArray[leg]
@@ -421,13 +430,17 @@ class SOLUTION:
 
         for leg in range(self.numofLegs):
             #np.random.seed(c.seed)
-            #self.synapseWeight[random.randint(0, self.numofLegSensors - 1), random.randint(0, len(self.jointNames) - 1)] = int(random.random() * 2 - 1)
-            tempLinkNum = int(self.numofLinksDict[leg]) - 1
+            tempLinkNum = len(self.synapseWeight) - 1
             randLink = random.randint(0, tempLinkNum)
-            tempJointNum = len(self.jointNames) - 1
+            tempJointNum = len(self.synapseWeight[randLink]) - 1
             randJoint = random.randint(0, tempJointNum)
-            self.synapseWeight[randLink][randJoint]= int(random.random() * 2 - 1)
-        self.Create_New_Brain()
+
+            self.synapseWeight[leg][randLink][randJoint]= int(random.random() * 2 - 1)
+        
+        #self.Create_New_Brain()
+
+        
+            
         
     
 
