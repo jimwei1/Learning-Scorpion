@@ -8,6 +8,7 @@ import constants as c
 import solution as solution
 
 timevalue = 100000
+sleepTime = 1/6000
 
 amplitude_Front = numpy.pi / 4
 frequency_Front = 1
@@ -21,10 +22,10 @@ numberofGenerations = 1
 
 populationSize = 1
 iterations = 5000
-maxForce = 100
+maxForce = 40000
 #numSensorNeurons = 8
 #numMotorNeurons = 8
 
-motorJointRange = 0.45
+motorJointRange = 0.8
 
-seed = 1
+seed = 2001

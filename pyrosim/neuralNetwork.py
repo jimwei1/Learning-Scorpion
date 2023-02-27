@@ -46,6 +46,10 @@ class NEURAL_NETWORK:
         return self.neurons[neuronName].Get_Joint_Name()
 
     def Get_Value_Of(self, neuronName):
+        #print("NEURON NAME:")
+        #print(neuronName)
+        #print("GET VALUE OF FROM NN.PY")
+        #print(self.neurons[neuronName].Get_Value())
         return self.neurons[neuronName].Get_Value()
 
 # ---------------- Private methods --------------------------------------

@@ -57,7 +57,7 @@ class SOLUTION:
 
         for i in range(self.numofLegs):
             np.random.seed(c.seed)
-            self.numofLinksDict[i] = random.randint(8, 12)
+            self.numofLinksDict[i] = random.randint(12, 18)
 
             print(self.numofLinksDict[i])
 
@@ -252,9 +252,9 @@ class SOLUTION:
             for link in range(self.numofLinksDict[leg]):
                 pyrosim.Send_Cube(name=self.linkNamesDict[leg][link], pos = self.linkPositionsDict[leg][link], size = self.linkSizeConstantsDict[leg][link], colorName = self.colorNameDict[leg][link], colorID = self.colorIdDict[leg][link])
 
-                print("SENDING CUBE:")
-                print("Name: " + str(self.linkNamesDict[leg][link]) + " Size: " + str(self.linkSizeConstantsDict[leg][link]))
-                print("Pos: "+ str(self.linkPositionsDict[leg][link]) + " ColorName: " + str(self.colorNameDict[leg][link]) + " ColorID: " + str(self.colorIdDict[leg][link]))
+                #print("SENDING CUBE:")
+                #print("Name: " + str(self.linkNamesDict[leg][link]) + " Size: " + str(self.linkSizeConstantsDict[leg][link]))
+                #print("Pos: "+ str(self.linkPositionsDict[leg][link]) + " ColorName: " + str(self.colorNameDict[leg][link]) + " ColorID: " + str(self.colorIdDict[leg][link]))
 
             #Making Joints for each Leg
             initJointPos = np.add(startPos, self.linkPositionsDict[leg][0])
@@ -264,9 +264,9 @@ class SOLUTION:
             firstJointName = "Torso_" + firstChildName
 
             pyrosim.Send_Joint(name = firstJointName , parent= "Torso" , child = firstChildName , type = "revolute", position = initJointPos, jointAxis = jointAxisConstant)
-            print("Creating Initial Joint:")
-            print("Joint Name: " + str(firstJointName) + " Child: " + str(firstChildName))
-            print("Joint Position: " +  str(initJointPos) + " Joint Axis: " + str(jointAxisConstant))
+            #print("Creating Initial Joint:")
+            #print("Joint Name: " + str(firstJointName) + " Child: " + str(firstChildName))
+            #print("Joint Position: " +  str(initJointPos) + " Joint Axis: " + str(jointAxisConstant))
             for joint in range(self.numofLinksDict[leg] - 1):
                 jointName = self.jointNamesDict[leg][joint]
 
@@ -301,9 +301,9 @@ class SOLUTION:
                 
                 #Now, generate joints with those numbers.
                 pyrosim.Send_Joint(name = self.jointNamesDict[leg][joint], parent = parentLink, child = childLink, type = "revolute", position = self.jointPositionsDict[leg][joint], jointAxis = jointAxisConstant)
-                print("SENDING JOINT:")
-                print("Joint Name: " + str(self.jointNamesDict[leg][joint]) + " Parent: " + str(parentLink) + " Child: " + str(childLink))
-                print("Joint Position: " +  str(self.jointPositionsDict[leg][joint]) + " Joint Axis: " + str(jointAxisConstant))
+                #rint("SENDING JOINT:")
+                #print("Joint Name: " + str(self.jointNamesDict[leg][joint]) + " Parent: " + str(parentLink) + " Child: " + str(childLink))
+                #print("Joint Position: " +  str(self.jointPositionsDict[leg][joint]) + " Joint Axis: " + str(jointAxisConstant))
                 
         pyrosim.End()
 
@@ -323,6 +323,14 @@ class SOLUTION:
             self.jointNames = []
             self.numofLegSensors = 0
 
+            self.sensorNames = []
+            self.sensorLinks = []
+            self.motorNames = []
+            self.motorJoints = []
+            self.synapseSource = []
+            self.synapseTarget = []
+            self.synapseWeight = []
+
             for link in range(len(self.linkNamesDict[leg]) - 1):
                  if len(str(self.linkNamesDict[leg][link])) == 6:
                      Num = int(self.linkNamesDict[leg][link][5])
@@ -335,23 +343,65 @@ class SOLUTION:
             
             for link in range(self.numofLinksDict[leg]):
                 pyrosim.Send_Sensor_Neuron(name = self.counter, linkName = self.linkNamesDict[leg][link])
+                self.sensorNames.append(self.counter)
+                self.sensorLinks.append(self.linkNamesDict[leg][link])
+                #print("SENDING SENSOR:")
+                #print("Sensor Name: " + str(self.counter) + " Link Name: " + str(self.linkNamesDict[leg][link]))
                 self.counter += 1
                 self.numofLegSensors += 1
                 #self.totalSensors += 1
             
             for joint in self.jointNames:
                 pyrosim.Send_Motor_Neuron(name = self.counter , jointName = joint)
+                self.motorNames.append(self.counter)
+                self.motorJoints.append(joint)
+                #print("SENDING JOINT: ")
+                #print("Joint Name: " + str(self.counter) + " Joint Name: " + str(joint))
 
             self.weights = np.random.rand(self.numofLegSensors, len(self.jointNames))
             self.weights = self.weights * 2 - 1 
 
             for link in range(len(self.linkNamesDict[leg]) - 1):
+                self.synapseSource.append([])
+                self.synapseTarget.append([])
+                self.synapseWeight.append([])
                 for joint in range(len(self.jointNames)):
-                    pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = (len(self.linkNamesDict[leg]) - 1) + joint, weight = self.weights[link, joint] )
+                    pyrosim.Send_Synapse(sourceNeuronName = link, targetNeuronName = ((len(self.linkNamesDict[leg]) - 1) + joint), weight = self.weights[link, joint] )
+                    self.synapseSource[link].append(link)
+                    self.synapseTarget[link].append((len(self.linkNamesDict[leg]) - 1) + joint)
+                    self.synapseWeight[link].append(self.weights[link, joint])
+                    #print("SENDING SYNAPSE: ")
+                    #print("Synapse Source Neuron Name: " + str(link) + " Synapse Target Neuron Name: " + str((len(self.linkNamesDict[leg]) - 1) + joint) + " Weight: " + str(self.weights[link, joint]))
 
-       
-
+    
         pyrosim.End()
+    
+    def Create_New_Brain(self):
+        brainID = "brain" + str(self.myID) +".nndf"
+        print("CREATING BRAIN:")
+        print(brainID)
+    
+        pyrosim.Start_NeuralNetwork(brainID)
+
+        for leg in range(self.numofLegs):
+       
+            for link in range(self.numofLinksDict[leg]):
+                pyrosim.Send_Sensor_Neuron(name = self.sensorNames[link], linkName = self.sensorLinks[link])
+            
+            for joint in range(len(self.jointNames)):
+                pyrosim.Send_Motor_Neuron(name = self.motorNames[joint] , jointName = self.motorJoints[joint])
+
+            for link in range(len(self.linkNamesDict[leg]) - 1):
+                for joint in range(len(self.jointNames)):
+                    pyrosim.Send_Synapse(sourceNeuronName = self.synapseSource[link][joint], targetNeuronName = self.synapseTarget[link][joint], weight = self.synapseWeight[link][joint] )
+
+                    #print("SENDING SYNAPSE: ")
+                    #print("Synapse Source Neuron Name: " + str(link) + " Synapse Target Neuron Name: " + str((len(self.linkNamesDict[leg]) - 1) + joint) + " Weight: " + str(self.weights[link, joint]))
+
+    
+        pyrosim.End()
+    
+        
 
     def Mutate(self):
         # for leg in range(self.numofLegs):
@@ -371,7 +421,15 @@ class SOLUTION:
 
         for leg in range(self.numofLegs):
             #np.random.seed(c.seed)
-            self.weights[random.randint(0, self.numofLegSensors - 1), random.randint(0, len(self.jointNames) - 1)] = random.random() * 2 - 1
+            #self.synapseWeight[random.randint(0, self.numofLegSensors - 1), random.randint(0, len(self.jointNames) - 1)] = int(random.random() * 2 - 1)
+            tempLinkNum = int(self.numofLinksDict[leg]) - 1
+            randLink = random.randint(0, tempLinkNum)
+            tempJointNum = len(self.jointNames) - 1
+            randJoint = random.randint(0, tempJointNum)
+            self.synapseWeight[randLink][randJoint]= int(random.random() * 2 - 1)
+        self.Create_New_Brain()
+        
+    
 
     def Set_ID(self, nextAvailableID):
         self.myID = nextAvailableID

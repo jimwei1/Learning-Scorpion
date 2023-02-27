@@ -1,4 +1,4 @@
-import math
+import math as math
 
 import pybullet as pybullet
 
@@ -44,20 +44,10 @@ class NEURON:
 
         return self.type == c.SENSOR_NEURON
 
-    def Update_Sensor_Neuron(self):
-
-        self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
-
     def Is_Hidden_Neuron(self):
 
         return self.type == c.HIDDEN_NEURON
 
-    def Update_Hidden_Or_Motor_Neuron(self, neurons, synapses): 
-        for synapseKey in synapses: 
-            if synapseKey[1] == self.Get_Name():
-                self.Allow_Presynaptic_Neuron_To_Influence_Me(synapses[synapseKey].Get_Weight(), neurons[synapseKey[0]].Get_Value())
-        self.Threshold()
-        
     def Is_Motor_Neuron(self):
 
         return self.type == c.MOTOR_NEURON
@@ -76,9 +66,19 @@ class NEURON:
 
         self.value = value
 
-    def Allow_Presynaptic_Neuron_To_Influence_Me(self, synapse_weight, presynaptic_value):
-        self.Add_To_Value(synapse_weight * presynaptic_value)
+    def Update_Sensor_Neuron(self):
+        self.Set_Value(pyrosim.Get_Touch_Sensor_Value_For_Link(self.Get_Link_Name()))
 
+    def Update_Hidden_Or_Motor_Neuron(self, neurons, synapses):
+        self.Set_Value(0.0)
+        for synapse in synapses:
+            if self.Get_Name() == synapse[1]:
+                self.Allow_Presynaptic_Neuron_To_Influence_Me(synapses[synapse].Get_Weight(), neurons[synapse[0]].Get_Value())
+        self.Threshold()
+
+    def Allow_Presynaptic_Neuron_To_Influence_Me(self, weight, value):
+        self.Add_To_Value(weight * value)
+                
 # -------------------------- Private methods -------------------------
 
     def Determine_Name(self,line):
