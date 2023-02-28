@@ -116,8 +116,8 @@ class SOLUTION:
         for i in range(self.numofLinks):
             
             pyrosim.Send_Cube(name=self.linkNames[i], pos=self.LinkPositions[i] , size=self.linkSizeConstants[i], colorName = colorName[i], colorID = colorID[i])
-            print("SENDING CUBE:")
-            print("name: " + str(self.linkNames[i]) + " size: "+ str(self.linkSizeConstants[i]))
+            #print("SENDING CUBE:")
+            #print("name: " + str(self.linkNames[i]) + " size: "+ str(self.linkSizeConstants[i]))
 
         legJointAxis = "1 0 0"
         for randLink in range(len(self.randomLink)):
@@ -150,17 +150,17 @@ class SOLUTION:
         for i in range(self.numofLinks - 1):
             if i < 9:
                 pyrosim.Send_Joint(name = self.jointNames[i] , parent = self.jointNames[i][0:5] , child = self.jointNames[i][6:11] , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                print("Link i<9")
-                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
+                #print("Link i<9")
+                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:11]))
 
             if i == 9:
                 pyrosim.Send_Joint(name = self.jointNames[i] , parent = str(self.jointNames[i][0:5]) , child = str(self.jointNames[i][6:12]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                print("Link i=9")
-                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
+                #print("Link i=9")
+                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:5]) + " | " + str(self.jointNames[i][6:12]))
             if i > 9:
                 pyrosim.Send_Joint(name = self.jointNames[i] , parent = str(self.jointNames[i][0:6]) , child = str(self.jointNames[i][7:13]) , type = "revolute", position = [0, 0.5, 0], jointAxis = jointAxisConstant)
-                print("Link i>9")
-                print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
+                #print("Link i>9")
+                #print(str(self.jointNames[i]) + " | " + str(self.jointNames[i][0:6]) + " | " + str(self.jointNames[i][7:13]))
 
         pyrosim.End()
 
@@ -216,7 +216,7 @@ class SOLUTION:
         #     randLink = random.randint(0, tempNum)
         #     self.linkSizeConstantsDict[leg][randLink] = [random.random(), random.random(), random.random()]
         randLink = random.randint(0, self.numofLinks)
-        maxLink = len(self.numofLinks)
+        maxLink = self.numofLinks
         self.linkSizeConstants[maxLink] = [random.random(), random.random(), random.random()]
 
     def Mutate_Brain(self):
@@ -227,8 +227,8 @@ class SOLUTION:
         #     randJoint = random.randint(0, tempJointNum)
 
         #     self.weights[leg][randLink][randJoint]= int(random.random() * 2 - 1)
-        randLink = random.randint(0, self.numofLinks)
-        randJoint = random.randint(0, self.numofLinks - 1)
+        randLink = random.randint(0, c.numSensorNeurons - 1)
+        randJoint = random.randint(0, c.numMotorNeurons - 1)
         self.weights[randLink][randJoint]= int(random.random() * 2 - 1)
 
     

@@ -18,7 +18,7 @@ for file in tempDir:
                 data.append(float(num))
         plt.plot(data, label=legend)
 
-plt.gca().invert_yaxis()
+#plt.gca().invert_yaxis()
 plt.ylabel("Fitness")
 plt.xlabel("Generation Number")
 plt.title("Fitness Graph:")

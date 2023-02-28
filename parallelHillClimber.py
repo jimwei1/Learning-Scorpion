@@ -9,8 +9,8 @@ class PARALLEL_HILL_CLIMBER:
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
         os.system("rm body*.urdf")
-        self.tempFile = c.populationSize + "_" + c.numberofGenerations + "_" + c.seed
-        os.system(f"rm temp\{self.tempFile}.txt")
+        self.tempFile = str(c.populationSize) + "_" + str(c.numberofGenerations) + "_" + str(c.seed)
+        #os.system(f"rm temp\{self.tempFile}.txt")
 
         self.nextAvailableID = 0
         self.parents = {}
@@ -26,11 +26,11 @@ class PARALLEL_HILL_CLIMBER:
             self.Evolve_For_One_Generation(currentGeneration)
             self.Save_Best()
 
-    def Evolve_For_One_Generation(self, gen):
+    def Evolve_For_One_Generation(self, generation):
         self.Spawn()
         self.Mutate()
         self.Evaluate(self.children)
-        self.Print(gen)
+        self.Print(generation)
         self.Select()
 
     def Evaluate(self, solutions):
@@ -75,5 +75,5 @@ class PARALLEL_HILL_CLIMBER:
         f.write(f"{bestFitness}\n")
         f.close()
 
-    def Print(self):
+    def Print(self, generation):
         pass
