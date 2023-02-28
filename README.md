@@ -10,7 +10,7 @@ First, this assignment builds on Assignment 7 by adding both body and brain muta
 
 The first blue cube is the Torso. Then, 13 to 15 links are attached behind the Torso cube, with 4 randomly selected links serving as the sensor and leg links.
 
-![Fitness][Fitness.png]
+![Fitness](Fitness.png)
 
 Here are the fitness results per generation, with the specific seed and number of generations/populations shown in the Legend of the graph for 5 different seeds.
 
