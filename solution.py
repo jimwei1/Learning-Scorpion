@@ -41,12 +41,14 @@ class SOLUTION:
         jointAxisConstant = "1 1 0"
 
         #Random number of links
+        random.seed(c.seed + 123131)
         self.numofLinks = random.randint(13, 15)
 
         #Random Sizes Dictionary
         self.linkSizeConstants = dict.fromkeys(range(self.numofLinks), None)
 
         for i in range(self.numofLinks):
+            #random.seed(c.seed)
             self.linkSizeConstants[i] = [random.random(), random.random(), random.random()]
 
 
@@ -74,6 +76,7 @@ class SOLUTION:
             self.LinkPositions[i] = [0, yPos, 0]
 
         #Randomly Selected Link Dictionary
+        random.seed(c.seed + 1231316747)
         self.randomLink = dict.fromkeys(range(4), None)
 
         #Makes sure each Random Link is unique
@@ -195,7 +198,7 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 14 , jointName = self.RightjointName)
         pyrosim.Send_Motor_Neuron(name = 15 , jointName = self.RightlowerJointName)
 
-
+        random.seed(c.seed + 51241231)
         self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)
         self.weights = (self.weights * 2) - 1
         for currentRow in range(c.numSensorNeurons - 1):
@@ -215,8 +218,10 @@ class SOLUTION:
         #     #print(tempNum)
         #     randLink = random.randint(0, tempNum)
         #     self.linkSizeConstantsDict[leg][randLink] = [random.random(), random.random(), random.random()]
+        random.seed(c.seed + 1245512)
         randLink = random.randint(0, self.numofLinks)
         maxLink = self.numofLinks
+        random.seed(c.seed + 41231512)
         self.linkSizeConstants[maxLink] = [random.random(), random.random(), random.random()]
 
     def Mutate_Brain(self):
@@ -227,7 +232,9 @@ class SOLUTION:
         #     randJoint = random.randint(0, tempJointNum)
 
         #     self.weights[leg][randLink][randJoint]= int(random.random() * 2 - 1)
+        random.seed(c.seed + 1234)
         randLink = random.randint(0, c.numSensorNeurons - 1)
+        random.seed(c.seed +123)
         randJoint = random.randint(0, c.numMotorNeurons - 1)
         self.weights[randLink][randJoint]= int(random.random() * 2 - 1)
 
