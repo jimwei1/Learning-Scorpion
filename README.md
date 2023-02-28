@@ -2,33 +2,30 @@
 
 ## Overview
 
-Assignment 8:
-Store fitnesses in an array, append to .npy the greatest value of the generation
+This is a submission for Assignment 8 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
 
+First, this assignment builds on Assignment 7 by adding both body and brain mutation functionality, as well as fitness graph tracking, to the robot in Assignment 7. However, the robot in assignment 7 was extremely difficult to create a functional brain for due to its unique recursive leg design. As a result, Assignment 8's robot is a Scorpion with the random sensor links having legs that touch th eground, also with both sensor and motor links attached.
 
+![Assignment8](Assignment8.png)
 
+The first blue cube is the Torso. Then, 13 to 15 links are attached behind the Torso cube, with 4 randomly selected links serving as the sensor and leg links.
 
+![Fitness][Fitness.png]
 
-This is a submission for Assignemnt 8 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
-
-First, this assignment builds on Assignment 6 by generating a random number of legs between 3 to 6, which then generate in different directions from a red center Torso, as shown in the diagram below. I call this creature Dr. Octopus. We can ignore the fact that he only has up to 6 legs.
-
-In order to do this, I created an array for each value I needed to generate, and then stored dictionaries in each array element so that each array is an array of dictionaries and each element of the array is the dictionary for that particular leg of Dr. Octopus.
-
-![Assignment7](Assignment7.png)
-
-The red center cube is the Torso. The coordinates indicate the positional location of the center cube and the starting cube of each leg. The arrows indicate whether Dr. Octopus is generating outwards or repeating the creation of that leg. Finally, each cube is labeled in a purple number that indicates the order of which it will be generated depending on the random # of legs.
+Here are the fitness results per generation, with the specific seed and number of generations/populations shown in the Legend of the graph for 5 different seeds.
 
 
 ## Random Behavior:
 
-**Legs** Random number between 3 and 6
+**Legs** 4 randomly selected legs will contain sensor and motor neurons.
 
-**Links:** Random number between 8 to 12, can be different for each Leg
+**Links:** Random number between 13 and 15 body links.
 
-**Size of Links:** Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension. Each Leg has new sizes.
+**Size of Links:** Cube of x, y, z dimensions randomized from a range of 0 to 1 for each dimension.
 
-**Placement of Sensors/Motors:** 4 Sensors placed randomly within the chain of each Leg. Each sensor is placed at a different link so there will always be 4 sensors and motors. The placement of sensors will likely differ between each Leg.
+**Placement of Sensors/Motors:** 4 Sensors placed randomly in the Scorpion.
+
+**Body:** The final cube, the Abdomen cube, is randomly changed to be a new size in each new iteration. This cube provides balancing and movement capabilities for the legs that touch the ground.
 
 
 ## Video Example:
@@ -36,20 +33,8 @@ https://youtu.be/L3ZA3SuhO1A
 
 ## How to Run:
 
-Download repository, run **assignment7.py** and it will generate Dr Octopus for viewing :). Must have python3 and pybullet installed.
-
-## Notes:
-
-For the sensors, motors, and synapses, I set an overall self.counter that keeps going up (that serves as the name for the sensors and motors. Then, for each individual leg, I count the number of Sensors and Joints (Motors), as well as arrays that save the name (self.count) of the sensors and motors. Finally, I set the synapses with two for loops that iterate through range(numOfSensors) and range(numofJoints), but the names don't match, so I take the names from the sensorsArray and the jointsArray.
-
-
-To revert to evolving behavior, uncomment changes in search, parallelHillClimber, and simulate.
-
+Download repository, modify the 3 variables in **constants.py**, then run **search.py** and it will generate a certain number of Scorpion Generations/Populations for viewing :). Run **analyze.py** AFTER search.py and it will generate the fitness graph. Must have python3 and pybullet installed.
 
 
 ## References:
 Base code from: https://www.reddit.com/r/ludobots
-
-
-
-
