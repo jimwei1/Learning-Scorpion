@@ -1,3 +1,11 @@
+need: playsound
+
+pypi
+pydub
+
+ffmpeg
+ffmpeg-python
+
 # CS 396 Artificial Life Assignment 8
 
 ## Overview

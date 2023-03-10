@@ -9,8 +9,8 @@ import solution as solution
 
 #############################
 #CHANGE THESE:
-numberofGenerations = 10
-populationSize = 3
+numberofGenerations = 1
+populationSize = 1
 seed = 6
 #############################
 
