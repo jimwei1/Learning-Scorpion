@@ -24,6 +24,7 @@ class SIMULATION:
         self.robot = ROBOT(solID)
         self.kickBallPos = [0] * c.iterations
         self.targetBallPos = [0] * c.iterations
+        
 
     def Run(self):
         for i in range(c.iterations): 
@@ -33,6 +34,7 @@ class SIMULATION:
             self.robot.Act(i)
             if self.directOrGUI == "GUI":
                 time.sleep(1/600)
+        
 
     def Get_Fitness(self, solutionId):
         self.robot.Get_Fitness(solutionId)

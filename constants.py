@@ -9,14 +9,14 @@ import solution as solution
 
 #############################
 #CHANGE THESE:
-numberofGenerations = 1
-populationSize = 1
-seed = 6
+numberofGenerations = 3
+populationSize = 3
+seed = 1
 #############################
 
 
-timevalue = 100000
-sleepTime = 1/6000
+timevalue = 10000
+sleepTime = 1/60000
 
 amplitude_Front = numpy.pi / 4
 frequency_Front = 1

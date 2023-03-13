@@ -1,31 +1,3 @@
-pybullet build time: Jan  3 2023 17:30:37
-Version = 4.1 Metal - 76.3
-Vendor = Apple
-Renderer = Apple M1
-b3Printf: Selected demo: Physics Server
-startThreads creating 1 threads.
-starting thread 0
-started thread 0 
-MotionThreadFunc thread started
-b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-
-b3Printf: expected a world element, continuing without it.
-b3Printf: b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
-
-b3Printf: No links found in URDF file
-Traceback (most recent call last):
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulate.py", line 6, in <module>
-    simulation = SIMULATION(directOrGUI, solutionID)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/simulation.py", line 31, in __init__
-    self.robot = ROBOT(solutionID)
-  File "/Users/jim/Documents/GitHub/CS-396-Artificial-Life-Bots/robot.py", line 21, in __init__
-    self.robotID = p.loadURDF("body.urdf")
-pybullet.error: Cannot load URDF file.
-numActiveThreads = 0
-stopping threads
-Thread with taskId 0 exiting
-Thread TERMINATED
-destroy semaphore
-semaphore destroyed
-destroy main semaphore
-main semaphore destroyed
+b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+expected a world element, continuing without it.b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,152]:
+URDF file 'body02%.urdf' not found

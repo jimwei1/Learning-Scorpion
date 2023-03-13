@@ -1,10 +1,6 @@
 need: playsound
 
-pypi
-pydub
-
-ffmpeg
-ffmpeg-python
+pip3 install playsound
 
 # CS 396 Artificial Life Assignment 8
 

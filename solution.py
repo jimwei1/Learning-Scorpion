@@ -38,7 +38,7 @@ class SOLUTION:
         bodyID = "body" + str(self.myID) + ".urdf"
         pyrosim.Start_URDF(bodyID)
 
-        jointAxisConstant = "1 1 0"
+        jointAxisConstant = "1 1 1"
 
         #Random number of links
         random.seed(c.seed + 123131)
@@ -122,7 +122,7 @@ class SOLUTION:
             #print("SENDING CUBE:")
             #print("name: " + str(self.linkNames[i]) + " size: "+ str(self.linkSizeConstants[i]))
 
-        legJointAxis = "1 0 0"
+        legJointAxis = "1 1 1"
         for randLink in range(len(self.randomLink)):
             randomLink = self.randomLink[randLink]
             self.LeftjointName = str(randomLink) + "_LeftLeg" + str(randomLink)
