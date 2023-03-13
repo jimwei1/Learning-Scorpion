@@ -22,10 +22,10 @@ numberofGenerations = 1
 
 populationSize = 1
 iterations = 5000
-maxForce = 10000000
+maxForce = 10000
 #numSensorNeurons = 8
 #numMotorNeurons = 8
 
-motorJointRange = 0.8
+motorJointRange = 0.75
 
-seed = 2001
+seed = 1
