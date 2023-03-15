@@ -17,6 +17,7 @@ for file in tempDir:
             if num != '':
                 data.append(float(num))
         plt.plot(data, label=legend)
+        #plt.plot(data)
 
 #plt.gca().invert_yaxis()
 plt.ylabel("Fitness")
