@@ -1,14 +1,12 @@
-need: playsound
-
-pip3 install playsound
-
-# CS 396 Artificial Life Assignment 8
+# CS 396 Artificial Life Final Project
 
 ## Overview
 
-This is a submission for Assignment 8 for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
+This is a Final Project submission for CS 396: Artificial Life at Northwestern University, Winter 2023 by Jim Wei.
 
-First, this assignment builds on Assignment 7 by adding both body and brain mutation functionality, as well as fitness graph tracking, to the robot in Assignment 7. However, the robot in assignment 7 was extremely difficult to create a functional brain for due to its unique recursive leg design. As a result, Assignment 8's robot is a Scorpion with the random sensor links having legs that touch th eground, also with both sensor and motor links attached.
+**Note to Grader:** I spent a significant amount of time this assignment trying to get my Octopus from Assignment 7 to mutate correctly. He was never able to do so in time. Given the time constraints of running the 50,000 iterations, I decided to perform the mutations on my Assignment 8 submission (the incomplete Scorpion). Therefore, my submission fails the presupposed priori requirement. It also doesn't evolve very well, but we will get into that later.
+
+Hi. My name is Jim Wei. In this course, I built 
 
 ![Assignment8](Assignment8.png)
 

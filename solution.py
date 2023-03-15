@@ -38,11 +38,11 @@ class SOLUTION:
         bodyID = "body" + str(self.myID) + ".urdf"
         pyrosim.Start_URDF(bodyID)
 
-        jointAxisConstant = "1 1 1"
+        jointAxisConstant = "1 1 0"
 
         #Random number of links
-        random.seed(c.seed + 123131)
-        self.numofLinks = random.randint(13, 15)
+        random.seed(c.seed)
+        self.numofLinks = random.randint(8, 15)
 
         #Random Sizes Dictionary
         self.linkSizeConstants = dict.fromkeys(range(self.numofLinks), None)
@@ -76,7 +76,7 @@ class SOLUTION:
             self.LinkPositions[i] = [0, yPos, 0]
 
         #Randomly Selected Link Dictionary
-        random.seed(c.seed + 1231316747)
+        random.seed(c.seed)
         self.randomLink = dict.fromkeys(range(4), None)
 
         #Makes sure each Random Link is unique
@@ -122,7 +122,7 @@ class SOLUTION:
             #print("SENDING CUBE:")
             #print("name: " + str(self.linkNames[i]) + " size: "+ str(self.linkSizeConstants[i]))
 
-        legJointAxis = "1 1 1"
+        legJointAxis = "1 1 0"
         for randLink in range(len(self.randomLink)):
             randomLink = self.randomLink[randLink]
             self.LeftjointName = str(randomLink) + "_LeftLeg" + str(randomLink)
@@ -198,7 +198,7 @@ class SOLUTION:
         pyrosim.Send_Motor_Neuron(name = 14 , jointName = self.RightjointName)
         pyrosim.Send_Motor_Neuron(name = 15 , jointName = self.RightlowerJointName)
 
-        random.seed(c.seed + 51241231)
+        random.seed(c.seed)
         self.weights = np.random.rand(c.numSensorNeurons, c.numMotorNeurons)
         self.weights = (self.weights * 2) - 1
         for currentRow in range(c.numSensorNeurons - 1):
@@ -218,10 +218,10 @@ class SOLUTION:
         #     #print(tempNum)
         #     randLink = random.randint(0, tempNum)
         #     self.linkSizeConstantsDict[leg][randLink] = [random.random(), random.random(), random.random()]
-        random.seed(c.seed + 1245512)
+        random.seed(c.seed)
         randLink = random.randint(0, self.numofLinks)
         maxLink = self.numofLinks
-        random.seed(c.seed + 41231512)
+        random.seed(c.seed)
         self.linkSizeConstants[maxLink] = [random.random(), random.random(), random.random()]
 
     def Mutate_Brain(self):
@@ -232,9 +232,9 @@ class SOLUTION:
         #     randJoint = random.randint(0, tempJointNum)
 
         #     self.weights[leg][randLink][randJoint]= int(random.random() * 2 - 1)
-        random.seed(c.seed + 1234)
+        random.seed(c.seed)
         randLink = random.randint(0, c.numSensorNeurons - 1)
-        random.seed(c.seed +123)
+        random.seed(c.seed)
         randJoint = random.randint(0, c.numMotorNeurons - 1)
         self.weights[randLink][randJoint]= int(random.random() * 2 - 1)
 
