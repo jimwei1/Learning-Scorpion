@@ -9,14 +9,14 @@ import solution as solution
 
 #############################
 #CHANGE THESE:
-numberofGenerations = 10
-populationSize = 3
-seed = 6
+numberofGenerations = 500
+populationSize = 10
+seed = 1000001
 #############################
 
 
-timevalue = 100000
-sleepTime = 1/6000
+timevalue = 10000
+sleepTime = 1/60000
 
 amplitude_Front = numpy.pi / 4
 frequency_Front = 1
@@ -26,8 +26,8 @@ amplitude_Back = numpy.pi / 4
 frequency_Back = 1
 phaseOffset_Back = numpy.pi / 4
 
-iterations = 10000
-maxForce = 1000
+iterations = 1000
+maxForce = 100
 gravity = - 4.5
 numSensorNeurons = 8
 numMotorNeurons = 8
