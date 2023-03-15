@@ -18,7 +18,7 @@ This is a Final Project submission, through the Engineer Path, for CS 396: Artif
 
 Hi. My name is Jim Wei, a junior at Northwestern University studying Computer Science and Learning & Organizational Change. In this course, I built a robot simulation on Python (code language) using a physics engine called PyBullet and a graphical tool program called PyroSim. My robot, using just cubes and connecting joints, can generate a random number of legs (between 2 to 6) on each face of a cube. Then, it can extend its legs a random number of cubes long, with each cube being a random size. Here's an example of the robot I built:
 
-![assignment7](assignment7.png)
+![assignment7](assignment7.jpg)
 
 His name is Dr. Oc, like Doctor Octopus from Spider Man. Unfortunately, I was unable to get Dr. Oc to move, so I was unable to use him for my final assignment. Speaking of moving, our robots are able to move by attaching sensor neurons to certain parts of its body, which then communicate through synapse neurons with the motor neurons attached to joints within the robot. Then, we simply adjust the weights (power) of the synapse neurons to make each joint move a certain way. This is usuallly a random process, where we set the weights of the synapse neurons to be a random value, then randomly change each value to another random value and see how that impacts the robot's desired behavior.
 
