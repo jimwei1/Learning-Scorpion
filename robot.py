@@ -17,8 +17,10 @@ class ROBOT:
         pyrosim.Prepare_To_Simulate(self.robotId)
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
-        os.system("rm " + brainID)
-        os.system("rm " + bodyID)
+        # os.system("rm " + brainID)
+        # os.system("rm " + bodyID)
+        os.system("del " + brainID)
+        os.system("del " + bodyID)
 
     # generate the sensors
     def Prepare_To_Sense(self):
@@ -57,11 +59,18 @@ class ROBOT:
 
         xPosition = basePosition[0]
 
+        # print("GET_FITNESS:")
+        # print("tmp" + solutionID + ".txt", "w")
+        # f = open("tmp" + solutionID + ".txt", "w")
+
+        # os.system("mv tmp" + str(solutionID) + ".txt fitness" + str(solutionID) + ".txt")
+        # f.write(str(xPosition))
+        # f.close()
         print("GET_FITNESS:")
         print("tmp" + solutionID + ".txt", "w")
         f = open("tmp" + solutionID + ".txt", "w")
 
-        os.system("mv tmp" + str(solutionID) + ".txt fitness" + str(solutionID) + ".txt")
+        os.system("move tmp" + str(solutionID) + ".txt fitness" + str(solutionID) + ".txt")
         f.write(str(xPosition))
         f.close()
 
